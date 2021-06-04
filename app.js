@@ -9,7 +9,7 @@ const cars = require('./route/cars')
 app.use(bodyParser.json())
 
 // allow cross origin header all route
-app.use(cors())
+app.use(cors()) 
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
