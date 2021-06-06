@@ -6,7 +6,7 @@ const { carsGet,carsGetByLicense,carCheckRegister,carConfirmRegister,carsRemove,
 const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor } = require('../controller/servicepointController')
 const { CustomerGet,CustomerProfile,CustomerLogin,CustomerProfileEdit } = require('../controller/customerController')
 const { lastServicePoint,insertJob,confirmJob } = require('../controller/jobController')
-const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose } = require('../controller/backendController')
+const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate } = require('../controller/backendController')
 const { verifyUserToken } = require("../middleware/auth");
  
 
@@ -48,7 +48,7 @@ router.get('/back/getalljob_orderbyjobno/:cust_type/:startdate/:enddate',verifyU
 router.post('/back/jobcreateticket',verifyUserToken,jobcreateticket); // เปิดticket
 router.post('/back/jobsummary',verifyUserToken,jobsummary); //สรุปเรื่อง
 router.post('/back/jobclose',verifyUserToken,jobclose); //ปิดเรื่อง
-// อัพเดทสถานะ job
+router.post('/back/jobupdate',verifyUserToken,jobupdate); //// อัพเดทข้อมูลจ๊อบนั้นๆ
 // api service point ใช้ ร่วมกันกับหน้า frontend ลูกค้า
 
 

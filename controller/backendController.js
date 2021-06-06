@@ -161,9 +161,19 @@ exports.jobsummary=(req,res,next)=>{
 }
 
 exports.jobclose=(req,res,next)=>{
-    // สรุปเรื่อง
+    // ปิดเรื่อง
 
     EmployeeModel.updateJobClose({final_job_id:req.body.final_job_id,emp_code:req.user.emp_code});
+    res.status(200).json({
+        message:"success"
+    });
+}
+
+
+//job_note,job_service_point_code_confirm,job_appoint_confirm_datetime,servicetask1,servicetask2,servicenote,custcare1,custcare2,custcare3,custcarenote,car_odo_mile
+exports.jobupdate=(req,res,next)=>{
+//อัพเดทข้อมูลจ๊อบนั้นๆ
+    EmployeeModel.updateJob({job_note:req.body.job_note,job_service_point_code_confirm:req.user.job_service_point_code_confirm,job_appoint_confirm_datetime:req.user.job_appoint_confirm_datetime,servicetask1:req.body.servicetask1,servicetask2:req.body.servicetask2,servicenote:req.body.servicenote,custcare1:req.body.custcare1,custcare2:req.body.custcare2,custcare3:req.body.custcare3,custcarenote:req.body.custcarenote,car_odo_mile:req.body.car_odo_mile,final_job_id:req.body.final_job_id});
     res.status(200).json({
         message:"success"
     });
