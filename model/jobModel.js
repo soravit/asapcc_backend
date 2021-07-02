@@ -25,6 +25,17 @@ static updatejobid_complete({customer_code=''}){
     // frontend ส่ง job order มาก่อน แล้วเว้นว่าง job id ไว้ ให้ระบบรันต่อในหน้า confirm และส่ง mail
 
 }
+
+
+static getjobid_complete({customer_code=''}){
+
+    return db.execute('SELECT final_job_id FROM `asapcc_job_main` WHERE job_customer_id=? order by job_order desc LIMIT 1',[customer_code])
+    
+    // frontend ส่ง job order มาก่อน แล้วเว้นว่าง job id ไว้ ให้ระบบรันต่อในหน้า confirm และส่ง mail
+
+}
+
+
 static updatejobid_complete2(){
 
  return db.execute('UPDATE asapcc_constant_jobno SET current_job_no=current_job_no+1 WHERE auto_id=1;')

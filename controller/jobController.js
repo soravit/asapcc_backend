@@ -31,11 +31,14 @@ exports.confirmJob=(req,res,next)=> {
         
         JobModel.updatejobid_complete2();
 
+        JobModel.getjobid_complete({customer_code:req.user.customer_code}).then(([row2]) => {
+
         res.status(200).json({
             message: 'confirm job success ',
+            jobid: row2[0].final_job_id,
             result: 'true'
         });
-
+    });
   
     });
 }
