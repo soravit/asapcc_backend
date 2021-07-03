@@ -16,7 +16,7 @@ class CarsModel {
 
 
     static getMyCars({customer_code=''}){
-        return db.execute('SELECT cm.car_vin_id,cm.customer_code,car.car_license,car.car_brand,car.car_series,car.car_model,car.car_engine_no,car.car_customer_type,car.business_name,car.contract_startdate,car.contract_enddate,(SELECT MAX(job_appoint_confirm_datetime) FROM asapcc_job_main WHERE job_car_vin_id=cm.car_vin_id LIMIT 1) as last_service_date,IF(DATE_FORMAT(NOW(), "%Y-%m-%d") > car.contract_enddate,"yes","no") as isexpirecontract FROM asapcc_car_mapping_customer cm INNER JOIN asapcc_car_db car ON cm.car_vin_id=car.car_vin WHERE cm.customer_code=?',[customer_code]);
+        return db.execute('SELECT cm.car_vin_id,cm.customer_code,car.car_license,car.car_brand,car.car_series,car.car_model,car.car_engine_no,car.car_customer_type,car.business_name,car.contract_startdate,car.contract_enddate,(SELECT MAX(job_appoint_confirm_datetime) FROM asapcc_job_main WHERE job_car_vin_id=cm.car_vin_id LIMIT 1) as last_service_date,IF(DATE_FORMAT(NOW(), "%Y-%m-%d") > car.contract_enddate,"yes","no") as isexpirecontract,car.carpicture FROM asapcc_car_mapping_customer cm INNER JOIN asapcc_car_db car ON cm.car_vin_id=car.car_vin WHERE cm.customer_code=?',[customer_code]);
     }
 
 
