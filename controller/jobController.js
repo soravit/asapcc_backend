@@ -3,10 +3,20 @@ const axios = require('axios');
 const FormData = require('form-data');
 const jwt = require('jsonwebtoken') // ใช้ระบบ jwt token
 const dotenv = require('dotenv'); // ดึงค่า .env ใช้
+const nodemailer = require("nodemailer");
 // get config vars
 dotenv.config();
 // access config var
 process.env.TOKEN_SECRET;
+// กำหนดค่าเกี่ยวกับ email ที่จะใช้ส่ง
+let transporter = nodemailer.createTransport({
+    host: 'gmail',
+    service: 'Gmail',
+    auth: {
+        user: process.env.GMAILUSER,
+        pass: process.env.GMAILPASS,
+    },
+});
  
 
 const JobModel = require('../model/jobModel');
@@ -33,14 +43,58 @@ exports.confirmJob=(req,res,next)=> {
 
         JobModel.getjobid_complete({customer_code:req.user.customer_code}).then(([row2]) => {
 
+
+         
+
         res.status(200).json({
             message: 'confirm job success ',
-            jobid: row2[0].final_job_id,
+            jobid: row2[0].job_id,
             result: 'true'
         });
+
+        ///// EMAIL SENDER
+        a=row2[0].job_id;
+        b=row2[0].customer_firstname;
+        c=row2[0].customer_lastname;
+        d=row2[0].customer_email;
+        e="";
+        JobModel.getcarlist_confirmed_sendmail({job_id:a}).then(([row3]) => {
+        
+                for(i=0;i<row3.length;i++){
+                    e=e+"<li>"+row3[i].car_license+" : "+row3[i].final_job_id+""+"</li>";
+                
+                }
+
+                // รายละเอียดอีเมล
+                    transporter.sendMail({
+                        from: 'ASAP_CallCenter <'+process.env.GMAILUSER+'>',   // ผู้ส่ง
+                        to: ""+b+" "+c+" <"+d+">",// ผู้รับ
+                        subject: "ASAP Call Center : Confirm Job "+a+"",                      // หัวข้อ
+                        text: "Hello,",                         // ข้อความ
+                        html: "<b>คำนัดหมายของท่านคือหมายเลข "+a+" ได้นัดหมายเรียบร้อยแล้ว มีทะเบียนรถที่เข้ารับบริการดังนี้ <br><ol>"+e+"</ol> <br>หากมีข้อสงสัยให้ติดต่อกลับที่ โทรศัพท์ 0-12-345678 </b><br>ASAP Call Center",                
+                    // ข้อความ
+                    }, (err, info) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log(info.messageId);
+                        }
+                    });
+        
+            });
+            ////// END EMAIL
+
+
+            ////// SMS
+
+
+            ////// END SMS
+
     });
   
-    });
+});
+
+    
 }
 
 exports.lastServicePoint = (req,res,next) => {
