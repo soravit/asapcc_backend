@@ -2,8 +2,8 @@ const db = require('../db/db')
 
 class JobModel {
 
-    static getLastServicePoint(){
-        return db.execute('SELECT sp.service_point_name FROM asapcc_job_main job inner join asapcc_service_point sp on job.job_service_point_code_confirm=sp.service_code WHERE job.job_customer_id="69074" order by job.job_appoint_confirm_datetime desc limit 3');
+    static getLastServicePoint({customer_code=''}){
+        return db.execute('SELECT DISTINCT(sp.service_point_name) FROM asapcc_job_main job inner join asapcc_service_point sp on job.job_service_point_code_confirm=sp.service_code WHERE job.job_customer_id=? order by job.job_appoint_confirm_datetime desc limit 3',[customer_code]);
     }
 
     static insertJobs({job_orderss='',job_customer_id='',job_car_vin_id='',job_service_point_code='',job_appoint_datetime='',servicetask1='',servicetask2='',servicenote='',custcare1='',custcare2='',custcare3='',custcarenote='',car_odo_mile='',usertasknote=''}){
