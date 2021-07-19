@@ -39,6 +39,12 @@ class EmployeeModel {
     }
 
 
+
+    static findcustgroup(){
+        return db.execute('SELECT DISTINCT(customer_type) FROM asapcc_customer_db') 
+    }
+
+
    /* static getAllCustomers(){
         return db.execute('SELECT * FROM asapcc_customer_db');
     }

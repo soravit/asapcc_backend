@@ -178,3 +178,21 @@ exports.jobupdate=(req,res,next)=>{
         message:"success"
     });
 }
+
+
+exports.custgroup=(req,res,next)=>{
+ 
+
+    EmployeeModel.findcustgroup().then(([row2]) => {
+
+        res.status(200).json({
+
+            custgroup: row2
+            
+        });
+
+    });
+
+
+
+}
