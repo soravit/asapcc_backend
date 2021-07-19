@@ -71,11 +71,12 @@ exports.carConfirmRegister = (req, res, next) => {
         } else {
 
             CarsModel.findCarMappingByVinId({car_vin_id:car_vin_id,customer_code:customer_code,checkvaliddate:'true'}).then(([row]) => {
-                if(row.length !== 0) {
+                if(row.length == 0) {
     
                   /*  res.status(200).json({
                      carlist: row
                     });*/
+                    console.log("insert map car new");
                     
                     CarsModel.insertCarMappingByVinId({car_vin_id:car_vin_id,customer_code:customer_code}).catch((error) => { res.status(401)
                         .json({
