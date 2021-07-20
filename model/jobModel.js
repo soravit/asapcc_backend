@@ -3,6 +3,7 @@ const db = require('../db/db')
 class JobModel {
 
     static getLastServicePoint({customer_code=''}){ 
+        console.log(customer_code)
         return db.execute('SELECT DISTINCT(sp.service_point_name),sp.service_code,sp.branch_name,sp.full_address,sp.amphor_name_th,sp.province_name_th,sp.post_code,sp.telephone,sp.mobiletel,sp.lattitude,sp.longtitude,sp.branchpicture FROM asapcc_job_main job inner join asapcc_service_point sp on job.job_service_point_code_confirm=sp.service_code WHERE job.job_customer_id=? order by job.job_appoint_confirm_datetime desc limit 3',[customer_code]);
     }
 

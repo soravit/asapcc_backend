@@ -98,7 +98,7 @@ exports.confirmJob=(req,res,next)=> {
 }
 
 exports.lastServicePoint = (req,res,next) => {
-    JobModel.getLastServicePoint({cust_code:req.user.customer_code}).then(([row]) => {
+    JobModel.getLastServicePoint({customer_code:req.user.customer_code}).then(([row]) => {
     
         if(row.length !== 0) {
             res.status(200).json({
