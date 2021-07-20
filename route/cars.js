@@ -6,7 +6,7 @@ const { carsGet,carsGetByLicense,carCheckRegister,carConfirmRegister,carsRemove,
 const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor } = require('../controller/servicepointController')
 const { CustomerGet,CustomerProfile,CustomerLogin,CustomerProfileEdit } = require('../controller/customerController')
 const { lastServicePoint,insertJob,confirmJob } = require('../controller/jobController')
-const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup } = require('../controller/backendController')
+const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2 } = require('../controller/backendController')
 const { verifyUserToken } = require("../middleware/auth");
  
 
@@ -50,6 +50,10 @@ router.post('/back/jobsummary',verifyUserToken,jobsummary); //สรุปเร
 router.post('/back/jobclose',verifyUserToken,jobclose); //ปิดเรื่อง
 router.post('/back/jobupdate',verifyUserToken,jobupdate); //// อัพเดทข้อมูลจ๊อบนั้นๆ
 router.get('/back/getcustomergroup',verifyUserToken,custgroup); //// อัพเดทข้อมูลจ๊อบนั้นๆ
+router.get('/back/checktokenexpire',verifyUserToken,success)// api ดึงรายการแบบทั้งหมด
+router.get('/back/getalljob_orderbyjobno/:startdate/:enddate',verifyUserToken,getAllJobOrderByJobNo2); //ดู jobทั้งหมด เรียงตาม jobno 2
+// api check token
+
 // api service point ใช้ ร่วมกันกับหน้า frontend ลูกค้า
 
 

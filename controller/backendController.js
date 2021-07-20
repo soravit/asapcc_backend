@@ -73,6 +73,15 @@ exports.genHash=(req,res,next) => {
 })
 }
 
+exports.success=(req,res,next) => {
+   
+    res.status(200).json({
+      message: "success"
+    });
+
+ 
+}
+
 exports.getAllJob=(req,res,next) => {
     EmployeeModel.findJobByCustTypeAlldate({cust_type:req.params.cust_type,startdate:req.params.startdate,enddate:req.params.enddate}).then(([row]) => {
         //console.log(req.params.licenseId)
@@ -141,6 +150,50 @@ exports.getAllJobOrderByJobNo=(req,res,next) => {
     })
 
 }
+
+
+exports.getAllJobOrderByJobNo2=(req,res,next) => {
+    EmployeeModel.findJobByCustTypeAlldate2({startdate:req.params.startdate,enddate:req.params.enddate}).then(([row]) => {
+        //console.log(req.params.licenseId)
+        
+        if(row.length !== 0) {
+
+            EmployeeModel.getstatJob2({startdate:req.params.startdate,enddate:req.params.enddate}).then(([row2]) => {
+                //console.log(req.params.licenseId)
+                
+                if(row.length !== 0) {
+        
+                    res.status(200).json({
+                        joblist: row,
+                        length:row.length,
+                        jobstat: row2
+                    });
+        
+        
+                } else {
+                    res.status(401)
+                    .json({
+                        message: "notfound"
+                    });
+                }
+        
+            })
+
+           
+
+
+        } else {
+            res.status(401)
+            .json({
+                message: "notfound"
+            });
+        }
+
+    })
+
+}
+
+
 
 exports.jobcreateticket=(req,res,next)=>{
     // รับเรื่อง
