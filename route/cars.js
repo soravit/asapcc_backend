@@ -49,7 +49,7 @@ router.post('/back/jobcreateticket',verifyUserToken,jobcreateticket); // เป�
 router.post('/back/jobsummary',verifyUserToken,jobsummary); //สรุปเรื่อง
 router.post('/back/jobclose',verifyUserToken,jobclose); //ปิดเรื่อง
 router.post('/back/jobupdate',verifyUserToken,jobupdate); //// อัพเดทข้อมูลจ๊อบนั้นๆ
-router.post('/back/getcustomergroup',verifyUserToken,custgroup); //// อัพเดทข้อมูลจ๊อบนั้นๆ
+router.get('/back/getcustomergroup',verifyUserToken,custgroup); //// อัพเดทข้อมูลจ๊อบนั้นๆ
 // api service point ใช้ ร่วมกันกับหน้า frontend ลูกค้า
 
 
