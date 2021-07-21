@@ -54,6 +54,24 @@ class EmployeeModel {
     }
 
 
+    /* TRUNCATE `asapcallcenter`.`test`*/
+
+    static clearcartable(){
+        return db.execute('TRUNCATE asapcc_car_db') 
+    }
+
+    static clearservicepointable(){
+        return db.execute('TRUNCATE asapcc_service_point') 
+    }
+
+    static insertcarimport({car_license='',car_brand='',car_series='',car_model='',car_vin='',car_engine_no='',car_customer_type='',business_name='',contract_startdate='',contract_enddate=''}){
+        return db.execute("INSERT INTO `asapcc_car_db` (`auto_id`, `car_license`, `car_brand`, `car_series`, `car_model`, `car_vin`, `car_engine_no`, `car_customer_type`, `business_name`, `contract_startdate`, `contract_enddate`, `carpicture`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)",[car_license,car_brand,car_series,car_model,car_vin,car_engine_no,car_customer_type,business_name,contract_startdate,contract_enddate]);
+    }
+
+    static insertservicepointimport({service_code='',service_point_name='',branch_name='',full_address='',amphor_name_th='',province_name_th='',post_code='',telephone='',mobiletel='',lattitude='',longtitude=''}){
+        return db.execute("INSERT INTO `asapcc_service_point` (`auto_id`, `service_code`, `service_point_name`, `branch_name`, `full_address`, `amphor_name_th`, `province_name_th`, `post_code`, `telephone`, `mobiletel`, `lattitude`, `longtitude`, `branchpicture`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)",[service_code,service_point_name,branch_name,full_address,amphor_name_th,province_name_th,post_code,telephone,mobiletel,lattitude,longtitude]);
+    }
+
    /* static getAllCustomers(){
         return db.execute('SELECT * FROM asapcc_customer_db');
     }

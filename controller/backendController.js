@@ -3,11 +3,38 @@ const axios = require('axios');
 const FormData = require('form-data');
 const jwt = require('jsonwebtoken') // ใช้ระบบ jwt token
 const dotenv = require('dotenv'); // ดึงค่า .env ใช้
+const fs = require('fs');
+
 // get config vars
 dotenv.config();
 // access config var
 process.env.TOKEN_SECRET;
  
+
+const multer = require('multer');
+const csv = require('fast-csv');
+// Set global directory
+global.__basedir = process.env.ROOTDIR;
+
+// Multer Upload Storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, __basedir + '/uploads/')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname)
+    }
+});
+
+// Filter for CSV file
+const csvFilter = (req, file, cb) => {
+    if (file.mimetype.includes("csv")) {
+        cb(null, true);
+    } else {
+        cb("Please upload only csv file.", false);
+    }
+};
+const upload = multer({ storage: storage, fileFilter: csvFilter });
 
 const EmployeeModel = require('../model/employeeModel');
 
@@ -249,3 +276,102 @@ exports.custgroup=(req,res,next)=>{
 
 
 }
+
+
+
+exports.csvcar=(req,res,next)=>{
+    try {
+        if (req.file == undefined) {
+            return res.status(400).send({
+                message: "Please upload a CSV file!"
+            });
+        }
+
+        // Import CSV File to MongoDB database
+        let csvData = [];
+        let filePath = __basedir + '/uploads/' + req.file.filename;
+        fs.createReadStream(filePath)
+            .pipe(csv.parse({ headers: true }))
+            .on("error", (error) => {
+                console.log("err")
+                throw error.message;
+                
+            })
+            .on("data", (row) => {
+                csvData.push(row);
+            })
+            .on("end", () => {
+
+                fs.unlinkSync(filePath);   // remove temp file
+                //EmployeeModel.clearcartable(); // clear car table
+                
+                for(i=0;i<csvData.length;i++){
+              
+                   EmployeeModel.insertcarimport({car_license:csvData[i].car_license,car_brand:csvData[i].car_brand,car_series:csvData[i].car_series,car_model:csvData[i].car_model,car_vin:csvData[i].car_vin,car_engine_no:csvData[i].car_engine_no,car_customer_type:csvData[i].car_customer_type,business_name:csvData[i].business_name,contract_startdate:csvData[i].contract_startdate,contract_enddate:csvData[i].contract_enddate});
+                }
+
+                console.log(csvData)
+
+                res.status(200).send({
+                    message:
+                        "Upload/import the CSV data into database successfully: " + req.file.originalname,
+                });
+
+            });
+    } catch (error) {
+        console.log("catch error-", error);
+        res.status(500).send({
+            message: "Could not upload the file: " + req.file.originalname,
+        });
+    }
+}
+
+exports.csvservicepoint=(req,res,next)=>{
+    try {
+        if (req.file == undefined) {
+            return res.status(400).send({
+                message: "Please upload a CSV file!"
+            });
+        }
+
+        // Import CSV File to MongoDB database
+        let csvData = [];
+        let filePath = __basedir + '/uploads/' + req.file.filename;
+        fs.createReadStream(filePath)
+            .pipe(csv.parse({ headers: true }))
+            .on("error", (error) => {
+                console.log("err")
+                throw error.message;
+                
+            })
+            .on("data", (row) => {
+                csvData.push(row);
+            })
+            .on("end", () => {
+
+                fs.unlinkSync(filePath);   // remove temp file
+                //EmployeeModel.clearservicepointable(); // clear  table
+                
+                for(i=0;i<csvData.length;i++){
+              
+                   EmployeeModel.insertservicepointimport({service_code:csvData[i].service_code,service_point_name:csvData[i].service_point_name,branch_name:csvData[i].branch_name,full_address:csvData[i].full_address,amphor_name_th:csvData[i].amphor_name_th,province_name_th:csvData[i].province_name_th,post_code:csvData[i].post_code,telephone:csvData[i].telephone,mobiletel:csvData[i].mobiletel,lattitude:csvData[i].lattitude,longtitude:csvData[i].longtitude});
+                }
+
+                console.log(csvData)
+
+                res.status(200).send({
+                    message:
+                        "Upload/import the CSV data into database successfully: " + req.file.originalname,
+                });
+
+            });
+    } catch (error) {
+        console.log("catch error-", error);
+        res.status(500).send({
+            message: "Could not upload the file: " + req.file.originalname,
+        });
+    }
+}
+
+
+ 

@@ -1,12 +1,40 @@
 const express = require('express');
 const router  = express.Router()
 
+const multer = require('multer');
+const csv = require('fast-csv');
+const fs = require('fs');
+const dotenv = require('dotenv'); // ดึงค่า .env ใช้
+// get config vars
+dotenv.config();
+// Set global directory
+global.__basedir = process.env.ROOTDIR;
+ 
+// Multer Upload Storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, __basedir + '/uploads/')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname)
+    }
+});
+
+// Filter for CSV file
+const csvFilter = (req, file, cb) => {
+    if (file.mimetype.includes("csv")) {
+        cb(null, true);
+    } else {
+        cb("Please upload only csv file.", false);
+    }
+};
+const upload = multer({ storage: storage, fileFilter: csvFilter });
 
 const { carsGet,carsGetByLicense,carCheckRegister,carConfirmRegister,carsRemove,getMyCar } = require('../controller/carsController')
 const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor } = require('../controller/servicepointController')
 const { CustomerGet,CustomerProfile,CustomerLogin,CustomerProfileEdit } = require('../controller/customerController')
 const { lastServicePoint,insertJob,confirmJob } = require('../controller/jobController')
-const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2 } = require('../controller/backendController')
+const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint } = require('../controller/backendController')
 const { verifyUserToken } = require("../middleware/auth");
  
 
@@ -53,8 +81,9 @@ router.get('/back/getcustomergroup',verifyUserToken,custgroup); //// อัพ�
 router.get('/back/checktokenexpire',verifyUserToken,success)// api ดึงรายการแบบทั้งหมด
 router.get('/back/getalljob_orderbyjobno/:startdate/:enddate',verifyUserToken,getAllJobOrderByJobNo2); //ดู jobทั้งหมด เรียงตาม jobno 2
 // api check token
-
 // api service point ใช้ ร่วมกันกับหน้า frontend ลูกค้า
 
+router.post('/back/uploadcsvcar',verifyUserToken,upload.single("file"),csvcar); // 
+router.post('/back/uploadcsvservicepoint',verifyUserToken,upload.single("file"),csvservicepoint); // 
 
 module.exports = router;
