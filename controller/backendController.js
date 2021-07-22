@@ -228,6 +228,8 @@ exports.getAllJobOrderByJobNo2=(req,res,next) => {
 exports.jobcreateticket=(req,res,next)=>{
     // รับเรื่อง
 
+    
+
     EmployeeModel.updateJobTicketCreate({final_job_id:req.body.final_job_id,emp_code:req.user.emp_code,empname:req.user.employee_fullname});
     res.status(200).json({
         message:"success"
@@ -248,18 +250,7 @@ exports.jobsummary=(req,res,next)=>{
 exports.jobclose=(req,res,next)=>{
     // ปิดเรื่อง
 
-    // insert final service point data
-    EmployeeModel.findservicepointcodeinjobtable({final_job_id:req.body.final_job_id}).then(([row]) => {
-       a= row[0].job_service_point_code_confirm
-
-       ServicePoint.findServicePointByCode({code:a}).then(([row2]) => {
-   
-           /*`service_point_name` = '1', `branch_name` = '1', `full_address` = '1', `amphor_name_th` = '1', `province_name_th` = '1', `post_code` = '1', `telephone` = '1', `mobiletel` = '1', `lattitude` = '1', `longtitude` = '1', `service_group`*/
-            EmployeeModel.updateservicepointdatainjobtable({final_job_id:req.body.final_job_id,service_point_name:row2[0].service_point_name,branch_name:row2[0].branch_name,full_address:row2[0].full_address,amphor_name_th:row2[0].amphor_name_th,province_name_th:row2[0].province_name_th,post_code:row2[0].post_code,telephone:row2[0].telephone,mobiletel:row2[0].mobiletel,lattitude:row2[0].lattitude,longtitude:row2[0].longtitude,service_group:row2[0].service_group})
-
-       });
-        
-    });
+  
 
 
 
@@ -274,6 +265,20 @@ exports.jobclose=(req,res,next)=>{
 
 //job_note,job_service_point_code_confirm,job_appoint_confirm_datetime,servicetask1,servicetask2,servicenote,custcare1,custcare2,custcare3,custcarenote,car_odo_mile
 exports.jobupdate=(req,res,next)=>{
+
+      // insert final service point data
+      EmployeeModel.findservicepointcodeinjobtable({final_job_id:req.body.final_job_id}).then(([row]) => {
+        a= row[0].job_service_point_code_confirm
+ 
+        ServicePoint.findServicePointByCode({code:a}).then(([row2]) => {
+    
+            /*`service_point_name` = '1', `branch_name` = '1', `full_address` = '1', `amphor_name_th` = '1', `province_name_th` = '1', `post_code` = '1', `telephone` = '1', `mobiletel` = '1', `lattitude` = '1', `longtitude` = '1', `service_group`*/
+             EmployeeModel.updateservicepointdatainjobtable({final_job_id:req.body.final_job_id,service_point_name:row2[0].service_point_name,branch_name:row2[0].branch_name,full_address:row2[0].full_address,amphor_name_th:row2[0].amphor_name_th,province_name_th:row2[0].province_name_th,post_code:row2[0].post_code,telephone:row2[0].telephone,mobiletel:row2[0].mobiletel,lattitude:row2[0].lattitude,longtitude:row2[0].longtitude,service_group:row2[0].service_group})
+ 
+        });
+         
+     });
+     
 //อัพเดทข้อมูลจ๊อบนั้นๆ
     EmployeeModel.updateJob({job_note:req.body.job_note,job_service_point_code_confirm:req.user.job_service_point_code_confirm,job_appoint_confirm_datetime:req.user.job_appoint_confirm_datetime,servicetask1:req.body.servicetask1,servicetask2:req.body.servicetask2,servicenote:req.body.servicenote,custcare1:req.body.custcare1,custcare2:req.body.custcare2,custcare3:req.body.custcare3,custcarenote:req.body.custcarenote,car_odo_mile:req.body.car_odo_mile,final_job_id:req.body.final_job_id});
     res.status(200).json({
