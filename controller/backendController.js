@@ -37,6 +37,7 @@ const csvFilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: csvFilter });
 
 const EmployeeModel = require('../model/employeeModel');
+const ServicePoint = require('../model/servicepointModel');
 
 exports.loginEmp=(req,res,next) => {
     const { emp_code='', password} = req.body;
@@ -52,7 +53,9 @@ exports.loginEmp=(req,res,next) => {
                             })
                     } else {
                         let jwtToken = jwt.sign({
-                            emp_code: row[0].employee_code
+                            emp_code: row[0].employee_code,
+                            employee_fullname: row[0].employee_fullname,
+                            employee_default_customer_type: row[0].employee_default_customer_type
                         },process.env.TOKEN_SECRET, {
                             expiresIn: process.env.TOKEN_EXPIRE_IN
                         });
@@ -225,7 +228,7 @@ exports.getAllJobOrderByJobNo2=(req,res,next) => {
 exports.jobcreateticket=(req,res,next)=>{
     // รับเรื่อง
 
-    EmployeeModel.updateJobTicketCreate({final_job_id:req.body.final_job_id,emp_code:req.user.emp_code});
+    EmployeeModel.updateJobTicketCreate({final_job_id:req.body.final_job_id,emp_code:req.user.emp_code,empname:req.user.employee_fullname});
     res.status(200).json({
         message:"success"
     });
@@ -234,7 +237,9 @@ exports.jobcreateticket=(req,res,next)=>{
 exports.jobsummary=(req,res,next)=>{
     // สรุปเรื่อง
 
-    EmployeeModel.updateJobSummary({final_job_id:req.body.final_job_id,emp_code:req.user.emp_code});
+  
+
+    EmployeeModel.updateJobSummary({final_job_id:req.body.final_job_id,emp_code:req.user.emp_code,empname:req.user.employee_fullname});
     res.status(200).json({
         message:"success"
     });
@@ -243,7 +248,24 @@ exports.jobsummary=(req,res,next)=>{
 exports.jobclose=(req,res,next)=>{
     // ปิดเรื่อง
 
-    EmployeeModel.updateJobClose({final_job_id:req.body.final_job_id,emp_code:req.user.emp_code});
+    // insert final service point data
+    EmployeeModel.findservicepointcodeinjobtable({final_job_id:req.body.final_job_id}).then(([row]) => {
+       a= row[0].job_service_point_code_confirm
+
+       ServicePoint.findServicePointByCode({code:a}).then(([row2]) => {
+   
+           /*`service_point_name` = '1', `branch_name` = '1', `full_address` = '1', `amphor_name_th` = '1', `province_name_th` = '1', `post_code` = '1', `telephone` = '1', `mobiletel` = '1', `lattitude` = '1', `longtitude` = '1', `service_group`*/
+            EmployeeModel.updateservicepointdatainjobtable({final_job_id:req.body.final_job_id,service_point_name:row2[0].service_point_name,branch_name:row2[0].branch_name,full_address:row2[0].full_address,amphor_name_th:row2[0].amphor_name_th,province_name_th:row2[0].province_name_th,post_code:row2[0].post_code,telephone:row2[0].telephone,mobiletel:row2[0].mobiletel,lattitude:row2[0].lattitude,longtitude:row2[0].longtitude,service_group:row2[0].service_group})
+
+       });
+        
+    });
+
+
+
+    // send sms/email confirm อีกรอบ
+
+    EmployeeModel.updateJobClose({final_job_id:req.body.final_job_id,emp_code:req.user.emp_code,empname:req.user.employee_fullname});
     res.status(200).json({
         message:"success"
     });
@@ -354,7 +376,7 @@ exports.csvservicepoint=(req,res,next)=>{
                 
                 for(i=0;i<csvData.length;i++){
               
-                   EmployeeModel.insertservicepointimport({service_code:csvData[i].service_code,service_point_name:csvData[i].service_point_name,branch_name:csvData[i].branch_name,full_address:csvData[i].full_address,amphor_name_th:csvData[i].amphor_name_th,province_name_th:csvData[i].province_name_th,post_code:csvData[i].post_code,telephone:csvData[i].telephone,mobiletel:csvData[i].mobiletel,lattitude:csvData[i].lattitude,longtitude:csvData[i].longtitude});
+                   EmployeeModel.insertservicepointimport({service_code:csvData[i].service_code,service_point_name:csvData[i].service_point_name,branch_name:csvData[i].branch_name,full_address:csvData[i].full_address,amphor_name_th:csvData[i].amphor_name_th,province_name_th:csvData[i].province_name_th,post_code:csvData[i].post_code,telephone:csvData[i].telephone,mobiletel:csvData[i].mobiletel,lattitude:csvData[i].lattitude,longtitude:csvData[i].longtitude,service_group:csvData[i].service_group});
                 }
 
                 console.log(csvData)

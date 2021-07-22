@@ -25,6 +25,11 @@ class CarsModel {
         return db.execute('SELECT * FROM asapcc_car_db WHERE car_license LIKE "%'+carlicense+'%" AND contract_enddate > DATE_FORMAT(NOW(), "%Y-%m-%d")');
     }
 
+    static findCarByVin({vinid=''}){
+      
+        return db.execute('SELECT * FROM asapcc_car_db WHERE car_vin = "'+vinid+'"');
+    }
+
     static findCarMappingByVinId({car_vin_id='',customer_code='',checkvaliddate=''}){
         if(checkvaliddate=='false'){
              

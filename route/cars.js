@@ -82,8 +82,14 @@ router.get('/back/checktokenexpire',verifyUserToken,success)// api ดึงร�
 router.get('/back/getalljob_orderbyjobno/:startdate/:enddate',verifyUserToken,getAllJobOrderByJobNo2); //ดู jobทั้งหมด เรียงตาม jobno 2
 // api check token
 // api service point ใช้ ร่วมกันกับหน้า frontend ลูกค้า
-
 router.post('/back/uploadcsvcar',verifyUserToken,upload.single("file"),csvcar); // 
 router.post('/back/uploadcsvservicepoint',verifyUserToken,upload.single("file"),csvservicepoint); // 
+
+// api filter ยกชุด
+
+// api export excel
+
+// api getjobinfo by jobid
+
 
 module.exports = router;

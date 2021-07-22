@@ -18,6 +18,10 @@ class ServicePoint {
         return db.execute('SELECT * FROM asapcc_service_point WHERE service_point_name LIKE "%'+name+'%"');
     }
 
+    static findServicePointByCode({code=''}){
+        return db.execute('SELECT * FROM asapcc_service_point WHERE service_code="'+code+'"');
+    }
+
     static findServicePointByLocation({province='',amphor=''}){
         return db.execute('SELECT * FROM asapcc_service_point WHERE province_name_th LIKE "'+province+'" AND amphor_name_th LIKE "'+amphor+'"');
     }

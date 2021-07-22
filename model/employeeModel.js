@@ -30,17 +30,17 @@ class EmployeeModel {
         return db.execute('SELECT (SELECT COUNT(*) FROM asapcc_job_main j INNER JOIN asapcc_customer_db c ON j.job_customer_id=c.customer_code WHERE j.job_status="new" AND (DATE(j.job_add_datetime) BETWEEN "'+startdate+'" AND "'+enddate+'") ) AS NEWJOB,(SELECT COUNT(*) FROM asapcc_job_main j INNER JOIN asapcc_customer_db c ON j.job_customer_id=c.customer_code WHERE j.job_status="onprocess" AND (DATE(j.job_add_datetime) BETWEEN "'+startdate+'" AND "'+enddate+'") ) AS ONPROCESS,(SELECT COUNT(*) FROM asapcc_job_main j INNER JOIN asapcc_customer_db c ON j.job_customer_id=c.customer_code WHERE j.job_status="finished" AND (DATE(j.job_add_datetime) BETWEEN "'+startdate+'" AND "'+enddate+'") ) AS FINISHED')
     }
 
-    static updateJobTicketCreate({final_job_id='',emp_code=''}){
-        return db.execute('UPDATE asapcc_job_main SET job_create_ticket_by_emp_id = ?, job_create_ticket_datetime = NOW(), job_status="onprocess" WHERE final_job_id = ?',[emp_code,final_job_id])
+    static updateJobTicketCreate({final_job_id='',emp_code='',empname=''}){
+        return db.execute('UPDATE asapcc_job_main SET job_create_ticket_by_emp_id = ?, job_create_ticket_datetime = NOW(), job_status="onprocess",job_create_ticket_by_emp_name=? WHERE final_job_id = ?',[emp_code,empname,final_job_id])
     }
 
-    static updateJobSummary({final_job_id='',emp_code=''}){
-        return db.execute('UPDATE asapcc_job_main SET job_summary_ticket_by_emp_id = ?, job_summary_ticket_datetime = NOW(), job_status="onprocess" WHERE final_job_id = ?',[emp_code,final_job_id])
+    static updateJobSummary({final_job_id='',emp_code='',empname=''}){
+        return db.execute('UPDATE asapcc_job_main SET job_summary_ticket_by_emp_id = ?, job_summary_ticket_datetime = NOW(), job_status="onprocess",job_summary_ticket_by_emp_name=? WHERE final_job_id = ?',[emp_code,empname,final_job_id])
     }
 
 
-    static updateJobClose({final_job_id='',emp_code=''}){
-        return db.execute('UPDATE asapcc_job_main SET job_closed_ticket_by_emp_id = ?, job_closed_ticket_datetime = NOW(), job_status="finished" WHERE final_job_id = ?',[emp_code,final_job_id])
+    static updateJobClose({final_job_id='',emp_code='',empname=''}){
+        return db.execute('UPDATE asapcc_job_main SET job_closed_ticket_by_emp_id = ?, job_closed_ticket_datetime = NOW(), job_status="finished",job_closed_ticket_by_emp_name=? WHERE final_job_id = ?',[emp_code,empname,final_job_id])
     }
 
     static updateJob({job_note='',job_service_point_code_confirm='',job_appoint_confirm_datetime='',servicetask1='',servicetask2='',servicenote='',custcare1='',custcare2='',custcare3='',custcarenote='',car_odo_mile='',final_job_id=''}){
@@ -68,9 +68,20 @@ class EmployeeModel {
         return db.execute("INSERT INTO `asapcc_car_db` (`auto_id`, `car_license`, `car_brand`, `car_series`, `car_model`, `car_vin`, `car_engine_no`, `car_customer_type`, `business_name`, `contract_startdate`, `contract_enddate`, `carpicture`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)",[car_license,car_brand,car_series,car_model,car_vin,car_engine_no,car_customer_type,business_name,contract_startdate,contract_enddate]);
     }
 
-    static insertservicepointimport({service_code='',service_point_name='',branch_name='',full_address='',amphor_name_th='',province_name_th='',post_code='',telephone='',mobiletel='',lattitude='',longtitude=''}){
-        return db.execute("INSERT INTO `asapcc_service_point` (`auto_id`, `service_code`, `service_point_name`, `branch_name`, `full_address`, `amphor_name_th`, `province_name_th`, `post_code`, `telephone`, `mobiletel`, `lattitude`, `longtitude`, `branchpicture`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)",[service_code,service_point_name,branch_name,full_address,amphor_name_th,province_name_th,post_code,telephone,mobiletel,lattitude,longtitude]);
+    static insertservicepointimport({service_code='',service_point_name='',branch_name='',full_address='',amphor_name_th='',province_name_th='',post_code='',telephone='',mobiletel='',lattitude='',longtitude='',service_group=''}){
+        return db.execute("INSERT INTO `asapcc_service_point` (`auto_id`, `service_code`, `service_point_name`, `branch_name`, `full_address`, `amphor_name_th`, `province_name_th`, `post_code`, `telephone`, `mobiletel`, `lattitude`, `longtitude`, `branchpicture`, `service_group`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL,?)",[service_code,service_point_name,branch_name,full_address,amphor_name_th,province_name_th,post_code,telephone,mobiletel,lattitude,longtitude,service_group]);
     }
+
+    static findservicepointcodeinjobtable({final_job_id=''}){
+        return db.execute("SELECT job_service_point_code_confirm FROM asapcc_job_main WHERE final_job_id='"+final_job_id+"'")
+    }
+
+    static updateservicepointdatainjobtable({final_job_id='',service_point_name='',branch_name='',full_address='',amphor_name_th='',province_name_th='',post_code='',telephone='',mobiletel='',lattitude='',longtitude='',service_group=''}){
+        return db.execute("UPDATE `asapcc_job_main` SET `service_point_name` = ?, `branch_name` = ?, `full_address` = ?, `amphor_name_th` = ?, `province_name_th` = ?, `post_code` = ?, `telephone` = ?, `mobiletel` = ?, `lattitude` = ?, `longtitude` = ?, `service_group` = ? WHERE `asapcc_job_main`.`final_job_id` = ?",[service_point_name,branch_name,full_address,amphor_name_th,province_name_th,post_code,telephone,mobiletel,lattitude,longtitude,service_group,final_job_id])
+    }
+
+
+
 
    /* static getAllCustomers(){
         return db.execute('SELECT * FROM asapcc_customer_db');
