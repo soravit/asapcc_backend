@@ -70,6 +70,7 @@ exports.confirmJob=(req,res,next)=> {
         c=row2[0].customer_lastname;
         d=row2[0].customer_email;
         e="";
+    
         JobModel.getcarlist_confirmed_sendmail({job_id:a}).then(([row3]) => {
         
                 for(i=0;i<row3.length;i++){
@@ -81,12 +82,16 @@ exports.confirmJob=(req,res,next)=> {
                         
                         a=row4[0].job_car_vin_id
                         b=row4[0].final_job_id
+                        c=row2[0].customer_firstname+' '+row2[0].customer_lastname
+                        d=row2[0].customer_email
+                        e=row2[0].customer_telephone
+                        console.log(c)
                  
                          
                         CarsModel.findCarByVin({vinid:a}).then(([row5]) => {
                             console.log(a)
                             console.log(b)
-                            JobModel.updatecardatainjobtable({final_job_id:b,car_license:row5[0].car_license,car_brand:row5[0].car_brand,car_series:row5[0].car_series,car_model:row5[0].car_model,car_engine_no:row5[0].car_engine_no,car_customer_type:row5[0].car_customer_type,business_name:row5[0].business_name,contract_startdate:row5[0].contract_startdate,contract_enddate:row5[0].contract_enddate})
+                            JobModel.updatecardatainjobtable({final_job_id:b,car_license:row5[0].car_license,car_brand:row5[0].car_brand,car_series:row5[0].car_series,car_model:row5[0].car_model,car_engine_no:row5[0].car_engine_no,car_customer_type:row5[0].car_customer_type,business_name:row5[0].business_name,contract_startdate:row5[0].contract_startdate,contract_enddate:row5[0].contract_enddate,customer_name:c,customer_email:d,customer_telephone:e})
                         });
 
 

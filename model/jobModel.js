@@ -30,7 +30,7 @@ static updatejobid_complete({customer_code=''}){
 
 static getjobid_complete({customer_code=''}){
 
-    return db.execute('SELECT j.job_id,c.customer_code,c.customer_firstname,c.customer_lastname,c.customer_email FROM `asapcc_job_main` j INNER JOIN asapcc_customer_db c ON j.job_customer_id=c.customer_code WHERE j.job_customer_id=? order by j.job_id desc LIMIT 1',[customer_code])
+    return db.execute('SELECT j.job_id,c.customer_code,c.customer_firstname,c.customer_lastname,c.customer_email,c.customer_telephone FROM `asapcc_job_main` j INNER JOIN asapcc_customer_db c ON j.job_customer_id=c.customer_code WHERE j.job_customer_id=? order by j.job_id desc LIMIT 1',[customer_code])
     
     // frontend ส่ง job order มาก่อน แล้วเว้นว่าง job id ไว้ ให้ระบบรันต่อในหน้า confirm และส่ง mail
 
@@ -50,8 +50,8 @@ static updatejobid_complete2(){
  return db.execute('UPDATE asapcc_constant_jobno SET current_job_no=current_job_no+1 WHERE auto_id=1;')
 }
 
-static updatecardatainjobtable({final_job_id='',car_license='',car_brand='',car_series='',car_model='',car_engine_no='',car_customer_type='',business_name='',contract_startdate='',contract_enddate=''}){
-    return db.execute("UPDATE `asapcc_job_main` SET `car_license` = ?, `car_brand` = ?, `car_series` = ?, `car_model` = ?, `car_engine_no` = ?, `car_customer_type` = ?, `business_name` = ?, `contract_startdate` = ?, `contract_enddate` = ? WHERE `asapcc_job_main`.`final_job_id` = ?",[car_license,car_brand,car_series,car_model,car_engine_no,car_customer_type,business_name,contract_startdate,contract_enddate,final_job_id])
+static updatecardatainjobtable({final_job_id='',car_license='',car_brand='',car_series='',car_model='',car_engine_no='',car_customer_type='',business_name='',contract_startdate='',contract_enddate='',customer_name='',customer_email='',customer_telephone=''}){
+    return db.execute("UPDATE `asapcc_job_main` SET `car_license` = ?, `car_brand` = ?, `car_series` = ?, `car_model` = ?, `car_engine_no` = ?, `car_customer_type` = ?, `business_name` = ?, `contract_startdate` = ?, `contract_enddate`=?,`customer_name`=?,`customer_email`=?,`customer_telephone` = ? WHERE `asapcc_job_main`.`final_job_id` = ?",[car_license,car_brand,car_series,car_model,car_engine_no,car_customer_type,business_name,contract_startdate,contract_enddate,customer_name,customer_email,customer_telephone,final_job_id])
 }
 
 static findcarvininjobtable({final_job_id=''}){
