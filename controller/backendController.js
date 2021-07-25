@@ -583,3 +583,31 @@ exports.searchjob=(req,res,next) => {
  }
 
 }
+
+
+
+exports.statusjoblist=(req,res,next) => {
+    EmployeeModel.findstatusjoblist().then(([row2]) => {
+        res.status(200).json({
+            joblist: row2
+        });
+    });
+}
+
+exports.servicegroup=(req,res,next) => {
+    EmployeeModel.findservicegroup().then(([row2]) => {
+        res.status(200).json({
+            serviceglist: row2
+        });
+    });
+
+}
+
+exports.employeelist=(req,res,next) => {
+    EmployeeModel.findemployeelist().then(([row2]) => {
+        res.status(200).json({
+            emplist: row2
+        });
+    });
+
+}

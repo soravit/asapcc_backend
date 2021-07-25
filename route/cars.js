@@ -34,7 +34,7 @@ const { carsGet,carsGetByLicense,carCheckRegister,carConfirmRegister,carsRemove,
 const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor } = require('../controller/servicepointController')
 const { CustomerGet,CustomerProfile,CustomerLogin,CustomerProfileEdit } = require('../controller/customerController')
 const { lastServicePoint,insertJob,confirmJob } = require('../controller/jobController')
-const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint,getJobSingle,searchjob} = require('../controller/backendController')
+const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint,getJobSingle,searchjob,statusjoblist,servicegroup,employeelist} = require('../controller/backendController')
 const { verifyUserToken } = require("../middleware/auth");
  
 
@@ -77,20 +77,27 @@ router.post('/back/jobcreateticket',verifyUserToken,jobcreateticket); // เป�
 router.post('/back/jobsummary',verifyUserToken,jobsummary); //สรุปเรื่อง
 router.post('/back/jobclose',verifyUserToken,jobclose); //ปิดเรื่อง
 router.post('/back/jobupdate',verifyUserToken,jobupdate); //// อัพเดทข้อมูลจ๊อบนั้นๆ
-router.get('/back/getcustomergroup',verifyUserToken,custgroup); //// 
-router.get('/back/checktokenexpire',verifyUserToken,success)// api ดึงรายการแบบทั้งหมด
+
+router.get('/back/getcustomergroup',verifyUserToken,custgroup); //// รายชื่อกลุ่มลูกค้า
+router.get('/back/getstatusjoblist',verifyUserToken,statusjoblist); // รายชื่อสถานะงาน
+router.get('/back/getservicegroup',verifyUserToken,servicegroup);  //รายชื่อกลุ่มผู้ให้บริการ
+router.get('/back/getemplist',verifyUserToken,employeelist);  //รายชื่อพนักงาน
+
+
+router.get('/back/checktokenexpire',verifyUserToken,success);// 
 router.get('/back/getalljob_orderbyjobno/:startdate/:enddate',verifyUserToken,getAllJobOrderByJobNo2); //ดู jobทั้งหมด เรียงตาม jobno 2
 
-// api check token
-// api service point ใช้ ร่วมกันกับหน้า frontend ลูกค้า
 router.post('/back/uploadcsvcar',verifyUserToken,upload.single("file"),csvcar); // 
 router.post('/back/uploadcsvservicepoint',verifyUserToken,upload.single("file"),csvservicepoint); // 
 
+router.post('/back/getjobsingle',verifyUserToken,getJobSingle); //// แสดง job เดี่ยวๆ
+router.post('/back/searchjob',verifyUserToken,searchjob); // ค้นหา job อันใหม่
+
+
+
+
 // api export excel
 
-// api getjobinfo by jobid
-router.post('/back/getjobsingle',verifyUserToken,getJobSingle); //// แสดง job เดี่ยวๆ
-// api filter ยกชุด
-router.post('/back/searchjob',verifyUserToken,searchjob); // ค้นหา job
+
 
 module.exports = router;

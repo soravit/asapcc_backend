@@ -50,10 +50,18 @@ class EmployeeModel {
 
 
     static findcustgroup(){
-        return db.execute('SELECT DISTINCT(customer_type) FROM asapcc_customer_db') 
+        return db.execute('SELECT DISTINCT(car_customer_type) FROM asapcc_job_main WHERE car_customer_type IS NOT NULL') 
     }
 
- 
+    static findstatusjoblist(){
+        return db.execute('SELECT DISTINCT(job_status) FROM asapcc_job_main WHERE job_status IS NOT NULL') 
+    }
+    static findservicegroup(){
+        return db.execute('SELECT DISTINCT(service_group) FROM asapcc_job_main WHERE service_group IS NOT NULL') 
+    }
+    static findemployeelist(){
+        return db.execute('SELECT DISTINCT(employee_fullname) FROM asapcc_employee_db WHERE employee_fullname IS NOT NULL') 
+    }
 
     static clearcartable(){
         return db.execute('TRUNCATE asapcc_car_db') 
