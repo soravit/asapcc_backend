@@ -91,6 +91,6 @@ router.post('/back/uploadcsvservicepoint',verifyUserToken,upload.single("file"),
 // api getjobinfo by jobid
 router.post('/back/getjobsingle',verifyUserToken,getJobSingle); //// แสดง job เดี่ยวๆ
 // api filter ยกชุด
-router.post('back/searchjob',verifyUserToken,searchjob); // ค้นหา job
+router.post('/back/searchjob',verifyUserToken,searchjob); // ค้นหา job
 
 module.exports = router;

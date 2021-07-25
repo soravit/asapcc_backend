@@ -427,6 +427,159 @@ exports.searchjob=(req,res,next) => {
     // carlicense
     // customername
     // customergroup
+    // statusjob
+    // service_group
+    // branch
+    // emp_name_assign
+    // emp_name_jobclose
+
+    // sort condition
     // 
+    /*เรียง ดาม
+    1.date created (new first)
+    2. date created (new last)
+    3. date close (new first)
+    4. date close (new last)*/
+
  
+
+    // condition
+    // 1 if startdate = null  = all
+    // 2 if customergroup = null = all
+    // 3 4 5 6 7 ...
+
+
+    // order condition
+    orderstring=''
+    if(req.body.ordercondition=='datecreated_newfirst'){
+        orderstring='ORDER BY job_add_datetime DESC'
+    } else if(req.body.ordercondition=='datecreated_newlast'){
+        orderstring='ORDER BY job_add_datetime ASC'
+    } else if(req.body.ordercondition=='dateclose_newfirst'){
+        orderstring='ORDER BY job_closed_ticket_datetime DESC'
+    } else if(req.body.ordercondition=='dateclose_newlast'){
+        orderstring='ORDER BY job_closed_ticket_datetime ASC'
+    }
+
+
+    // Part 1 Core Filter
+
+    if(req.body.startdate=='' && req.body.enddate=='' && req.body.customergroup=='' && (req.body.carlicense=='' && req.body.customername=='' && req.body.statusjob=='' && req.body.service_group=='' && req.body.branch=='' && req.body.emp_name_assign=='' && req.body.emp_name_jobclose=='')){ 
+        EmployeeModel.searchjob_all({order:orderstring}).then(([row]) => {
+            res.status(200).json({
+                joblist: row   
+            });
+        });
+
+    } else if(req.body.startdate!='' && req.body.enddate!='' && req.body.customergroup=='' && (req.body.carlicense=='' && req.body.customername=='' && req.body.statusjob=='' && req.body.service_group=='' && req.body.branch=='' && req.body.emp_name_assign=='' && req.body.emp_name_jobclose=='')){
+        EmployeeModel.searchjob_all({order:orderstring,daterange:'WHERE job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
+            res.status(200).json({
+                joblist: row   
+            });
+        });
+
+    
+
+    // Part 2 filter another
+
+    } else if(req.body.startdate=='' && req.body.enddate=='' && (req.body.customergroup!='' || req.body.carlicense!='' || req.body.customername!='' || req.body.statusjob!='' || req.body.service_group!='' || req.body.branch!='' || req.body.emp_name_assign!='' || req.body.emp_name_jobclose!='')){ 
+        
+        arr1 = [];
+        searchstring='';
+        if(req.body.customergroup!=''){
+            arr1.push('car_customer_type = "'+req.body.customergroup+'"')
+        }
+        if(req.body.carlicense!=''){
+            arr1.push('car_license LIKE "%'+req.body.carlicense+'%"')
+        }
+        if(req.body.customername!=''){
+            arr1.push('customer_name LIKE "%'+req.body.customername+'%"')
+        }
+        if(req.body.statusjob!=''){
+            arr1.push('job_status = "'+req.body.statusjob+'"')
+        }
+        if(req.body.service_group!=''){
+            arr1.push('service_group = "'+req.body.service_group+'"')
+        }
+        if(req.body.branch!=''){
+            arr1.push('service_point_name LIKE "%'+req.body.branch+'%"')
+        }
+        if(req.body.emp_name_assign!=''){
+            arr1.push('job_create_ticket_by_emp_name = "'+req.body.emp_name_assign+'"')
+        }
+        if(req.body.emp_name_jobclose!=''){
+            arr1.push('job_closed_ticket_by_emp_name = "'+req.body.emp_name_jobclose+'"')
+        }
+
+        //console.log(arr1)
+
+        for(i=0;i<arr1.length;i++){
+            searchstring+=arr1[i]+' AND '
+            if(i==(arr1.length-1)){
+                searchstring+=arr1[i]
+            }
+        }
+     
+
+  
+
+        EmployeeModel.searchjob_filter({othersearch:searchstring,order:orderstring}).then(([row]) => {
+            res.status(200).json({
+                joblist: row   
+            });
+        });
+
+    } else if(req.body.startdate!='' && req.body.enddate!='' && (req.body.customergroup!='' || req.body.carlicense!='' || req.body.customername!='' || req.body.statusjob!='' || req.body.service_group!='' || req.body.branch!='' || req.body.emp_name_assign!='' || req.body.emp_name_jobclose!='')){ 
+        
+        arr1 = [];
+        searchstring='';
+        if(req.body.customergroup!=''){
+            arr1.push('car_customer_type = "'+req.body.customergroup+'"')
+        }
+        if(req.body.carlicense!=''){
+            arr1.push('car_license LIKE "%'+req.body.carlicense+'%"')
+        }
+        if(req.body.customername!=''){
+            arr1.push('customer_name LIKE "%'+req.body.customername+'%"')
+        }
+        if(req.body.statusjob!=''){
+            arr1.push('job_status = "'+req.body.statusjob+'"')
+        }
+        if(req.body.service_group!=''){
+            arr1.push('service_group = "'+req.body.service_group+'"')
+        }
+        if(req.body.branch!=''){
+            arr1.push('service_point_name LIKE "%'+req.body.branch+'%"')
+        }
+        if(req.body.emp_name_assign!=''){
+            arr1.push('job_create_ticket_by_emp_name = "'+req.body.emp_name_assign+'"')
+        }
+        if(req.body.emp_name_jobclose!=''){
+            arr1.push('job_closed_ticket_by_emp_name = "'+req.body.emp_name_jobclose+'"')
+        }
+
+        //console.log(arr1)
+
+        for(i=0;i<arr1.length;i++){
+            searchstring+=arr1[i]+' AND '
+            if(i==(arr1.length-1)){
+                searchstring+=arr1[i]
+            }
+        }
+  
+
+        EmployeeModel.searchjob_filter({othersearch:searchstring,order:orderstring,daterange:'AND job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
+            res.status(200).json({
+                joblist: row   
+            });
+        });
+
+    } 
+
+ else {
+    res.status(400).json({
+        message: "error search"
+    });
+ }
+
 }

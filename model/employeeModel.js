@@ -84,6 +84,16 @@ class EmployeeModel {
         return db.execute("SELECT * FROM asapcc_job_main WHERE final_job_id='"+final_job_id+"' LIMIT 1")
     }
 
+    ///// Search job new
+    static searchjob_all({order='',daterange=''}){
+        console.log('SELECT * FROM asapcc_job_main '+daterange+' '+order+'')
+        return db.execute('SELECT * FROM asapcc_job_main '+daterange+' '+order+'')
+    }
+
+    static searchjob_filter({othersearch='',order='',daterange=''}){
+        console.log('SELECT * FROM asapcc_job_main WHERE '+othersearch+' '+daterange+' '+order+'')
+        return db.execute('SELECT * FROM asapcc_job_main WHERE '+othersearch+' '+daterange+' '+order+'')
+    }
 
 
    /* static getAllCustomers(){
