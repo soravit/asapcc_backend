@@ -34,7 +34,7 @@ const { carsGet,carsGetByLicense,carCheckRegister,carConfirmRegister,carsRemove,
 const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor } = require('../controller/servicepointController')
 const { CustomerGet,CustomerProfile,CustomerLogin,CustomerProfileEdit } = require('../controller/customerController')
 const { lastServicePoint,insertJob,confirmJob } = require('../controller/jobController')
-const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint,getJobSingle,searchjob,servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor } = require('../controller/backendController')
+const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint,getJobSingle,searchjob} = require('../controller/backendController')
 const { verifyUserToken } = require("../middleware/auth");
  
 
@@ -80,12 +80,7 @@ router.post('/back/jobupdate',verifyUserToken,jobupdate); //// อัพเด�
 router.get('/back/getcustomergroup',verifyUserToken,custgroup); //// 
 router.get('/back/checktokenexpire',verifyUserToken,success)// api ดึงรายการแบบทั้งหมด
 router.get('/back/getalljob_orderbyjobno/:startdate/:enddate',verifyUserToken,getAllJobOrderByJobNo2); //ดู jobทั้งหมด เรียงตาม jobno 2
-// SERVICE POINT for backend
-router.get('/back/getallservicepoint',verifyUserToken,servicePointAll); // ดึงข้อมูลศูนย์บริการทั้งหมด
-router.get('/back/searchservicepointbyname/:name',verifyUserToken,servicePointSearchName); // ค้นหาข้อมูลศูนย์บริการโดยใช้ชื่อ
-router.get('/back/searchservicepointbyloc',verifyUserToken,servicePointSearchLocation); // ค้นหาข้อมูลศูนย์บริการโดยใช้ เขต และ จังหวัด
-router.get('/back/getservicepointprovince',verifyUserToken,servicePointProvince); // ดึงข้อมูลชื่อจังหวัดทั้งหมด
-router.get('/back/getservicepointamphor',verifyUserToken,servicePointAmphor); // ดึงข้อมูลเขต/อำเภอทั้งหมด
+
 // api check token
 // api service point ใช้ ร่วมกันกับหน้า frontend ลูกค้า
 router.post('/back/uploadcsvcar',verifyUserToken,upload.single("file"),csvcar); // 
