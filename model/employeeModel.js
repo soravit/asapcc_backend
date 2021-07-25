@@ -53,8 +53,7 @@ class EmployeeModel {
         return db.execute('SELECT DISTINCT(customer_type) FROM asapcc_customer_db') 
     }
 
-
-    /* TRUNCATE `asapcallcenter`.`test`*/
+ 
 
     static clearcartable(){
         return db.execute('TRUNCATE asapcc_car_db') 
@@ -80,6 +79,10 @@ class EmployeeModel {
         return db.execute("UPDATE `asapcc_job_main` SET `service_point_name` = ?, `branch_name` = ?, `full_address` = ?, `amphor_name_th` = ?, `province_name_th` = ?, `post_code` = ?, `telephone` = ?, `mobiletel` = ?, `lattitude` = ?, `longtitude` = ?, `service_group` = ? WHERE `asapcc_job_main`.`final_job_id` = ?",[service_point_name,branch_name,full_address,amphor_name_th,province_name_th,post_code,telephone,mobiletel,lattitude,longtitude,service_group,final_job_id])
     }
 
+
+    static getJobSingleRow({final_job_id=''}){
+        return db.execute("SELECT * FROM asapcc_job_main WHERE final_job_id='"+final_job_id+"' LIMIT 1")
+    }
 
 
 
@@ -107,6 +110,8 @@ class EmployeeModel {
         return db.execute('UPDATE asapcc_customer_db SET customer_firstname="'+firstname+'",customer_lastname="'+lastname+'",customer_telephone="'+telephone+'",customer_email="'+email+'",customer_username=CONCAT("'+firstname+'"," ","'+lastname+'") WHERE customer_code="'+cust_code+'"')
     }*/
     
+
+
 }
 
 module.exports = EmployeeModel;

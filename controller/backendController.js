@@ -400,5 +400,21 @@ exports.csvservicepoint=(req,res,next)=>{
     }
 }
 
+exports.getJobSingle=(req,res,next)=>{
+    // get  single job
+
+  
+
+    EmployeeModel.getJobSingleRow({final_job_id:req.body.final_job_id}).then(([row]) => {
+
+        res.status(200).json({
+
+            jobdata: row
+            
+        });
+
+    });
+    
+}
 
  

@@ -34,7 +34,7 @@ const { carsGet,carsGetByLicense,carCheckRegister,carConfirmRegister,carsRemove,
 const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor } = require('../controller/servicepointController')
 const { CustomerGet,CustomerProfile,CustomerLogin,CustomerProfileEdit } = require('../controller/customerController')
 const { lastServicePoint,insertJob,confirmJob } = require('../controller/jobController')
-const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint } = require('../controller/backendController')
+const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint,getJobSingle } = require('../controller/backendController')
 const { verifyUserToken } = require("../middleware/auth");
  
 
@@ -90,6 +90,7 @@ router.post('/back/uploadcsvservicepoint',verifyUserToken,upload.single("file"),
 // api export excel
 
 // api getjobinfo by jobid
+router.post('/back/getjobsingle',verifyUserToken,getJobSingle); //// อัพเดทข้อมูลจ๊อบนั้นๆ
 
 
 module.exports = router;
