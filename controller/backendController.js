@@ -417,6 +417,116 @@ exports.getJobSingle=(req,res,next)=>{
     
 }
 
+
+exports.servicePointAll = (req, res, next) => {
+    ServicePoint.getAllServicePoint().then(([row]) => {
+        //console.log(req.params.licenseId)
+        
+        if(row.length !== 0) {
+
+            res.status(200).json({
+                servicepoint: row
+            });
+
+
+        } else {
+            res.status(401)
+            .json({
+                message: "notfound"
+            });
+        }
+
+    })
+
+}
+
+exports.servicePointSearchName = (req, res, next) => {
+    ServicePoint.findServicePointByName({name:req.params.name}).then(([row]) => {
+        //console.log(req.params.licenseId)
+        
+        if(row.length !== 0) {
+
+            res.status(200).json({
+                servicepoint: row
+            });
+
+
+        } else {
+            res.status(401)
+            .json({
+                message: "notfound"
+            });
+        }
+
+    })
+
+}
+
+exports.servicePointSearchLocation = (req, res, next) => {
+    ServicePoint.findServicePointByLocation({province:req.query.province,amphor:req.query.amphor}).then(([row]) => {
+        //console.log(req.params.licenseId)
+        
+        if(row.length !== 0) {
+
+            res.status(200).json({
+                servicepoint: row
+            });
+
+
+        } else {
+            res.status(401)
+            .json({
+                message: "notfound"
+            });
+        }
+
+    })
+
+}
+
+exports.servicePointProvince = (req, res, next) => {
+    ServicePoint.getProvinceList().then(([row]) => {
+        //console.log(req.params.licenseId)
+        
+        if(row.length !== 0) {
+
+            res.status(200).json({
+                province: row
+            });
+
+
+        } else {
+            res.status(401)
+            .json({
+                message: "notfound"
+            });
+        }
+
+    })
+
+}
+
+exports.servicePointAmphor = (req, res, next) => {
+    ServicePoint.getAmphor({province:req.query.province}).then(([row]) => {
+        //console.log(req.params.licenseId)
+        
+        if(row.length !== 0) {
+
+            res.status(200).json({
+                amphor: row
+            });
+
+
+        } else {
+            res.status(401)
+            .json({
+                message: "notfound"
+            });
+        }
+
+    })
+
+}
  
 exports.searchjob=(req,res,next) => {
    
