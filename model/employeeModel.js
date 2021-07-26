@@ -83,6 +83,11 @@ class EmployeeModel {
         return db.execute("SELECT job_service_point_code_confirm FROM asapcc_job_main WHERE final_job_id='"+final_job_id+"'")
     }
 
+    static findservicepointcodeinjobtable_beforeconfirm({final_job_id=''}){
+       
+        return db.execute("SELECT * FROM asapcc_job_main WHERE final_job_id='"+final_job_id+"'")
+    }
+
     static updateservicepointdatainjobtable({final_job_id='',service_point_name='',branch_name='',full_address='',amphor_name_th='',province_name_th='',post_code='',telephone='',mobiletel='',lattitude='',longtitude='',service_group=''}){
         return db.execute("UPDATE `asapcc_job_main` SET `service_point_name` = ?, `branch_name` = ?, `full_address` = ?, `amphor_name_th` = ?, `province_name_th` = ?, `post_code` = ?, `telephone` = ?, `mobiletel` = ?, `lattitude` = ?, `longtitude` = ?, `service_group` = ? WHERE `asapcc_job_main`.`final_job_id` = ?",[service_point_name,branch_name,full_address,amphor_name_th,province_name_th,post_code,telephone,mobiletel,lattitude,longtitude,service_group,final_job_id])
     }
