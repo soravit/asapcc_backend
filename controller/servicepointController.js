@@ -52,6 +52,30 @@ exports.servicePointSearchName = (req, res, next) => {
 
 }
 
+
+exports.servicePointByCode = (req, res, next) => {
+    ServicePoint.findServicePointByCode({code:req.params.code}).then(([row]) => {
+        //console.log(req.params.licenseId)
+        
+        if(row.length !== 0) {
+
+            res.status(200).json({
+                servicepoint: row
+            });
+
+
+        } else {
+            res.status(401)
+            .json({
+                message: "notfound"
+            });
+        }
+
+    })
+
+}
+
+
 exports.servicePointSearchLocation = (req, res, next) => {
     ServicePoint.findServicePointByLocation({province:req.query.province,amphor:req.query.amphor}).then(([row]) => {
         //console.log(req.params.licenseId)

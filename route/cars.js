@@ -31,7 +31,7 @@ const csvFilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: csvFilter });
 
 const { carsGet,carsGetByLicense,carCheckRegister,carConfirmRegister,carsRemove,getMyCar } = require('../controller/carsController')
-const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor } = require('../controller/servicepointController')
+const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor,servicePointByCode } = require('../controller/servicepointController')
 const { CustomerGet,CustomerProfile,CustomerLogin,CustomerProfileEdit } = require('../controller/customerController')
 const { lastServicePoint,insertJob,confirmJob } = require('../controller/jobController')
 const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint,getJobSingle,searchjob,statusjoblist,servicegroup,employeelist} = require('../controller/backendController')
@@ -62,6 +62,7 @@ router.get('/searchservicepointbyname/:name',verifyUserToken,servicePointSearchN
 router.get('/searchservicepointbyloc',verifyUserToken,servicePointSearchLocation); // ค้นหาข้อมูลศูนย์บริการโดยใช้ เขต และ จังหวัด
 router.get('/getservicepointprovince',verifyUserToken,servicePointProvince); // ดึงข้อมูลชื่อจังหวัดทั้งหมด
 router.get('/getservicepointamphor',verifyUserToken,servicePointAmphor); // ดึงข้อมูลเขต/อำเภอทั้งหมด
+router.get('/getservicepointbycode',verifyUserToken,servicePointByCode); // 
 
 // JOBs
 router.get('/getlastservicepoint',verifyUserToken,lastServicePoint); // ดึงประวัติศูนย์บริการที่ได้ใช้บริการล่าสุด 3 แห่ง เรียงตามวันที่
