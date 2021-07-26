@@ -54,7 +54,7 @@ exports.servicePointSearchName = (req, res, next) => {
 
 
 exports.servicePointByCode = (req, res, next) => {
-    ServicePoint.findServicePointByCode({code:req.params.code}).then(([row]) => {
+    ServicePoint.findServicePointByCode({code:req.query.code}).then(([row]) => {
         //console.log(req.params.licenseId)
         
         if(row.length !== 0) {

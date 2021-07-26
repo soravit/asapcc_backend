@@ -19,7 +19,9 @@ class ServicePoint {
     }
 
     static findServicePointByCode({code=''}){
+    console.log('SELECT * FROM asapcc_service_point WHERE service_code="'+code+'"');
         return db.execute('SELECT * FROM asapcc_service_point WHERE service_code="'+code+'"');
+    
     }
 
     static findServicePointByLocation({province='',amphor=''}){
