@@ -418,6 +418,9 @@ exports.getJobSingle=(req,res,next)=>{
 }
 
 
+exports.exportjob=(req,res,next) => {
+}
+
 
  
 exports.searchjob=(req,res,next) => {
