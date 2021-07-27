@@ -470,19 +470,30 @@ exports.searchjob=(req,res,next) => {
 
     if(req.body.startdate=='' && req.body.enddate=='' && req.body.customergroup=='' && (req.body.carlicense=='' && req.body.customername=='' && req.body.statusjob=='' && req.body.service_group=='' && req.body.branch=='' && req.body.emp_name_assign=='' && req.body.emp_name_jobclose=='')){ 
         EmployeeModel.searchjob_all({order:orderstring}).then(([row]) => {
+
+            EmployeeModel.statsearchjob_all().then(([row2]) => {
+
             res.status(200).json({
-                joblist: row   
+                joblist: row,
+                length: row.length,
+                jobstat: row2
             });
+        });
         });
 
     } else if(req.body.startdate!='' && req.body.enddate!='' && req.body.customergroup=='' && (req.body.carlicense=='' && req.body.customername=='' && req.body.statusjob=='' && req.body.service_group=='' && req.body.branch=='' && req.body.emp_name_assign=='' && req.body.emp_name_jobclose=='')){
         EmployeeModel.searchjob_all({order:orderstring,daterange:'WHERE job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
+           
+            EmployeeModel.statsearchjob_all2({daterange:'WHERE job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
+
             res.status(200).json({
-                joblist: row   
+                joblist: row,
+                length: row.length,
+                jobstat: row2      
             });
         });
 
-    
+    });
 
     // Part 2 filter another
 
@@ -528,10 +539,16 @@ exports.searchjob=(req,res,next) => {
   
 
         EmployeeModel.searchjob_filter({othersearch:searchstring,order:orderstring}).then(([row]) => {
+
+            EmployeeModel.statsearchjob_filter({othersearch:searchstring}).then(([row2]) => {
+
             res.status(200).json({
-                joblist: row   
+                joblist: row,
+                length: row.length,
+                jobstat: row2      
             });
         });
+    });
 
     } else if(req.body.startdate!='' && req.body.enddate!='' && (req.body.customergroup!='' || req.body.carlicense!='' || req.body.customername!='' || req.body.statusjob!='' || req.body.service_group!='' || req.body.branch!='' || req.body.emp_name_assign!='' || req.body.emp_name_jobclose!='')){ 
         
@@ -573,10 +590,15 @@ exports.searchjob=(req,res,next) => {
   
 
         EmployeeModel.searchjob_filter({othersearch:searchstring,order:orderstring,daterange:'AND job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
+            EmployeeModel.statsearchjob_filter2({othersearch:searchstring,daterange:'AND job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
+          
             res.status(200).json({
-                joblist: row   
+                joblist: row,
+                length: row.length,
+                jobstat: row2      
             });
         });
+    });
 
     } 
 
