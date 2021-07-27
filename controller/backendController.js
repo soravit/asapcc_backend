@@ -267,8 +267,9 @@ exports.jobclose=(req,res,next)=>{
 exports.jobupdate=(req,res,next)=>{
 
       // insert final service point data
-      EmployeeModel.findservicepointcodeinjobtable({final_job_id:req.body.final_job_id}).then(([row]) => {
-        a= row[0].job_service_point_code_confirm
+     // EmployeeModel.findservicepointcodeinjobtable({final_job_id:req.body.final_job_id}).then(([row]) => {
+        a= req.body.job_service_point_code_confirm
+        console.log(a)
  
         ServicePoint.findServicePointByCode({code:a}).then(([row2]) => {
     
@@ -277,10 +278,10 @@ exports.jobupdate=(req,res,next)=>{
  
         });
          
-     });
+   //  });
      
 //อัพเดทข้อมูลจ๊อบนั้นๆ
-    EmployeeModel.updateJob({job_note:req.body.job_note,job_service_point_code_confirm:req.user.job_service_point_code_confirm,job_appoint_confirm_datetime:req.user.job_appoint_confirm_datetime,servicetask1:req.body.servicetask1,servicetask2:req.body.servicetask2,servicenote:req.body.servicenote,custcare1:req.body.custcare1,custcare2:req.body.custcare2,custcare3:req.body.custcare3,custcarenote:req.body.custcarenote,car_odo_mile:req.body.car_odo_mile,final_job_id:req.body.final_job_id});
+    EmployeeModel.updateJob({job_note:req.body.job_note,job_service_point_code_confirm:req.user.job_service_point_code_confirm,job_appoint_confirm_datetime:req.user.job_appoint_confirm_datetime,servicetask1:req.body.servicetask1,servicetask2:req.body.servicetask2,servicenote:req.body.servicenote,custcare1:req.body.custcare1,custcare2:req.body.custcare2,custcare3:req.body.custcare3,custcarenote:req.body.custcarenote,car_odo_mile:req.body.car_odo_mile,job_callcenter_note:req.body.job_callcenter_note,job_status:req.body.job_status,final_job_id:req.body.final_job_id});
     res.status(200).json({
         message:"success"
     });
@@ -309,7 +310,7 @@ exports.custgroup=(req,res,next)=>{
 exports.csvcar=(req,res,next)=>{
     try {
         if (req.file == undefined) {
-            return res.status(400).send({
+            return res.status(500).send({
                 message: "Please upload a CSV file!"
             });
         }
@@ -356,7 +357,7 @@ exports.csvcar=(req,res,next)=>{
 exports.csvservicepoint=(req,res,next)=>{
     try {
         if (req.file == undefined) {
-            return res.status(400).send({
+            return res.status(500).send({
                 message: "Please upload a CSV file!"
             });
         }
