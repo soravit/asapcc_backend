@@ -38,7 +38,7 @@ class ServicePoint {
 
      
     
-
+/*test*/
     /*registerUser() {
         return db.execute('INSERT INTO USER (email, password, createAt, updateAt) VALUES(?, ?, ?, ?)',
         [this.email, this.password, this.createAt, this.updateAt])

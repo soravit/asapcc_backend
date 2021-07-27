@@ -38,7 +38,7 @@ class EmployeeModel {
         return db.execute('UPDATE asapcc_job_main SET job_summary_ticket_by_emp_id = ?, job_summary_ticket_datetime = NOW(), job_status="onprocess",job_summary_ticket_by_emp_name=? WHERE final_job_id = ?',[emp_code,empname,final_job_id])
     }
 
-
+/*test*/
     static updateJobClose({final_job_id='',emp_code='',empname=''}){
         return db.execute('UPDATE asapcc_job_main SET job_closed_ticket_by_emp_id = ?, job_closed_ticket_datetime = NOW(), job_status="finished",job_closed_ticket_by_emp_name=? WHERE final_job_id = ?',[emp_code,empname,final_job_id])
     }
