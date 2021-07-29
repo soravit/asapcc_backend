@@ -93,12 +93,11 @@ router.post('/back/uploadcsvservicepoint',verifyUserToken,upload.single("file"),
 
 router.post('/back/getjobsingle',verifyUserToken,getJobSingle); //// แสดง job เดี่ยวๆ
 router.post('/back/searchjob',verifyUserToken,searchjob); // ค้นหา job อันใหม่
-
-
+ 
 
 
 // api export excel เป็นไฟล์ excel เลย return เป็น URL download
-router.post('/back/exportjob',verifyUserToken,exportjob); // 
+router.get('/back/downloadcsv',exportjob); // 
 
 
 module.exports = router;

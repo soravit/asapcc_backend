@@ -5,6 +5,9 @@ const jwt = require('jsonwebtoken') // ใช้ระบบ jwt token
 const dotenv = require('dotenv'); // ดึงค่า .env ใช้
 const fs = require('fs');
 
+const CsvParser = require("json2csv").Parser
+
+
 // get config vars
 dotenv.config();
 // access config var
@@ -420,6 +423,35 @@ exports.getJobSingle=(req,res,next)=>{
 
 
 exports.exportjob=(req,res,next) => {
+    
+    EmployeeModel.searchjob_all({order:''}).then(([row]) => {
+
+        let tutorials = [];
+
+        id='a';
+        title='b';
+        description='c';
+        published='d';
+        
+        tutorials.push({ id, title, description, published });
+     
+         csvFields = ["Id", "Title", "Description", "Published"];
+         csvParser = new CsvParser({ csvFields });
+      
+         csvData = csvParser.parse(row);
+    
+        res.setHeader("Content-Type", "application/octet-stream"); // text-csv
+        res.setHeader("Content-Disposition", "attachment; filename=tutorials.csv");
+    
+        res.status(200).end(csvData);
+        console.log(csvData);
+
+
+        });
+
+  
+ 
+
 }
 
 
