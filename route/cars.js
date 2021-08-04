@@ -97,7 +97,7 @@ router.post('/back/searchjob',verifyUserToken,searchjob); // ค้นหา job
 
 
 // api export excel เป็นไฟล์ excel เลย return เป็น URL download
-router.get('/back/downloadcsv',exportjob); // 
+router.post('/back/downloadcsv',exportjob); // 
 
 
 module.exports = router;
