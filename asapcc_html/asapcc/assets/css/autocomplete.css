@@ -1,0 +1,35 @@
+
+.clear{
+    clear:both;
+    margin-top: 20px;
+}
+
+#searchResult{
+    list-style: none;
+    padding: 0px;
+    width: 100%;
+    position: absolute;
+    margin: 0;
+    z-index: 99;
+}
+
+#searchResult li{
+    background: lavender;
+    padding: 4px;
+    margin-bottom: 1px;
+}
+
+#searchResult li:nth-child(even){
+    background: #ff595a;
+    color: white;
+}
+
+#searchResult li:hover{
+    cursor: pointer;
+}
+
+input[type=text]{
+    padding: 5px;
+    width: 250px;
+    letter-spacing: 1px;
+}

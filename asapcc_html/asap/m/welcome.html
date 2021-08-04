@@ -1,0 +1,48 @@
+<div class="modal-dialog-top m-modal-dialog-top">
+  <img src="../assets/img/modal-m.png" width="80%">
+</div>
+<div class="modal-dialog-bottom modal-dialog-bottom-welcome">
+  <div class="text-header-welcome">บริการผู้ช่วยส่วนตัว</div>
+  <div class="text-title-welcome-box">
+    <i class="fas fa-tools icon-box-welcome"></i>
+    <div class="text-title-welcome">
+      บริการซ่อมและบำรุงรักษารถยนต์
+    </div>
+    <div class="text-subtitle-welcome">
+      จองเวลากับศูนย์ซ่อมรถยนต์เพื่อ
+      รับบริการบำรุงรักษา ใกล้คุณ
+    </div>
+  </div>
+
+  <div class="text-title-welcome-box">
+    <i class="fas fa-clipboard-list icon-box-welcome"></i>
+    <div class="text-title-welcome">
+      ตรวจสอบสถานะ
+    </div>
+    <div class="text-subtitle-welcome">
+      ตรวจสอบสถานะการซ่อมรถของคุณ หรือ สถานะรถทดแทน
+    </div>
+  </div>
+
+  <div class="text-title-welcome-box">
+    <i class="fas fa-comments icon-box-welcome"></i>
+    <div class="text-title-welcome">
+      บริการให้คำปรึกษา
+    </div>
+    <div class="text-subtitle-welcome">
+      รับคำแนะนำโดยผู้ช่วยส่วนตัว
+    </div>
+  </div>
+  <button class="register-car-btn m-register-car-btn">ลงทะเบียนรถ</button>
+</div>
+<script>
+
+  $(document).ready(function () {
+    isLogin();
+    showMenu();
+    $(".m-register-car-btn").click(function(){
+      window.location.href = "#/register/";
+    });
+  });
+
+</script>

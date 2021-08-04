@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>asap</title>
+  <meta http-equiv="Content-Language" content="th" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="./assets/css/dashboard.css">
+  <link href="./assets/fontawesome/css/all.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="./assets/datepicker/css/bootstrap-datetimepicker.css">
+  <link rel="stylesheet" href="./assets/datepicker/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="./assets/datatables/datatables.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css" />
+</head>
+
+<body class="container-custom">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+          aria-expanded="false" aria-controls="navbar" id="menu-btn">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand navbar-brand-custom" href="#"><img src="./assets/img/logo.png" alt=""></a>
+      </div>
+      <span class="text-header"></span>
+      <div id="navbar" class="navbar-collapse collapse">
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#/login" class="navbar-brand-navigate-login">
+              <span id="username-fullname"> </span>
+              <span class="username-text">Code
+                <span id="username-code"></span>
+              </span>
+            </a>
+          </li>
+          <form class="navbar-form navbar-left">
+
+            <li class="dropdown">
+              <a class="dropdown-toggle btn navbar-brand-navigate-register" data-toggle="dropdown" href="#">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#/dashboard/" id="menu-dashboard">Dashboard</a></li>
+                <li><a href="#/uploadcsvcar/" id="menu-uploadcsvcar">Upload csv car</a></li>
+                <li><a href="#/uploadcsvservicepoint/" id="menu-uploadcsvservicepoint">Upload csv service point</a></li>
+                <li><a href="" id="menu-logout" onClick="logout()">Logout</a></li>
+              </ul>
+            </li>
+          </form>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+  <div id="content" class="container-fluid dashboard-container">
+    <div class="row">
+      <div class='col-sm-2'>
+        <div class="form-group">
+          <div class='input-group date' id='dateStart'>
+            <input type='text' class="form-control" style="height:40px;" placeholder="วันที่เริ่มต้น" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class='col-sm-2'>
+        <div class="form-group">
+          <div class='input-group date' id='dateEnd'>
+            <input type='text' class="form-control" style="height:40px;" placeholder="วันที่สิ้นสุด" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <select class="form-control select-custom" aria-label="Default select" id="customer-group">
+          <option selected>Group</option>
+        </select>
+      </div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-primary btn-primary-custom" id="export-excel">Export to Excel</button>
+        <button type="button" class="btn btn-danger btn-danger-custom" id="customer-group-default">Default</button>
+        <button type="button" class="btn btn-default btn-default-custom" id="filter"><span
+            class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filter</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class='col-sm-1'>
+        <h5>Sort by</h5>
+      </div>
+      <div class="col-sm-3">
+        <select class="form-control select-custom" aria-label="Default select" id="filter-ordercondition">
+          <option value="datecreated_newfirst" selected>date created (new first)</option>
+          <option value="datecreated_newlast">date created (new last)</option>
+          <option value="dateclose_newfirst">date close (new first)</option>
+          <option value="dateclose_newlast">date close (new last)</option>
+        </select>
+      </div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4">
+        <div class="row">
+          <p class="text-primary status-box" id="total_newjob">New (2 Jobs)</p>
+          <p class="text-success status-box" id="total_onprocess">On Process (2 Jobs)</p>
+          <p class="text-danger status-box" id="total_finish">Finish (10 Jobs)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class='col-sm-12'>
+        <div id="hidden-btn" style="visibility: hidden"></div>
+        <!-- <button id='export-excel'>Export to excel</button> -->
+        <table id="example" class="display nowrap table" style="width:100%">
+          <thead>
+            <tr>
+              <th>STATUS JOB</th>
+              <th>JOB INFO.</th>
+              <th>CUSTOMER</th>
+              <th>CAR INFO.</th>
+              <th>REQUEST</th>
+              <th>SERVICE POINT</th>
+              <th>NOTE</th>
+              <!-- <th>PHOTO</th> -->
+              <th>RECORD TIME</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div class="modal fade" id="jobStatusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content modal-dialog-custom modal-dialog-custom-3">
+        <div class="modal-body">
+          <div class="select-services"><span>รายละเอียดงาน</span>
+            <span style="font-size: 10pt;float: right;padding-top: 8px;color: #9e9e9e;">BOOKING NO. <span
+                style="color:#ff595a;" id="jobstatus-jobInfo"></span></span>
+          </div>
+
+          <div class="service-topic-box">
+            <div class="service-topic">Customer Detail</div>
+          </div>
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">CUSTOMER NAME</div>
+              <div class="row" id="jobstatus-customer_name">Adam Aoole</div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">CONTACT</div>
+              <div class="row" id="jobstatus-customer_telephone">089-888-9999</div>
+            </div>
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">SERIES</div>
+              <div class="row" id="jobstatus-car_series">2017 Toyota Revo 3.0</div>
+            </div>
+            <div class="col-sm-3">
+              <div class="row jobstatus-label">LICENSE</div>
+              <div class="row jobstatus-blue" id="jobstatus-car_license">ดด-4464</div>
+            </div>
+            <div class="col-sm-3">
+              <div class="row jobstatus-label">ODO KM.</div>
+              <div class="row jobstatus-blue" id="jobstatus-car_odo_mile">55000</div>
+            </div>
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-12">
+              <div class="row"><span class="jobstatus-label">Request</span>&nbsp;&nbsp;&nbsp;
+                <span id="jobstatus-servicetask"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-12">
+              <div class="row"><span class="jobstatus-label" style="display: inline;">Note</span> <textarea
+                  class="note-textarea" rows="4" cols="50" readonly
+                  id="jobstatus-usertasknote">&nbsp;&nbsp;&nbsp;</textarea></div>
+            </div>
+          </div>
+
+          <div class="service-topic-box">
+            <div class="service-topic">สถานที่และเวลาที่ลูกค้าต้องการ</div>
+          </div>
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">Service point</div>
+              <div class="row" id="jobstatus-service_point_name"></div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">DATE&TIME</div>
+              <div class="row" id="jobstatus-job_appoint_datetime"></div>
+            </div>
+          </div>
+
+          <div class="service-topic-box">
+            <div class="service-topic">สถานที่และเวลาที่ยืนยันนัดหมาย</div>
+          </div>
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">จังหวัด</div>
+              <!-- <div class="row">B-Quik โลตัส สมุทรปราการ</div> -->
+              <div class="row">
+                <select class="form-control jobstatus-dropdown" id="jobstatus-province_name_th">
+                  <option value="">เลือกจังหวัด</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">อำเภอ</div>
+              <div class="row">
+                <select class="form-control jobstatus-dropdown" id="jobstatus-amphor_name_th">
+                  <option value="">เลือกอำเภอ</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">Service point</div>
+              <div class="row">
+                <select class="form-control jobstatus-dropdown" id="jobstatus-service_point_name_confirm">
+                  <option value="">เลือกศูนย์บริการ</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">DATE&TIME</div>
+              <!-- <div class="row">14-Dec-20 15:30</div> -->
+              <div class="row">
+                <div class="form-group jobstatus-datetime">
+                  <div class='input-group date' id='jobStatusDateTime'>
+                    <input type='text' class="form-control" placeholder="" />
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-12">
+              <div class="row jobstatus-label">Call center note</div>
+              <div class="row"><textarea rows="4" cols="50" class="jobstatus-textarea"
+                  id="jobstatus-job_note">ยังติดต่อลูกค้าไม่ได้</textarea></div>
+            </div>
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-12">
+              <span class="service-checkbox">
+                <input type="checkbox" id="jobstatus-current">
+                <span class="service-checkbox-label" id="">ปิด Job</span> </span>
+            </div>
+          </div>
+
+          <!-- <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">Action for job:</div>
+              <div class="row">
+                <select class="form-control select-custom jobstatus-select" aria-label="Default select"
+                  id="jobstatus-current">
+                  <option value="new" disabled>Open Ticket</option>
+                  <option value="onprocess">Summary</option>
+                  <option value="finished">Close Job</option>
+                </select>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <div class="service-divider"></div>
+
+        <textarea class="service-textarea" rows="4" cols="50" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)"></textarea>
+        <button class="service-next-btn-disable" id="service-next-btn" disabled>ถัดไป</button> -->
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-danger-cancel" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger btn-danger-save" id="updateJobStatus" disabled>Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content modal-dialog-custom modal-dialog-custom-3">
+        <div class="modal-body">
+          <div class="select-services"><span>Filter</span>
+            <!-- <span
+              style="font-size: 10pt;float: right;padding-top: 8px;color: #9e9e9e;">BOOKING NO. <span
+                style="color:#ff595a;">201200009/1</span></span> -->
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">จากวันที่สร้างรายการ</div>
+              <div class="row">
+                <div class="form-group jobstatus-datetime">
+                  <div class='input-group date' id='filter-dateStart'>
+                    <input type='text' class="form-control" placeholder="" />
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">ถึงวันที่สร้างรายการ</div>
+              <div class="row">
+                <div class="form-group jobstatus-datetime">
+                  <div class='input-group date' id='filter-dateEnd'>
+                    <input type='text' class="form-control" placeholder="" />
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">ทะเบียนรถ</div>
+              <div class="row">
+                <input type="text" class="form-control jobstatus-input" id="filter-carlicense">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">ชื่อลูกค้า</div>
+              <div class="row">
+                <input type="text" class="form-control jobstatus-input" id="filter-customername">
+              </div>
+            </div>
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">กลุ่มลูกค้า</div>
+              <div class="row">
+                <select class="form-control select-custom jobstatus-select" aria-label="Default select"
+                  id="filter-customergroup">
+
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">สถานะงาน</div>
+              <div class="row">
+                <select class="form-control select-custom jobstatus-select" aria-label="Default select"
+                  id="filter-statusjob">
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">กลุ่มผู้ให้บริการ</div>
+              <div class="row">
+                <select class="form-control select-custom jobstatus-select" aria-label="Default select"
+                  id="filter-service_group">
+
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">สาขาผู้ให้บริการ</div>
+              <div class="row">
+                <select class="form-control select-custom jobstatus-select" aria-label="Default select"
+                  id="filter-branch">
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row jobstatus-row">
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">พนักงานที่รับเรื่อง</div>
+              <div class="row">
+                <select class="form-control select-custom jobstatus-select" aria-label="Default select"
+                  id="filter-emp_name_assign">
+
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row jobstatus-label">พนักงานที่ปิดเรื่อง</div>
+              <div class="row">
+                <select class="form-control select-custom jobstatus-select" aria-label="Default select"
+                  id="filter-emp_name_jobclose">
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-danger-cancel" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger btn-danger-save" id="datatableFilter">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="jobstatusNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content modal-dialog-custom modal-dialog-custom-3">
+        <div class="modal-body">
+          <div class="select-services" style="font-size: 20px;"><span>กำหนดผู้รับผิดชอบ</span></div>
+
+          <div style="font-size: 20px;">ท่านต้องการรับผิดชอบ Job <span id="jobstatusID"></span> หรือไม่</div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-danger-cancel" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger btn-danger-save" id="jobstatusNewConfirm">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+    var employee_default_customer_type = "";
+    var employee_fullname = "";
+    var emp_code = "";
+    var table;
+    var total_newjob = 0;
+    var total_onprocess = 0;
+    var total_finish = 0;
+    var dateStart = formatDate(Date.now());
+    var dateEnd = formatDate(Date.now());
+
+    var currentProvince = "";
+    var currentAmphor = "";
+    var currentJobID = "";
+
+    // var currentFilter_carlicense = "";
+    // var currentFilter_customername = "";
+    // var currentFilter_customergroup = "";
+    // var currentFilter_statusjob = "";
+    // var currentFilter_service_group = "";
+    // var currentFilter_branch = "";
+    // var currentFilter_emp_name_assign = "";
+    // var currentFilter_emp_name_jobclose = "";
+
+    var carlicense = "";
+    var customername = "";
+    var statusjob = "";
+    var service_group = "";
+    var branch = "";
+    var emp_name_assign = "";
+    var emp_name_jobclose = "";
+    var ordercondition = "";
+
+    $(function () {
+
+      isLogin();
+
+      $("#filter-customergroup").change(function () {
+        employee_default_customer_type = $("#filter-customergroup").val();
+      });
+
+      $("#filter-ordercondition").change(function () {
+        getDatatableFilter();
+      });
+
+      $("#datatableFilter").click(function () {
+        $("#filterModal").modal("hide");
+        $("#dateStart").find("input").val($("#filter-dateStart").find("input").val());
+        $("#dateEnd").find("input").val($("#filter-dateEnd").find("input").val());
+        getDatatableFilter();
+      });
+
+      $("#filter").click(function () {
+        $("#filterModal").modal("show");
+        getCustomerGroupFilter();
+        getJobStatusFilter();
+        getServiceGroupFilter();
+        getServicePointAllFilter();
+        getEmployeeAllFilter();
+        $("#filter-dateStart").find("input").val($("#dateStart").find("input").val());
+        $("#filter-dateEnd").find("input").val($("#dateEnd").find("input").val());
+        $("#filter-carlicense").val(carlicense);
+        $("#filter-customername").val(customername);
+        $("#filter-statusjob").val(statusjob);
+        $("#filter-service_group").val(service_group);
+        $("#filter-branch").val(branch);
+        $("#filter-emp_name_assign").val(emp_name_assign);
+        $("#filter-emp_name_jobclose").val(emp_name_jobclose);
+        $("#filter-ordercondition").val(ordercondition);
+
+        $("#filter-customergroup").val(employee_default_customer_type);
+      });
+
+      $("#jobstatusNewConfirm").click(function () {
+        newJob();
+      });
+
+      $("#updateJobStatus").click(function () {
+        // var jobstatusProgress = $("#jobstatus-current").val();
+        // if (jobstatusProgress == "new") {
+        //   assignJob();
+        //   updateJob();
+        // } else if (jobstatusProgress == "onprocess") {
+        //   assignJob();// เรียก API /back/jobsummary
+        //   updateJob();
+        // } else if (jobstatusProgress == "finished") {
+        //   closeJob();
+        //   updateJob();
+        // }
+
+        var jobstatusProgress = $("#jobstatus-current").is(":checked") ? 1 : 0;
+        if (jobstatusProgress == 0) {
+          assignJob();// เรียก API /back/jobsummary
+          updateJob();
+        } else if (jobstatusProgress == 1) {
+          closeJob();
+          updateJob();
+        }
+      });
+
+      $("#jobStatusDateTime").on('dp.change', function (e) { validateForm(); });
+      $("#jobstatus-service_point_name_confirm").change(function () {
+        validateForm();
+      });
+
+      isLogin();
+      getProfile();
+
+      $('#dateStart').datetimepicker({
+        viewMode: 'days',
+        format: 'YYYY-MM-DD'
+      });
+
+      $('#dateEnd').datetimepicker({
+        viewMode: 'days',
+        format: 'YYYY-MM-DD'
+      });
+
+      $("#filter-dateStart").datetimepicker({
+        viewMode: 'days',
+        format: 'YYYY-MM-DD'
+      });
+      $("#filter-dateEnd").datetimepicker({
+        viewMode: 'days',
+        format: 'YYYY-MM-DD'
+      });
+
+      $("#dateStart").find("input").val(formatDate(Date.now()));
+      $("#dateEnd").find("input").val(formatDate(Date.now()));
+
+      $("#filter-dateStart").find("input").val(formatDate(Date.now()));
+      $("#filter-dateEnd").find("input").val(formatDate(Date.now()));
+
+      $("#dateStart").on('dp.change', function (e) {
+        //getDatatable();
+        dateStart = $("#dateStart").find("input").val();
+        getDatatableFilter();
+      });
+      $("#dateEnd").on('dp.change', function (e) {
+        //getDatatable();
+        dateEnd = $("#dateEnd").find("input").val();
+        getDatatableFilter();
+      });
+
+      $("#filter-dateStart").on('dp.change', function (e) {
+        //getDatatable();
+        dateStart = $("#filter-dateStart").find("input").val();
+        //getDatatableFilter();
+      });
+      $("#filter-dateEnd").on('dp.change', function (e) {
+        //getDatatable();
+        dateEnd = $("#filter-dateEnd").find("input").val();
+        //getDatatableFilter();
+      });
+
+      //getDatatable();
+      getDatatableFilter();
+      getCustomerGroup();
+
+      $('#export-excel').off().on('click', function () {
+        getExcelExport();
+        //table.button(0).trigger();
+      });
+
+      $("#customer-group").change(function () {
+        if ($(this).val()) {
+          employee_default_customer_type = $(this).val();
+          //getDatatable();
+          getDatatableFilter();
+        }
+      });
+
+      $("#customer-group-default").click(function () {
+        employee_default_customer_type = localStorage.getItem("employee_default_customer_type");
+        $("#customer-group").val(employee_default_customer_type);
+
+        carlicense = "";
+        customername = "";
+        statusjob = "";
+        service_group = "";
+        branch = "";
+        emp_name_assign = "";
+        emp_name_jobclose = "";
+        ordercondition = "datecreated_newfirst";
+
+        $("#filter-carlicense").val(carlicense);
+        $("#filter-customername").val(customername);
+        $("#filter-statusjob").val(statusjob);
+        $("#filter-service_group").val(service_group);
+        $("#filter-branch").val(branch);
+        $("#filter-emp_name_assign").val(emp_name_assign);
+        $("#filter-emp_name_jobclose").val(emp_name_jobclose);
+        $("#filter-ordercondition").val(ordercondition);
+
+        //getDatatable();
+        getDatatableFilter();
+      });
+
+      $('#jobstatusNewModal').on('hidden.bs.modal', function () {
+        $(".lds-ring").hide();
+      });
+      $('#jobStatusModal').on('hidden.bs.modal', function () {
+        $(".lds-ring").hide();
+      });
+      $('#filterModal').on('hidden.bs.modal', function () {
+        $(".lds-ring").hide();
+      });
+    });
+
+    function validateForm() {
+      var confirmDateTime = $("#jobStatusDateTime").find("input").val();
+      var confirmProvince = $("#jobstatus-province_name_th").val();
+      var confirmAmphor = $("#jobstatus-amphor_name_th").val();
+      var confirmServicePoint = $("#jobstatus-service_point_name_confirm").val();
+
+      console.log(confirmDateTime + "," + confirmProvince + "," + confirmAmphor + "," + confirmServicePoint)
+      if (confirmDateTime == "" || confirmProvince == "" || confirmAmphor == "" || confirmServicePoint == "" || confirmDateTime == null || confirmProvince == null || confirmAmphor == null || confirmServicePoint == null) {
+        $("#updateJobStatus").prop("disabled", true);
+      } else {
+        $("#updateJobStatus").prop("disabled", false);
+      }
+    }
+
+    function getProfile() {
+      if (localStorage.getItem("employee_default_customer_type")) {
+        employee_default_customer_type = localStorage.getItem("employee_default_customer_type");
+        $("#customer-group").val(employee_default_customer_type);
+        $("#customer-group").prop("disabled", true);
+      }
+      if (localStorage.getItem("employee_fullname")) {
+        employee_fullname = localStorage.getItem("employee_fullname");
+      }
+      if (localStorage.getItem("emp_code")) {
+        emp_code = localStorage.getItem("emp_code");
+      }
+      $("#username-fullname").text(employee_fullname);
+      $("#username-code").text(emp_code);
+    }
+
+    function getDatatable() {
+
+      dateStart = $("#dateStart").find("input").val();
+      dateEnd = $("#dateEnd").find("input").val();
+
+      // alert(baseURL + "back/getalljob_orderbyjobno/" + employee_default_customer_type + "/" + dateStart + "/" + dateEnd + "/");
+
+      $.ajax({
+        "url": baseURL + "back/getalljob_orderbyjobno/" + employee_default_customer_type + "/" + dateStart + "/" + dateEnd + "/",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        "type": "GET",
+        "datatype": 'json',
+        "success": function (data) {
+
+          total_newjob = data.jobstat[0].NEWJOB;
+          total_onprocess = data.jobstat[0].ONPROCESS;
+          total_finish = data.jobstat[0].FINISHED;
+
+          $("#total_newjob").text("New (" + total_newjob + " Jobs)");
+          $("#total_onprocess").text("On Process (" + total_onprocess + " Jobs)");
+          $("#total_finish").text("Finish (" + total_finish + " Jobs)");
+
+          renderTable(data);
+          //$("#export-excel").prop("disabled", false);
+        },
+        "error": function (xhr, status, error) {
+          $('#example').DataTable({
+            buttons: ['excel'],
+            bFilter: false,
+            bSort: false,
+            bLengthChange: false,
+            destroy: true,
+          }).clear().draw();
+          $("#export-excel").prop("disabled", true);
+        }
+      });
+    }
+
+    function getCustomerGroup() {
+      $.ajax({
+        url: baseURL + "back/getcustomergroup",
+        method: "GET",
+        data: {},
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        success: function (result) {
+
+          if (result.custgroup.length > 0) {
+            $("#customer-group").html("");
+            $.each(result.custgroup, function (key, val) {
+              $("#customer-group").append("<option value='" + val.car_customer_type + "'>" + val.car_customer_type + "</option>");
+            });
+            if (localStorage.getItem("employee_default_customer_type")) {
+              employee_default_customer_type = localStorage.getItem("employee_default_customer_type");
+              $("#customer-group").val(employee_default_customer_type);
+              $("#customer-group").prop("disabled", true);
+            }
+
+          }
+        },
+        error: function (xhr, status, error) {
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#/login/";
+          }
+        }
+      });
+    }
+
+    function formatDate(date) {
+      var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+      if (month.length < 2)
+        month = '0' + month;
+      if (day.length < 2)
+        day = '0' + day;
+
+      return [year, month, day].join('-');
+    }
+
+    function renderTable(data) {
+      if (data.joblist.length > 0) {
+        $("#export-excel").prop("disabled", false);
+      } else {
+        $("#export-excel").prop("disabled", true);
+      }
+      table = $('#example').DataTable({
+        buttons: ['excel'],
+        bFilter: false,
+        bSort: false,
+        bLengthChange: false,
+        iDisplayLength: 20,
+        pageLength: 20,
+        data: data.joblist,
+        destroy: true,
+        "columnDefs": [
+          {
+            "targets": 0,
+            "data": 'job_status',
+            "render": function (data, type, row) {
+              var button = "";
+              switch (row.job_status.toLowerCase()) {
+                case 'new':
+                  button = '<button type="button" class="btn btn-danger" onclick="getJobStatusDetail(\'' + row.final_job_id + '\',\'' + row.job_status + '\')">' + "New" + '</button>';
+                  break;
+                case 'onprocess':
+                  button = '<button type="button" class="btn btn-warning" onclick="getJobStatusDetail(\'' + row.final_job_id + '\',\'' + row.job_status + '\')">' + "Assign" + '</button>';
+                  break;
+                case 'finished':
+                  button = '<button type="button" class="btn btn-success" onclick="getJobStatusDetail(\'' + row.final_job_id + '\',\'' + row.job_status + '\')">' + "Finish" + '</button>';
+                  break;
+              }
+              return button;
+
+            }
+          },
+          {
+            "targets": 1, data: 'job_info',
+            "render": function (data, type, row) {
+              return row.final_job_id + "<br>" + row.job_appoint_datetime;
+            }
+          },
+          {
+            "targets": 2, data: 'customer',
+            "render": function (data, type, row) {
+              return (row.customer_firstname ? row.customer_firstname : "") + " " + (row.customer_lastname ? row.customer_lastname : "") + "<br>" + (row.customer_telephone ? row.customer_telephone : "") + "<br>" + (row.customer_business_name ? row.customer_business_name : "");
+            }
+          },
+          {
+            "targets": 3, data: 'car_info',
+            "render": function (data, type, row) {
+              return (row.car_license == null ? "" : row.car_license) + "<br>" + (row.car_brand == null ? "" : row.car_brand) + " " + (row.car_series == null ? "" : row.car_series) + " " + (row.car_model == null ? "" : row.car_model);
+            }
+          },
+          {
+            "targets": 4, data: 'servicetask1',
+            "render": function (data, type, row) {
+              return (row.servicetask1 == "1" ? "เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง" : "") + "<br>" + (row.servicetask2 == "1" ? "เปลี่ยนยาง" : "") + "<br>" + row.servicenote + "<br>" + (row.custcare1 == "1" ? "สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์" : "") + "<br>" + (row.custcare2 == "1" ? "สอบถามสถานะรถซ่อม" : "") + "<br>" + (row.custcare3 == "1" ? "สอบถามสถานะรถทดแทน" : "") + "<br>" + row.custcarenote;
+            }
+          },
+          {
+            "targets": 5, data: 'service_point_name',
+            "render": function (data, type, row) {
+              return (row.service_point_name == null ? "" : row.service_point_name) + "<br>" + (row.service_point_tel == null ? "" : row.service_point_tel) + "<br>" + (row.job_appoint_confirm_datetime == null ? "" : row.job_appoint_confirm_datetime);
+            }
+          },
+          {
+            "targets": 6, data: 'usertasknote',
+            "render": function (data, type, row) {
+              return row.usertasknote;
+            }
+          },
+          // {
+          //   "targets": 7, data: 'photos', "visible": false
+          // },
+          {
+            "targets": 7, data: 'record_time',
+            "render": function (data, type, row) {
+              return (row.createticketby == null ? "" : "รับเรื่อง " + row.createticketby + "<br> ") + (row.summaryby == null ? "" : "สรุป " + row.summaryby + "<br>") + (row.closeby == null ? "" : "ปิดเรื่อง " + row.closeby);
+            }
+          }
+        ],
+        "drawCallback": function (settings) {
+        },
+      });
+    }
+
+    function getJobStatusDetail(final_job_id, job_status) {
+      $("#jobstatus-amphor_name_th").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกอำเภอ</option>');
+      $("#jobstatus-service_point_name_confirm").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกศูนย์บริการ</option>');
+
+      currentJobID = final_job_id;
+      if (job_status == "new") {
+        $("#jobstatusNewModal").modal('show');
+        $("#jobstatusID").text(final_job_id);
+      } else {
+        openModalJobStatusDetail(final_job_id)
+      }
+    }
+
+    function openModalJobStatusDetail(final_job_id) {
+      $("#jobStatusModal").modal('show');
+      $('#jobStatusDateTime').datetimepicker({
+        defaultDate: new Date(),
+        format: 'YYYY-MMM-DD HH:mm',
+        extraFormats: ['ddd, DD MMM YYYY', 'DD/MM/YYYY'],
+      }).on('blur', function () {
+
+      });
+      resetJobStatusDetailForm();
+      getServicePointProvince();
+      var currentTime = new Date();
+      $("#jobStatusDateTime").find("input").val(formatDate(Date.now()) + " " + currentTime.getHours() + ":" + currentTime.getMinutes());
+      $("#jobstatus-jobInfo").text(final_job_id);
+      getJobStatusDetailById(final_job_id);
+    }
+
+    function getJobStatusDetailById(final_job_id) {
+      $.ajax({
+        url: baseURL + "back/getjobsingle",
+        method: "POST",
+        data: { final_job_id: final_job_id },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        success: function (result) {
+
+          if (result.jobdata.length > 0) {
+            var currentTime = new Date();
+            var item = result.jobdata[0];
+
+            $("#jobstatus-customer_name").text(item.customer_name ? item.customer_name : "-");
+            $("#jobstatus-customer_telephone").text(item.customer_telephone ? item.customer_telephone : "-");
+            $("#jobstatus-car_series").text(item.car_series ? item.car_series : "-");
+            $("#jobstatus-car_license").text(item.car_license ? item.car_license : "-");
+            $("#jobstatus-car_odo_mile").text(item.car_odo_mile ? item.car_odo_mile : "-");
+            $("#jobstatus-servicetask").html(`
+              <ul>
+                ${item.servicetask1 ? "<li>" + serviceCheckbox[0] + "</li>" : ""}
+                ${item.servicetask2 ? "<li>" + serviceCheckbox[1] + "</li>" : ""}
+              </ul>
+              <span class="jobstatus-label" style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><textarea class="note-textarea" rows="4" cols="50" readonly>${item.servicenote ? item.servicenote : ""}</textarea>
+              <hr>
+              <ul>
+                ${item.custcare1 ? "<li>" + cuscareCheckbox[0] + "</li>" : ""}
+                ${item.custcare2 ? "<li>" + cuscareCheckbox[1] + "</li>" : ""}
+                ${item.custcare3 ? "<li>" + cuscareCheckbox[2] + "</li>" : ""}
+              </ul>
+              <span class="jobstatus-label" style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><textarea class="note-textarea" rows="4" cols="50" readonly>${item.custcarenote ? item.custcarenote : ""}</textarea>
+            `);
+            $("#jobstatus-usertasknote").text(item.usertasknote ? item.usertasknote : "-");
+            getServicepoinByCode(item.job_service_point_code);
+            $("#jobstatus-job_appoint_datetime").text(item.job_appoint_datetime ? item.job_appoint_datetime : "-");
+
+            getServicepoinConfirmByCode(item.job_service_point_code_confirm);
+
+            $("#jobStatusDateTime").find("input").val(item.job_appoint_confirm_datetime ? item.job_appoint_confirm_datetime : formatDate(Date.now()) + " " + currentTime.getHours() + ":" + currentTime.getMinutes());
+            $("#jobstatus-job_note").text(item.job_note ? item.job_note : "");
+
+            $("#jobstatus-current").val(item.job_status);
+            currentJobID = item.final_job_id
+
+            if (item.job_status == "finished") {
+              $("#jobstatus-province_name_th").attr("disabled", true);
+              $("#jobstatus-amphor_name_th").attr("disabled", true);
+              $("#jobstatus-service_point_name_confirm").attr("disabled", true);
+              $("#jobstatus-job_note").attr("disabled", true);
+              $("#jobStatusDateTime").data("DateTimePicker").disable();
+              $("#jobstatus-current").attr("disabled", true);
+              $("#updateJobStatus").attr("disabled", true);
+
+              $("#jobstatus-current").attr("checked", true);
+            } else {
+              $("#jobstatus-province_name_th").attr("disabled", false);
+              $("#jobstatus-amphor_name_th").attr("disabled", false);
+              $("#jobstatus-service_point_name_confirm").attr("disabled", false);
+              $("#jobstatus-job_note").attr("disabled", false);
+              $("#jobStatusDateTime").attr("readonly", false);
+              $("#jobStatusDateTime").data("DateTimePicker").enable();
+              $("#jobstatus-current").attr("disabled", false);
+              $("#updateJobStatus").attr("disabled", false);
+
+              $("#jobstatus-current").attr("checked", false);
+            }
+            validateForm();
+          }
+        },
+        error: function (xhr, status, error) {
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#/login/";
+          }
+        }
+      });
+    }
+
+    function resetJobStatusDetailForm() {
+      $("#jobstatus-customer_name").text("-");
+      $("#jobstatus-customer_telephone").text("-");
+      $("#jobstatus-car_series").text("-");
+      $("#jobstatus-car_license").text("-");
+      $("#jobstatus-car_odo_mile").text("-");
+      $("#jobstatus-servicetask").html("-");
+      $("#jobstatus-usertasknote").text("-");
+      //$("#jobstatus-service_point_name").text();
+      $("#jobstatus-job_appoint_datetime").text("-");
+
+      // $("#jobstatus-province_name_th").val();
+
+      // $("#jobstatus-amphor_name_th").val();
+      // $("#jobstatus-service_point_name_confirm").val();
+      // $("#jobStatusDateTime").val();
+
+      $("#jobstatus-job_note").text("-");
+    }
+
+    function getServicePointProvince() {
+      $(".lds-ring").show();
+      $.ajax({
+        url: baseURL + "getservicepointprovince",
+        method: "GET",
+        data: {},
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: false,
+        success: function (result) {
+          $(".lds-ring").hide();
+          if (result.province.length > 0) {
+            $("#jobstatus-province_name_th").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกจังหวัด</option>');
+            $.each(result.province, function (key, val) {
+              $("#jobstatus-province_name_th").append("<option value='" + val.province_name_th + "'>" + val.province_name_th + "</option>");
+            });
+            $("#jobstatus-province_name_th").off().change(function () {
+              $("#jobstatus-amphor_name_th").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกอำเภอ</option>');
+              $("#jobstatus-service_point_name_confirm").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกศูนย์บริการ</option>');
+              currentProvince = $(this).val();
+              getServicepointamphor($(this).val(), null);
+              validateForm();
+            });
+            $("#jobstatus-amphor_name_th").off().change(function () {
+              $("#jobstatus-service_point_name_confirm").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกศูนย์บริการ</option>');
+              currentAmphor = $(this).val();
+              searchServicePointByLoc(null);
+              validateForm();
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          }
+        }
+      });
+    }
+
+    function getServicepointamphor(province_name_th, amphor_name_th) {
+      $(".lds-ring").show();
+      $.ajax({
+        url: baseURL + "getservicepointamphor?province=" + province_name_th,
+        method: "GET",
+        data: {},
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: false,
+        success: function (result) {
+          if (result.amphor.length > 0) {
+
+            $.each(result.amphor, function (key, val) {
+              $("#jobstatus-amphor_name_th").append("<option value='" + val.amphor_name_th + "'>" + val.amphor_name_th + "</option>");
+            });
+
+            if (amphor_name_th) {
+              $("#jobstatus-amphor_name_th").val(amphor_name_th);
+            }
+
+            validateForm();
+          }
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          }
+        }
+      });
+    }
+
+    function searchServicePointByLoc(service_point_name_confirm) {
+      $.ajax({
+        url: baseURL + "searchservicepointbyloc?province=" + currentProvince + "&amphor=" + currentAmphor,
+        method: "GET",
+        data: {},
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: false,
+        success: function (result) {
+          $(".lds-ring").hide();
+          if (result.servicepoint.length > 0) {
+
+            $.each(result.servicepoint, function (key, val) {
+              $("#jobstatus-service_point_name_confirm").append("<option amphor='" + val.amphor_name_th + "' value='" + val.service_code + "''>" + val.branch_name + "</option>");
+            });
+
+            if (service_point_name_confirm) {
+              $("#jobstatus-service_point_name_confirm").val(service_point_name_confirm);
+            }
+            validateForm();
+          }
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          }
+        }
+      });
+    }
+
+    function getServicepoinByCode(job_service_point_code) {
+      $(".lds-ring").show();
+      $.ajax({
+        url: baseURL + "getservicepointbycode?code=" + job_service_point_code,
+        method: "GET",
+        data: {},
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: true,
+        success: function (result) {
+          if (result.servicepoint.length > 0) {
+
+            $.each(result.servicepoint, function (key, val) {
+              $("#jobstatus-service_point_name").text(val.service_point_name);
+            });
+
+          }
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          }
+        }
+      });
+    }
+
+    function getServicepoinConfirmByCode(job_service_point_code_confirm) {
+      $(".lds-ring").show();
+      $.ajax({
+        url: baseURL + "getservicepointbycode?code=" + job_service_point_code_confirm,
+        method: "GET",
+        data: {},
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: false,
+        success: function (result) {
+          if (result.servicepoint.length > 0) {
+
+            $.each(result.servicepoint, function (key, val) {
+              if (val.province_name_th) {
+                currentProvince = val.province_name_th;
+                $("#jobstatus-province_name_th").val(val.province_name_th);
+                if (val.amphor_name_th) {
+                  currentAmphor = val.amphor_name_th;
+                  getServicepointamphor(val.province_name_th, val.amphor_name_th);
+                  searchServicePointByLoc(job_service_point_code_confirm);
+                } else {
+                  getServicepointamphor(item.province_name_th, null);
+                }
+              }
+            });
+
+          }
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          }
+        }
+      });
+    }
+
+    function updateJob() {
+      var jobstatusProgress = $("#jobstatus-current").is(":checked") ? "finished" : "onprocess";
+      $(".lds-ring").show();
+      $.ajax({
+        url: baseURL + "back/jobupdate",
+        method: "POST",
+        data: {
+          job_note: $("#jobstatus-job_note").val(),
+          job_service_point_code_confirm: $("#jobstatus-service_point_name_confirm").val(),
+          job_appoint_confirm_datetime: $("#jobStatusDateTime").find("input").val(),
+          job_status: jobstatusProgress,
+          final_job_id: currentJobID
+        },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: false,
+        success: function (result) {
+          if (result.message == "success") {
+            $("#jobstatus-job_note").val("");
+            $("#jobStatusModal").modal('hide');
+            //getDatatable();
+            getDatatableFilter();
+          }
+          $(".lds-ring").hide();
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          }
+        }
+      });
+    }
+
+    function newJob() {
+      $(".lds-ring").show();
+      $.ajax({
+        url: baseURL + "back/jobcreateticket",
+        method: "POST",
+        data: {
+          final_job_id: currentJobID
+        },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: false,
+        success: function (result) {
+          if (result.message == "success") {
+            $("#jobstatusNewModal").modal('hide');
+            setTimeout(function () {
+              openModalJobStatusDetail(currentJobID);
+            }, 1000);
+            setTimeout(function () {
+              validateForm();
+            }, 2000);
+          }
+          $(".lds-ring").hide();
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          }
+        }
+      });
+    }
+
+    function assignJob() {
+      $(".lds-ring").show();
+      $.ajax({
+        url: baseURL + "back/jobsummary",
+        method: "POST",
+        data: {
+          final_job_id: currentJobID
+        },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: false,
+        success: function (result) {
+          if (result.message == "success") {
+
+          }
+          $(".lds-ring").hide();
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          }
+        }
+      });
+    }
+
+    function closeJob() {
+      $(".lds-ring").show();
+      $.ajax({
+        url: baseURL + "back/jobclose",
+        method: "POST",
+        data: {
+          final_job_id: currentJobID
+        },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: false,
+        success: function (result) {
+          if (result.message == "success") {
+
+          }
+          $(".lds-ring").hide();
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          }
+        }
+      });
+    }
+
+    function getDatatableFilter() {
+
+      // var dateStart = $("#filter-dateStart").find("input").val();
+      // var dateEnd = $("#filter-dateEnd").find("input").val();
+      // var customergroup = $("#filter-customergroup").val();
+      carlicense = $("#filter-carlicense").val();
+      customername = $("#filter-customername").val();
+      statusjob = $("#filter-statusjob").val();
+      service_group = $("#filter-service_group").val();
+      branch = $("#filter-branch").val();
+      emp_name_assign = $("#filter-emp_name_assign").val();
+      emp_name_jobclose = $("#filter-emp_name_jobclose").val();
+      ordercondition = $("#filter-ordercondition").val();
+
+      $.ajax({
+        "url": baseURL + "back/searchjob",
+        data: {
+          startdate: dateStart ? dateStart : "",
+          enddate: dateEnd ? dateEnd : "",
+          customergroup: employee_default_customer_type ? employee_default_customer_type : "",
+          carlicense: carlicense ? carlicense : "",
+          customername: customername ? customername : "",
+          statusjob: statusjob ? statusjob : "",
+          service_group: service_group ? service_group : "",
+          branch: branch ? branch : "",
+          emp_name_assign: emp_name_assign ? emp_name_assign : "",
+          emp_name_jobclose: emp_name_jobclose ? emp_name_jobclose : "",
+          ordercondition: ordercondition ? ordercondition : ""
+        },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        "type": "POST",
+        "datatype": 'json',
+        "success": function (data) {
+
+          total_newjob = data.jobstat[0].NEWJOB;
+          total_onprocess = data.jobstat[0].ONPROCESS;
+          total_finish = data.jobstat[0].FINISHED;
+
+          $("#total_newjob").text("New (" + total_newjob + " Jobs)");
+          $("#total_onprocess").text("On Process (" + total_onprocess + " Jobs)");
+          $("#total_finish").text("Finish (" + total_finish + " Jobs)");
+
+          renderTable(data);
+          //$("#export-excel").prop("disabled", false);
+        },
+        "error": function (xhr, status, error) {
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#/login/";
+          } else {
+            $('#example').DataTable({
+              buttons: ['excel'],
+              bFilter: false,
+              bSort: false,
+              bLengthChange: false,
+              destroy: true,
+            }).clear().draw();
+            $("#export-excel").prop("disabled", true);
+          }
+        }
+      });
+    }
+
+    function getCustomerGroupFilter() {
+      $.ajax({
+        url: baseURL + "back/getcustomergroup",
+        method: "GET",
+        data: {},
+        async: false,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        success: function (result) {
+
+          if (result.custgroup.length > 0) {
+            $("#filter-customergroup").html("<option value='' selected disabled>เลือกกลุ่มลูกค้า</option>");
+            $.each(result.custgroup, function (key, val) {
+              $("#filter-customergroup").append("<option value='" + val.car_customer_type + "'>" + val.car_customer_type + "</option>");
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#/login/";
+          }
+        }
+      });
+    }
+
+    function getJobStatusFilter() {
+      $.ajax({
+        url: baseURL + "back/getstatusjoblist",
+        method: "GET",
+        data: {},
+        async: false,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        success: function (result) {
+
+          if (result.joblist.length > 0) {
+            $("#filter-statusjob").html("<option value='' selected disabled>เลือกสถานะงาน</option>");
+            $.each(result.joblist, function (key, val) {
+              $("#filter-statusjob").append("<option value='" + val.job_status + "'>" + val.job_status + "</option>");
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#/login/";
+          }
+        }
+      });
+    }
+
+    function getServiceGroupFilter() {
+      $.ajax({
+        url: baseURL + "back/getservicegroup",
+        method: "GET",
+        data: {},
+        async: false,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        success: function (result) {
+
+          if (result.serviceglist.length > 0) {
+            $("#filter-service_group").html("<option value='' selected disabled>เลือกกลุ่มผู้ให้บริการ</option>");
+            $.each(result.serviceglist, function (key, val) {
+              $("#filter-service_group").append("<option value='" + val.service_group + "'>" + val.service_group + "</option>");
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#/login/";
+          }
+        }
+      });
+    }
+
+    function getServicePointAllFilter() {
+      $.ajax({
+        url: baseURL + "getallservicepoint",
+        method: "GET",
+        data: {},
+        async: false,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        success: function (result) {
+
+          if (result.servicepoint.length > 0) {
+            $("#filter-branch").html("<option value='' selected disabled>เลือกสาขาผู้ให้บริการ</option>");
+            $.each(result.servicepoint, function (key, val) {
+              $("#filter-branch").append("<option value='" + val.service_point_name + "'>" + val.service_point_name + "</option>");
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#/login/";
+          }
+        }
+      });
+    }
+
+    function getEmployeeAllFilter() {
+      $.ajax({
+        url: baseURL + "back/getemplist",
+        method: "GET",
+        data: {},
+        async: false,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        success: function (result) {
+
+          if (result.emplist.length > 0) {
+            $("#filter-emp_name_assign").html("<option value='' selected disabled>เลือกพนักงานที่รับเรื่อง</option>");
+            $("#filter-emp_name_jobclose").html("<option value='' selected disabled>เลือกพนักงานที่ปิดเรื่อง</option>");
+            $.each(result.emplist, function (key, val) {
+              $("#filter-emp_name_assign").append("<option value='" + val.employee_fullname + "'>" + val.employee_fullname + "</option>");
+              $("#filter-emp_name_jobclose").append("<option value='" + val.employee_fullname + "'>" + val.employee_fullname + "</option>");
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#/login/";
+          }
+        }
+      });
+    }
+
+    function getExcelExport() {
+      carlicense = $("#filter-carlicense").val();
+      customername = $("#filter-customername").val();
+      statusjob = $("#filter-statusjob").val();
+      service_group = $("#filter-service_group").val();
+      branch = $("#filter-branch").val();
+      emp_name_assign = $("#filter-emp_name_assign").val();
+      emp_name_jobclose = $("#filter-emp_name_jobclose").val();
+      ordercondition = $("#filter-ordercondition").val();
+
+      $.ajax({
+        //"url": baseURL + "back/downloadcsv",
+        url: "https://50a6daee3a3c.ngrok.io/" + "api/back/downloadcsv",
+        data: {
+          startdate: dateStart ? dateStart : "",
+          enddate: dateEnd ? dateEnd : "",
+          customergroup: employee_default_customer_type ? employee_default_customer_type : "",
+          carlicense: carlicense ? carlicense : "",
+          customername: customername ? customername : "",
+          statusjob: statusjob ? statusjob : "",
+          service_group: service_group ? service_group : "",
+          branch: branch ? branch : "",
+          emp_name_assign: emp_name_assign ? emp_name_assign : "",
+          emp_name_jobclose: emp_name_jobclose ? emp_name_jobclose : "",
+          ordercondition: ordercondition ? ordercondition : ""
+        },
+        headers: {
+          // "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        "type": "POST",
+        //"dataType": "text/csv",
+        "success": function (data) {
+          var hiddenElement = document.createElement('a');
+          hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(data);
+          hiddenElement.target = '_blank';
+          hiddenElement.download = 'output.csv';
+          hiddenElement.click();
+        },
+        "error": function (xhr, status, error) {
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

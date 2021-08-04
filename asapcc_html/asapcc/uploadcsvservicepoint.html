@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>asap</title>
+  <meta http-equiv="Content-Language" content="th" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="./assets/css/dashboard.css">
+  <link href="./assets/fontawesome/css/all.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="./assets/datepicker/css/bootstrap-datetimepicker.css">
+  <link rel="stylesheet" href="./assets/datepicker/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="./assets/datatables/datatables.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css" />
+</head>
+
+<body class="container-custom">
+  <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+          aria-expanded="false" aria-controls="navbar" id="menu-btn">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand navbar-brand-custom" href="#"><img src="./assets/img/logo.png" alt=""></a>
+      </div>
+      <span class="text-header"></span>
+      <div id="navbar" class="navbar-collapse collapse">
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#/login" class="navbar-brand-navigate-login">
+              <span id="username-fullname"></span>
+              <span class="username-text">Code
+                <span id="username-code"></span>
+              </span>
+            </a>
+          </li>
+          <form class="navbar-form navbar-left">
+
+            <li class="dropdown">
+              <a class="dropdown-toggle btn navbar-brand-navigate-register" data-toggle="dropdown" href="#">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#/dashboard/" id="menu-dashboard">Dashboard</a></li>
+                <li><a href="#/uploadcsvcar/" id="menu-uploadcsvcar">Upload csv car</a></li>
+                <li><a href="#/uploadcsvservicepoint/" id="menu-uploadcsvservicepoint">Upload csv service point</a></li>
+                <li><a href="" id="menu-logout" onClick="logout()">Logout</a></li>
+              </ul>
+            </li>
+          </form>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+  <div class="center-block upload-box">
+    <div class="header-title">
+      Upload รายการศูนย์บริการ (csv)
+    </div>
+    <br>
+    <span class="control-fileupload">
+      <label for="file">Choose a file :</label>
+      <input type="file" id="file" name="file">
+    </span>
+
+    <span class="text-danger" id="message-error"></span>
+    <span class="text-success" id="message-success"></span>
+    <div class="submit-error"></div>
+    <button class="submit-login" id="upload-btn">Upload</button>
+
+  </div>
+
+  <script type="text/javascript">
+
+    $(function () {
+      $('.modal').modal('hide');
+      $('.modal-backdrop').remove();
+
+      $("#upload-btn").click(function () {
+        uploadExcel();
+      });
+
+      isLogin();
+      getProfile();
+    });
+
+    function uploadExcel() {
+
+      var formData = new FormData();
+      formData.append('file', $('input[type=file]')[0].files[0]);
+
+      $(".lds-ring").show();
+      $.ajax({
+        url: baseURL + "back/uploadcsvservicepoint",
+        //url: "https://50a6daee3a3c.ngrok.io/" + "api/back/uploadcsvservicepoint",
+        method: "POST",
+        data: formData,
+        cache: false,
+        crossDomain: true,
+        processData: false,
+        contentType: false,
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("tokenCC")
+        },
+        async: false,
+        success: function (result) {
+          if (result.message) {
+            $("#message-success").text(result.message);
+            $("#message-error").text("");
+          }
+          $(".lds-ring").hide();
+        },
+        error: function (xhr, status, error) {
+          $(".lds-ring").hide();
+          if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+            window.location.href = "#login";
+          } else {
+            $("#message-success").text("");
+            $("#message-error").text(xhr.responseJSON.message);
+          }
+        }
+      });
+    }
+
+    function getProfile() {
+
+      if (localStorage.getItem("employee_fullname")) {
+        employee_fullname = localStorage.getItem("employee_fullname");
+      }
+      if (localStorage.getItem("emp_code")) {
+        emp_code = localStorage.getItem("emp_code");
+      }
+      $("#username-fullname").text(employee_fullname);
+      $("#username-code").text(emp_code);
+    }
+
+  </script>
+</body>
+
+</html>

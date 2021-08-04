@@ -1,0 +1,330 @@
+<div class="center-block appointment-box">
+  <div class="header-title-service">
+    ข้อมูลการนัดหมาย
+  </div>
+  <div class="appointment-info-title">ผู้ใช้บริการ</div>
+  <div class="appointment-info-user-box">
+    <span class="appointment-info-inline">
+      <img src="../assets/img/user-info.png" width="80" style="position: relative;top: -25px;">
+    </span>
+    <span class="appointment-info-inline">
+      <div class="appointment-info-user-info" id="appointment-info-fullname"></div>
+      <div class="appointment-info-user-info" id="appointment-info-tel"></div>
+      <div class="appointment-info-user-info" id="appointment-info-email"></div>
+    </span>
+    <div class="appointment-info-edit-icon" id="edit-user"><span class="glyphicon glyphicon-pencil"
+        aria-hidden="true"></span></div>
+  </div><br>
+
+  <div class="appointment-info-title" id="appointment-info-title">รายละเอียดบริการ</div>
+
+  <div class="appointment-info-detail-box" id="appointment-info-detail-box">
+    <div class="appointment-info-detail">รายละเอียดเพิ่มเติม</div>
+    <div class="appointment-info-detail-long"> 
+      <ul id="appointment-info-detail-additional"></ul>
+    </div>
+  </div>
+
+  <div class="appointment-info-detail-box">
+    <div class="appointment-info-title">รายละเอียดการนัดหมาย</div>
+    <div class="appointment-info-detail-title"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+      จุดบริการ</div>
+    <div class="appointment-info-detail-title-long" id="services-point-name">ชื่อศูนย์บริการ กรุงเทพมหานคร, เขต พระโขนง
+    </div>
+
+    <div class="appointment-info-detail-title"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+      วันและเวลา</div>
+    <div class="appointment-info-detail-title-long">
+      <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <span id="job-date">15 กุมภาพันธ์
+        2564</span>&nbsp&nbsp&nbsp&nbsp
+      <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> <span id="job-time">8.30</span>
+    </div>
+  </div>
+
+  <button class="appointment-info-btn-confirm">ยืนยันการนัดหมาย</button>
+</div>
+
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dialog-custom modal-dialog-custom-1">
+      <div class="modal-body">
+        <div class="appointment-modal-title">แก้ไขข้อมูลผู้ใช้บริการ</div>
+
+        <div class="fname-input">
+          <input type="text" id="fname-field" />
+          <label for="fname-field" class="label-input" id="fname-lab">ชื่อ</label>
+        </div>
+
+        <div class="lname-input">
+          <input type="text" id="lname-field" />
+          <label for="lname-field" class="label-input" id="lname-lab">นามสกุล</label>
+        </div>
+
+        <!-- <div class="tel-input">
+          <input type="text" id="tel-field"  />
+          <label for="tel-field" class="label-input" id="tel-lab">เบอร์โทรศัพท์</label>
+        </div> -->
+        <div class="tel-input">
+          <!-- <input type="text" id="tel-field"  /> -->
+          <input id="tel-field" name="phone" type="tel">
+          <label for="tel-field" class="label-input" id="tel-lab">เบอร์โทรศัพท์</label>
+        </div>
+
+        <div class="emailUser-input">
+          <input type="text" id="emailUser-field" />
+          <label for="emailUser-field" class="label-input" id="emailUser-lab">อีเมล</label>
+        </div>
+
+        <button class="appointment-modal-btn-cancel">ยกเลิก</button>
+        <button class="appointment-modal-btn-save">บันทึก</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/tel-input/js/intlTelInput.js"></script>
+<script>
+
+
+  $(document).ready(function () {
+
+    isLogin();
+    checkServices();
+    showMenu();
+    getCustomerProfile();
+
+    $("#province-field").click(function () {
+      $("#provinceModal").modal("show");
+    });
+
+    $(".collapsible").click(function () {
+      $(this).toggleClass("active");
+      // $(this).parent().parent().toggleClass("services-expand-item-content-body");
+      $(this).find(".fas").toggleClass("fa-chevron-up").toggleClass("fa-chevron-down");
+      $(this).next().fadeToggle(300);
+      if ($(this).find(".fas").hasClass("fa-chevron-up")) {
+        $(this).parent().parent().css("height", "130px");
+      } else {
+        $(this).parent().parent().css("height", (130 + $(this).next().height()) + "px");
+      }
+    });
+
+    $("#edit-user").click(function () {
+      $("#editUserModal").modal("show");
+    });
+
+    $(".appointment-info-btn-confirm").click(function () {
+      setJob();
+    });
+
+    var input = document.querySelector("#tel-field");
+    window.intlTelInput(input, {
+      allowDropdown: true,
+      utilsScript: "../assets/build/js/utils.js",
+    });
+
+    renderJobList();
+    //initialLang();
+  });
+
+  function initialLang() {
+    var currentLang = langTH;
+    $(".header-title-service").text(currentLang.service.topic);
+  }
+
+  function getJobTemplate(key, val) {
+    var template = `
+      <div class="appointment-services-item" id="appointment-services-item-${key}">
+        <div class="appointment-services-total-checkbox">x2</div>
+        <span class="service-logo-left ">
+          <img src="../assets/img/${val.car_brand.toLowerCase()}.png" width="62px">
+        </span>
+        <span style="position: absolute;">
+          <div class="service-registercar">
+            ${val.car_license}
+          </div>
+          <div class="services-brandcar-detail">${val.car_series}</div>
+          <div class="services-expand-item collapsible">บริการที่เลือกทั้งหมด <i class="fas fa-chevron-up"></i></div>
+          <div class="services-expand-item-content">
+            <ul>
+                ${val.servicetask1 ? "<li>" + serviceCheckbox[0] + "</li>" : ""}
+                ${val.servicetask2 ? "<li>" + serviceCheckbox[1] + "</li>" : ""}
+                
+                ${val.custcare1 ? "<li>" + cuscareCheckbox[0] + "</li>" : ""}
+                ${val.custcare2 ? "<li>" + cuscareCheckbox[1] + "</li>" : ""}
+                ${val.custcare3 ? "<li>" + cuscareCheckbox[2] + "</li>" : ""}
+                
+              </ul>
+          </div>
+        </span>
+      </div>
+    `;
+    $("#services-point-name").html(val.job_service_point_name);
+    $("#job-date").html(val.job_appoint_date);
+    $("#job-time").html(val.job_appoint_time);
+    $("#appointment-info-detail-additional").append(`
+      
+        ${val.servicenote ? "<li>" + val.servicenote + "</li>" : ""}
+        ${val.custcarenote ? "<li>" + val.custcarenote + "</li>" : ""}
+      
+    `);
+    return template;
+  }
+
+  function renderJobList() {
+    $(".lds-ring").show();
+    if (localStorage.getItem("currentJobList") !== null) {
+      $(".appointment-info-btn-confirm").prop("disabled", true);
+      $(".appointment-info-btn-confirm").addClass("appointment-info-btn-confirm-inactive");
+      currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+      $.each(currentJobList, function (key, val) {
+        $(".appointment-info-btn-confirm").prop("disabled", false);
+        $(".appointment-info-btn-confirm").removeClass("appointment-info-btn-confirm-inactive");
+        var id = "#appointment-services-item-" + key;
+        if ($(".appointment-services-item").length) {
+          $("#appointment-info-detail-box").before(getJobTemplate(key, val));
+        } else {
+          $("#appointment-info-title").after(getJobTemplate(key, val));
+        }
+        $(id).find(".appointment-services-total-checkbox").text("x" + $(id).find("li").length);
+      });
+    } else {
+      $(".appointment-info-btn-confirm").prop("disabled", true);
+      $(".appointment-info-btn-confirm").addClass("appointment-info-btn-confirm-inactive");
+    }
+    setEvent();
+    $(".lds-ring").hide();
+  }
+
+  function setEvent() {
+    $(".collapsible").click(function () {
+      $(this).toggleClass("active");
+      $(this).find(".fas").toggleClass("fa-chevron-up").toggleClass("fa-chevron-down");
+      $(this).next().fadeToggle(300);
+      if ($(this).find(".fas").hasClass("fa-chevron-up")) {
+        $(this).parent().parent().css("height", "130px");
+      } else {
+        $(this).parent().parent().css("height", (130 + $(this).next().height()) + "px");
+      }
+    });
+  }
+
+  function checkServices() {
+    if (localStorage.getItem("currentJobList") !== null) {
+
+      currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+      if (currentJobList.length == 0) {
+        window.location.href = "#/register/";
+      }
+
+    } else {
+      window.location.href = "#/register/";
+    }
+  }
+
+  function setJob() {
+    if (localStorage.getItem("currentJobList") !== null) {
+      currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+      $(".lds-ring").show();
+      $.each(currentJobList, function (key, val) {
+        $.ajax({
+          url: baseURL + "insertjob/",
+          method: "POST",
+          data: {
+            job_order: (key + 1),
+            customer_code: "",
+            job_car_vin_id: val.car_vinID,
+            job_service_point_code: val.job_service_point_code,
+            job_appoint_datetime: val.job_appoint_datetime,
+            servicetask1: val.servicetask1,
+            servicetask2: val.servicetask2,
+            servicenote: val.servicenote,
+            custcare1: val.custcare1,
+            custcare2: val.custcare2,
+            custcare3: val.custcare3,
+            custcarenote: val.custcarenote,
+            car_odo_mile: val.car_odo_mile,
+            usertasknote: val.usertasknote
+          },
+          async: false,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Bearer " + localStorage.getItem("token")
+          },
+          success: function (result) {
+            $(".lds-ring").hide();
+            if (result.result == "true") {}
+          },
+          error: function (xhr, status, error) {
+            $(".lds-ring").hide();
+            if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+              window.location.href = "#/login/";
+            }
+          }
+        });
+      });
+      var jobid = confirmJob(); 
+      window.location.href = "#/confirmbook/?jobid="+jobid;
+    }
+  }
+
+  function confirmJob() {
+    var jobid = "";
+    $.ajax({
+      url: baseURL + "confirmjob/",
+      method: "GET",
+      data: {},
+      async: false,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.result == "true") {
+          localStorage.removeItem("currentJobList");
+          jobid = result.jobid;
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#/login/";
+        }
+      }
+    });
+    return jobid;
+  }
+
+  function getCustomerProfile() {
+    $(".lds-ring").show();
+    $.ajax({
+      url: baseURL + "customerprofile/",
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.profile.length > 0) {
+
+          $("#appointment-info-fullname").text(result.profile[0].customer_firstname+" "+result.profile[0].customer_lastname);
+          $("#appointment-info-tel").text(result.profile[0].customer_telephone);
+          $("#appointment-info-email").text(result.profile[0].customer_email);
+
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#/login/";
+        }
+      }
+    });
+  }
+  
+
+</script>

@@ -1,0 +1,46 @@
+<div class="center-block confirm-book-box">
+  <div class="confirm-book-title">
+    <span class="glyphicon glyphicon-ok confirm-book-icon" aria-hidden="true"></span> รับข้อมูลสำเร็จ
+  </div>
+  <div class="confirm-book-subtitle">หมายเลขบริการ : ASAPXXXX</div>
+  <img src="./assets/img/confirm.png" class="confirm-book-image">
+  <div class="confirm-book-content">
+    ASAP จะติดต่อกลับภายใน 2 ชั่วโมงทำการ <br>
+    จ - อา | 8.00 - 18.00 น.
+  </div>
+  <button class="confirm-book-next-btn">กลับสู่หน้าหลัก</button>
+  <div class="confirm-book-add-btn">ทำการนัดหมายเพิ่ม</div>
+</div> 
+
+<script>
+  var jobid = getParameterByName('jobid');
+
+  $(document).ready(function () {    
+    $(".container-custom").css({"background-image":"url('./assets/img/confirm-bg.png')", "background-repeat":"no-repeat","background-color": "#fef4f0"});
+    
+    $(".confirm-book-add-btn").click(function(){
+      window.location.href = "#/register/";
+    });
+    
+    $(".confirm-book-next-btn").click(function(){
+      window.location.href = "#/mylist/";
+    });
+
+
+    if(jobid == "" || jobid == undefined){
+      window.location.href = "#/register/";
+    }else{
+      $(".confirm-book-subtitle").text("หมายเลขบริการ : "+jobid);
+    }
+
+    isLogin();
+    //initialLang();
+  });
+
+  function initialLang() {
+    var currentLang = langTH;
+    $(".header-title-service").text(currentLang.service.topic);
+  }
+
+</script>
+

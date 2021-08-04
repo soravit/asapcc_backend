@@ -1,0 +1,445 @@
+<div class="center-block appointment-box">
+  <div class="header-title-service">
+    นัดหมาย
+  </div>
+  <div class="appointment-title">เลือกจุดบริการ</div>
+  <div class="appointment-subtitle">กรุณาเลือกศูนย์ซ่อมที่ต้องการเข้ารับบริการ</div>
+
+  <div class="appointment-map-box">
+    <div id="Map" style="height:300px"></div>
+  </div>
+
+  <div class="row">
+    <div class='col-sm-6'>
+      <select class="form-control" id="province-field">
+        <option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon"
+            aria-hidden="true"></span> เลือกจังหวัด</option>
+      </select>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <select class="form-control" id="service-center-field">
+          <option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon"
+              aria-hidden="true"></span> เลือกศูนย์บริการ</option>
+        </select>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="service-center-have-been">
+    ศูนย์บริการที่เคยไป
+  </div>
+  <!-- <div class="service-center-name-active">
+    <span class="glyphicon glyphicon-wrench service-center-name-icon" aria-hidden="true"></span>
+    <div class="service-center-name-label">ชื่อศูนย์ 1</div>
+  </div> -->
+  <!-- <div class="service-center-name-inactive">
+    <span class="glyphicon glyphicon-wrench service-center-name-icon" aria-hidden="true"></span>
+    <div class="service-center-name-label">ชื่อศูนย์ 2</div>
+  </div> -->
+  <div class="appointment-divider"></div>
+  <div class="appointment-title">เลือกวันและเวลา</div>
+  <div class="appointment-subtitle">กรุณาเลือกวันที่ต้องการเข้ารับบริการ </div>
+  <div class="appointment-warning-box">
+    <div class="appointment-warning-text">คำแนะนำ</div>
+    <div class="appointment-warning-text-list">
+      <ul>
+        <li>เลือกรับบริการเวลาเช้า เพื่อนำรถกลับภายในวัน </li>
+        <li>กรุณามาก่อนเวลานัดหมาย 15 นาที เพื่อเตรียมการ</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <div class='input-group date' id='dateOnly'>
+          <input type='text' class="form-control" style="height:40px;" placeholder="วัน" />
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <div class='input-group date' id='timeOnly'>
+          <input type='text' class="form-control" style="height:40px;" placeholder="เวลา" />
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-time"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(function () {
+        $('#dateOnly').datetimepicker({
+          viewMode: 'days',
+          format: 'YYYY-MM-DD'
+        });
+
+        $('#timeOnly').datetimepicker({
+          viewMode: 'days',
+          format: 'LT',
+          format: 'HH:mm:ss'
+        });
+      });
+    </script>
+  </div>
+
+  <button class="appointment-next-btn appointment-next-btn-inactive" disabled>ถัดไป</button>
+</div>
+
+<script>
+
+  var map;
+  $(document).ready(function () {
+    isLogin();
+    checkServices();
+    getLastServicePoint();
+    setTimeout(function () {
+      getAllServicePoint();
+      getServicePointProvince();
+    }, 2000);
+
+    $("#province-field").change(function () {
+      $("#service-center-field").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกศูนย์บริการ</option>');
+      getServicepointamphor($(this).val());
+      validationForm();
+    });
+
+    $("#service-center-field").change(function () {
+      getServicePointByLoc();
+      validationForm();
+    });
+
+    $("#dateOnly").on('dp.change', function (e) { validationForm(); console.log($("#dateOnly").find("input").val()); });
+
+    $("#timeOnly").on('dp.change', function (e) { validationForm(); console.log($("#timeOnly").find("input").val()); });
+
+    $(".appointment-next-btn").click(function () {
+      setServicePoint();
+    });
+
+    //initialLang();
+  });
+
+  function initialLang() {
+    var currentLang = langTH;
+    $(".header-title-service").text(currentLang.service.topic);
+
+  }
+
+  function getAllServicePoint() {
+    $(".lds-ring").show();
+    $.ajax({
+      url: baseURL + "getallservicepoint",
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      async: false,
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.servicepoint.length > 0) {
+
+          var planes = [];
+          $.each(result.servicepoint, function (key, val) {
+            planes.push([val.branch_name, val.lattitude, val.longtitude]);
+          });
+
+          map = L.map('Map').setView([13.767246756409243, 100.49440032288396], 10);
+          //var map = L.map('Map').setView([planes[1][1], planes[1][2]], 10);
+          mapLink =
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+          L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 18,
+          }).addTo(map);
+
+          for (var i = 0; i < planes.length; i++) {
+            marker = new L.marker([planes[i][1], planes[i][2]])
+              .bindPopup(planes[i][0])
+              .addTo(map);
+          }
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#login";
+        }
+      }
+    });
+  }
+
+  function getServicePointProvince() {
+    $(".lds-ring").show();
+    $.ajax({
+      url: baseURL + "getservicepointprovince",
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      async: false,
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.province.length > 0) {
+          $.each(result.province, function (key, val) {
+            $("#province-field").append("<option value='" + val.province_name_th + "'>" + val.province_name_th + "</option>");
+          });
+
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#login";
+        }
+      }
+    });
+  }
+
+  function getServicepointamphor(province_name_th) {
+    $(".lds-ring").show();
+    $.ajax({
+      url: baseURL + "getservicepointamphor?province=" + province_name_th,
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      async: true,
+      success: function (result) {
+        if (result.amphor.length > 0) {
+
+          $.each(result.amphor, function (key, val) {
+            searchServicePointByLoc(val);
+          });
+
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#login";
+        }
+      }
+    });
+  }
+
+  function searchServicePointByLoc(val) {
+    $.ajax({
+      url: baseURL + "searchservicepointbyloc?province=" + val.province_name_th + "&amphor=" + val.amphor_name_th,
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      async: true,
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.servicepoint.length > 0) {
+
+          $.each(result.servicepoint, function (key, val) {
+            $("#service-center-field").append("<option value='" + val.amphor_name_th + "' serviceCode='" + val.service_code + "''>" + val.branch_name + "</option>");
+          });
+
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#login";
+        }
+      }
+    });
+  }
+
+  function getServicePointByLoc() {
+    $(".lds-ring").show();
+    var province = $("#province-field").val();
+    var amphor = $("#service-center-field").val();
+    $.ajax({
+      url: baseURL + "searchservicepointbyloc?province=" + province + "&amphor=" + amphor,
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      async: true,
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.servicepoint.length > 0) {
+          var planes = [];
+          $.each(result.servicepoint, function (key, val) {
+            planes.push([val.branch_name, val.lattitude, val.longtitude]);
+          });
+
+          map.off();
+          map.remove();
+
+          setTimeout(function () {
+            map = L.map('Map').setView([planes[0][1], planes[0][2]], 10);
+            mapLink =
+              '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+            L.tileLayer(
+              'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; ' + mapLink + ' Contributors',
+              maxZoom: 18,
+            }).addTo(map);
+
+            for (var i = 0; i < planes.length; i++) {
+              marker = new L.marker([planes[i][1], planes[i][2]])
+                .bindPopup(planes[i][0])
+                .addTo(map);
+            }
+          }, 1000);
+
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#login";
+        }
+      }
+    });
+  }
+
+  function getLastServicePoint() {
+    $.ajax({
+      url: baseURL + "getlastservicepoint",
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      async: true,
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.servicepoint.length > 0) {
+          $(".service-center-have-been").show();
+          $.each(result.servicepoint, function (key, val) {
+            if ($(".service-center-name-inactive").length) {
+              $(".appointment-divider").before(`
+                <div class="service-center-name-inactive" lattitude="${val.lattitude}" longtitude="${val.longtitude}" amphor_name_th="${val.amphor_name_th}" province_name_th="${val.province_name_th}" branch_name="${val.branch_name}">
+                  <span class="glyphicon glyphicon-wrench service-center-name-icon" aria-hidden="true"></span>
+                  <div class="service-center-name-label">${val.service_point_name}</div>
+                </div>
+              `);
+            } else {
+              $(".service-center-have-been").after(`
+                <div class="service-center-name-inactive" lattitude="${val.lattitude}" longtitude="${val.longtitude}" amphor_name_th="${val.amphor_name_th}" province_name_th="${val.province_name_th}" branch_name="${val.branch_name}">
+                  <span class="glyphicon glyphicon-wrench service-center-name-icon" aria-hidden="true"></span>
+                  <div class="service-center-name-label">${val.service_point_name}</div>
+                </div>
+              `);
+            }
+
+          });
+
+          $(".service-center-name-inactive").off().click(function () {
+            var obj = $(this);
+            $("#province-field").val(obj.attr("province_name_th"));
+            $("#service-center-field").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกศูนย์บริการ</option>');
+            getServicepointamphor(obj.attr("province_name_th"));
+            setTimeout(function () {
+              $("#service-center-field").val(obj.attr("amphor_name_th"));
+              
+              var planes = [];
+              planes.push([obj.attr("branch_name"), obj.attr("lattitude"), obj.attr("longtitude")]);
+
+              map.off();
+              map.remove();
+              map = L.map('Map').setView([planes[0][1], planes[0][2]], 10);
+              mapLink =
+                '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+              L.tileLayer(
+                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; ' + mapLink + ' Contributors',
+                maxZoom: 18,
+              }).addTo(map);
+
+              for (var i = 0; i < planes.length; i++) {
+                marker = new L.marker([planes[i][1], planes[i][2]])
+                  .bindPopup(planes[i][0])
+                  .addTo(map);
+              }
+            }, 1000);
+          });
+
+        } else {
+          $(".service-center-have-been").hide();
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#login";
+        }
+        $(".service-center-have-been").hide();
+      }
+    });
+  }
+
+  function validationForm() {
+    var province = $("#province-field").val();
+    var amphor = $("#service-center-field").val();
+    var datePicker = $("#dateOnly").find("input").val();
+    var timePicker = $("#timeOnly").find("input").val();
+    if (province == null || amphor == null || datePicker == "" || timePicker == "") {
+      $(".appointment-next-btn").prop("disabled", true);
+      $(".appointment-next-btn").addClass("appointment-next-btn-inactive");
+    } else {
+      $(".appointment-next-btn").prop("disabled", false);
+      $(".appointment-next-btn").removeClass("appointment-next-btn-inactive");
+    }
+  }
+
+  function checkServices() {
+    if (localStorage.getItem("currentJobList") !== null) {
+
+      currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+      console.log(currentJobList);
+      if (currentJobList.length == 0) {
+        window.location.href = "#/register/";
+      }
+
+    } else {
+      window.location.href = "#/register/";
+    }
+  }
+
+  function setServicePoint() {
+    if (localStorage.getItem("currentJobList") !== null) {
+      currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+    }
+
+    $.each(currentJobList, function (key, val) {
+      val.job_service_point_name = $("#service-center-field option:selected").text() + "<br>" + $("#province-field option:selected").text();
+      val.job_service_point_code = $("#service-center-field option:selected").attr("serviceCode");
+      val.job_appoint_datetime = $("#dateOnly").find("input").val() + " " + $("#timeOnly").find("input").val();
+      val.job_appoint_date = $("#dateOnly").find("input").val();
+      val.job_appoint_time = $("#timeOnly").find("input").val();
+    });
+
+    console.log(currentJobList);
+
+    localStorage.removeItem("currentJobList");
+    localStorage.setItem("currentJobList", JSON.stringify(currentJobList));
+
+    window.location.href = "#/appointmentinfo/";
+  }
+
+</script>

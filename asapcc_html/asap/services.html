@@ -1,0 +1,1000 @@
+<div class="services-box">
+  <div class="header-title-services">
+    บริการที่คุณเลือก
+  </div>
+
+  <div class="services-add-btn"><i class="fas fa-plus"></i> เพิ่มรถ</div>
+
+  <div class="services-cancel-btn">ยกเลิกทั้งหมด</div>
+  <button class="services-next-btn">ทำรายการต่อ</button>
+</div>
+
+<div class="modal fade" id="myAddCarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dialog-custom modal-dialog-custom-1">
+      <div class="modal-body">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="text-header-register" id="text-header-register">
+          เลขทะเบียนรถยนต์
+        </div>
+        <div class="text-title" id="text-title-register">
+          กรุณาระบุทะเบียนรถของคุณเพื่อรับบริการ
+        </div>
+        <div class="registercar-frame">
+          <img src="./assets/img/frame-car.png" width="100%">
+          <input type="text" id="registercar-field" autocomplete="off" required />
+        </div>
+        <button class="register-car-number-btn-disabled" id="next-btn">ถัดไป</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="servicesAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dialog-custom modal-dialog-custom-1">
+      <div class="modal-body">
+        <div class="appointment-modal-title">เพิ่มรถเพื่อรับบริการ</div>
+
+        <div class="search-input">
+          <span class="glyphicon glyphicon-search search-icon" aria-hidden="true"></span>
+          <input type="text" id="search-field" autocomplete="off" />
+          <label for="search-field" class="label-input" id="search-lab">ค้นหาทะเบียนรถ</label>
+        </div>
+
+        <span class="services-total">ทั้งหมด 59 คัน</span>
+        <span class="services-select-one">เลือก 1/59 คัน</span>
+        <div style="position:relative;height:230px;overflow-y: scroll;overflow-x: hidden; margin: 10px 0px;"
+          id="mylist">
+          <!-- <div class="services-item-modal-active">
+            <span class=""><img src="./assets/img/bmw.png" class="mylist-item-img"></span>
+            <div class="mylist-item-line mylist-item-line-active"></div>
+            <div class="mylist-item-title">กต 245</div>
+            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด 22 ก.ย. 2563</div>
+            <div class="services-mylist-item-checkbox"><input type="checkbox" id="" name="" value="" checked></div>
+          </div> -->
+          <!-- <div class="services-item-modal">
+            <span class=""><img src="./assets/img/bmw.png" class="mylist-item-img"></span>
+            <div class="mylist-item-line"></div>
+            <div class="mylist-item-title">กต 245</div>
+            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด 22 ก.ย. 2563</div>
+            <div class="services-mylist-item-checkbox"><input type="checkbox" id="" name="" value=""></div>
+          </div>
+          <div class="services-item-modal">
+            <span class=""><img src="./assets/img/bmw.png" class="mylist-item-img"></span>
+            <div class="mylist-item-line"></div>
+            <div class="mylist-item-title">กต 245</div>
+            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด 22 ก.ย. 2563</div>
+            <div class="services-mylist-item-checkbox"><input type="checkbox" id="" name="" value=""></div>
+          </div>
+          <div class="services-item-modal">
+            <span class=""><img src="./assets/img/bmw.png" class="mylist-item-img"></span>
+            <div class="mylist-item-line"></div>
+            <div class="mylist-item-title">กต 245</div>
+            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด 22 ก.ย. 2563</div>
+            <div class="services-mylist-item-checkbox"><input type="checkbox" id="" name="" value=""></div>
+          </div> -->
+          <!-- <div class="services-item-modal">
+            <span class=""><img src="./assets/img/bmw.png" class="mylist-item-img"></span>
+            <div class="mylist-item-line"></div>
+            <div class="mylist-item-title">กต 245</div>
+            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด 22 ก.ย. 2563</div>
+            <div class="services-mylist-item-checkbox"><input type="checkbox" id="" name="mylist-item" value=""></div>
+          </div> -->
+        </div>
+        <button class="services-mylist-item-register-btn">ลงทะเบียนรถคันใหม่</button>
+        <button class="services-mylist-item-next-btn services-mylist-item-next-btn-inactive" disabled>ถัดไป</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myAddCarConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dialog-custom modal-dialog-custom-2">
+      <div class="modal-body">
+
+        <div class="confirm-register-top">
+          <div class="text-header-confirm">ยืนยันข้อมูล</div>
+          <div class="confirm-register-box-left">
+            <div class="confirm-register-img-sub-left"></div>
+            <img class="confirm-register-img-left" src="./assets/img/bmwcar.png" id="car_brand_img" width="210px">
+          </div>
+          <div class="confirm-register-box-right services-confirm-register-box-right">
+            <div>
+              <span class="confirm-register-box-right-logo">
+                <img src="./assets/img/bmw.png" width="34px" id="car_brand_logo">
+              </span>
+              <span class="confirm-register-box-right-text-top">
+                <div class="confirm-register-box-right-title" id="car_brand">BMW</div>
+                <div class="confirm-register-box-right-subtitle" id="car_series">Series 3 330e M Sport</div>
+              </span>
+            </div>
+            <div class="confirm-register-box-right-divider"></div>
+            <div style="position: absolute;">
+              <span class="confirm-register-box-right-logo">
+                <i class="fas fa-car confirm-register-car-icon"></i>
+              </span>
+              <span class="confirm-register-box-right-text-bottom">
+                <div class="confirm-register-box-right-title" id="car_license">กต 245</div>
+                <div class="confirm-register-box-right-subtitle">ทะเบียนรถ</div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="confirm-register-bottom">
+          <span class="confirm-register-bank-logo"><img src="./assets/img/bangkok.png" width="64px"
+              id="business_img"></span>
+          <span class="confirm-register-bank" id="business_name">
+            Bangkok Bank Public Company Limited
+          </span>
+          <button class="confirm-register-btn" id="confirm-next-btn">ยินยันข้อมูล</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myAddCarServiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dialog-custom modal-dialog-custom-3">
+      <div class="modal-body">
+        <div class="select-services">เลือกบริการ</div>
+        <div style="position: absolute;">
+          <span class="service-logo-left ">
+            <img src="./assets/img/bmw.png" width="62px" id="service-car-img-logo">
+          </span>
+          <span style="position: absolute;">
+            <div class="service-registercar" id="service-car-license">
+              กต 245
+            </div>
+            <div class="service-brandcar" id="service-car-brand">BMW</div>
+          </span>
+          <span class="service-brandcar-detail" id="service-car-series">Series 3 330e M Sport</span>
+        </div>
+
+        <div class="service-topic-box">
+          <div class="service-topic">บริการซ่อมและบำรุงรักษารถยนต์</div>
+        </div>
+
+        <span class="service-checkbox"><input type="checkbox" id="repair-input-1"> <span
+            class="service-checkbox-label">เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง</span> </span>
+        <span class="service-checkbox"><input type="checkbox" id="repair-input-2"> <span
+            class="service-checkbox-label">เปลี่ยนยาง</span></span>
+        <br>
+        <span class="service-checkbox"><input type="checkbox" id="other-check"> <span
+            class="service-checkbox-label">ปัญหาอื่นๆ (โปรดระบุ)</span></span>
+        <br>
+        <span class="service-checkbox"><input type="text" id="other-input" class="service-input-other hide"> </span>
+        <span class="service-checkbox"><input type="text" id="km-input" class="service-input-km"
+            placeholder="เลขไมล์                                       กม."> </span>
+
+        <div class="service-topic-box">
+          <div class="service-topic">บริการให้คำปรึกษา</div>
+        </div>
+
+        <span class="service-checkbox"><input type="checkbox" id="consult-input-1"><span
+            class="service-checkbox-label">สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์</span></span>
+        <span class="service-checkbox"><input type="checkbox" id="consult-input-2"> <span
+            class="service-checkbox-label">สอบถามสถานะรถซ่อม</span></span>
+        <br>
+        <span class="service-checkbox"><input type="checkbox" id="consult-input-3"> <span
+            class="service-checkbox-label">สอบถามสถานะรถทดแทน</span></span>
+        <span class="service-checkbox"><input type="checkbox" id="other-check-inquiry"> <span
+            class="service-checkbox-label">สอบถามอื่นๆ (โปรดระบุ)</span> </span>
+        <span class="service-checkbox"> <span class="service-checkbox-label"></span></span>
+        <span class="service-checkbox"><span style="width:223px;margin-left: 16px;"></span> </span>
+        <span class="service-checkbox"><input type="text" id="other-input-inquiry" class="service-input-km hide">
+        </span>
+
+        <div class="service-divider"></div>
+
+        <textarea class="service-textarea" rows="4" cols="50" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)"></textarea>
+        <button class="service-next-btn-disable" id="service-next-btn" disabled>ถัดไป</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myCancelAllModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dialog-custom modal-dialog-custom-1">
+      <div class="modal-body">
+        <div class="services-cancel-dialog" id="services-cancel-all-dialog">ยกเลิกบริการทั้งหมด</div>
+        <div class="services-cancel-dialog-detail">รายการทั้งหมดจะถูกยกเลิก หากต้องการ รับบริการ จะต้องทำรายการใหม่
+        </div>
+        <button class="services-cancel-confirm-btn" id="services-cancel-confirm-btn-all">ยืนยันการยกเลิก</button>
+        <button class="services-cancel-cancel-btn">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-dialog-custom modal-dialog-custom-1">
+      <div class="modal-body">
+        <div class="services-cancel-dialog" style="margin-bottom: 35px;">คุณต้องการลบ “<span
+            id="deleteCarLicense"></span>”
+          <br>ออกจากรายการรับบริการ
+        </div>
+        <button class="services-cancel-confirm-btn" id="services-cancel-confirm-btn">ยืนยันการยกเลิก</button>
+        <button class="services-cancel-cancel-btn">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModalRegister404" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-custom-404">
+    <div class="modal-content modal-dialog-custom">
+      <div class="modal-body modal-dialog-body-404">
+
+        <div class="modal-dialog-bottom">
+          <div class="icon-register-404">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="text-header-register-404">ไม่พบข้อมูลในระบบ</div>
+          <div class="text-title-register-404">กรุณาระบุเลขทะเบียนใหม่อีกครั้ง</div>
+
+
+          <button class="register-car-btn">ระบุเลขทะเบียนใหม่</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="registerExpired" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-custom-404">
+    <div class="modal-content modal-dialog-custom">
+      <div class="modal-body modal-dialog-body-404">
+        <div class="modal-dialog-bottom">
+
+          <div class="icon-register-404">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="text-header-register-expired" id="text-header-register-expired-1">รถสัญญาหมดอายุแล้ว</div>
+          <button class="register-car-btn">ระบุเลขทะเบียนใหม่</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirmRegusterAleady" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-custom-404">
+    <div class="modal-content modal-dialog-custom">
+      <div class="modal-body modal-dialog-body-404">
+        <div class="modal-dialog-bottom">
+
+          <div class="icon-register-404">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="text-header-register-expired" id="text-header-register-expired-2">รถคันนี้ลงทะเบียนแล้ว</div>
+          <div class="text-title-register-404">กรุณาระบุเลขทะเบียนใหม่อีกครั้ง</div>
+          <button class="register-car-btn">ระบุเลขทะเบียนใหม่</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  var jobByCarLicense;
+  var currentRegisterLicenseID;
+  //=====Modal Service=====
+  var isCheckRepair = false;
+  var isCheckConsult = false;
+  var vinID = "";
+  var currentJob = {};
+  var currentJobList = [];
+  var isServicesAddCarModal = false;
+  //=======================
+  $(document).ready(function () {
+
+    isLogin();
+    renderJobList();
+    getMyCar();
+
+    if($(".select-services-btn").length > 0){
+      $(".services-next-btn").prop("disabled", true);
+      $(".services-next-btn").addClass("services-next-btn-inactive");
+    }else{
+      $(".services-next-btn").prop("disabled", false);
+      $(".services-next-btn").removeClass("services-next-btn-inactive");
+    }
+
+    $(".services-add-btn").click(function () {
+      if (isServicesAddCarModal) {
+        $('#servicesAddModal').modal('show');
+      } else {
+        $('#myAddCarModal').modal('show');
+      }
+    });
+
+    $(".services-cancel-btn").click(function () {
+      $('#myCancelAllModal').modal('show');
+    });
+
+    $(".services-cancel-cancel-btn").click(function () {
+      $("#myCancelAllModal").modal('hide');
+      $("#deleteModal").modal('hide');
+    });
+
+    $("#services-cancel-confirm-btn").click(function () {
+      $(".services-item").remove();
+      removeJobByOrder();
+      renderJobList();
+      $("#deleteModal").modal('hide');
+    });
+
+    $("#services-cancel-confirm-btn-all").click(function () {
+      $(".services-item").remove();
+      removeJobAll();
+      renderJobList();
+      $("#myCancelAllModal").modal('hide');
+    });
+
+    $("#registercar-field").keyup(function () {
+      if ($(this).val() == "") {
+        $("#next-btn").addClass("register-car-number-btn-disabled");
+        $("#next-btn").removeClass("register-car-number-btn");
+      } else {
+        $("#next-btn").addClass("register-car-number-btn");
+        $("#next-btn").removeClass("register-car-number-btn-disabled");
+      }
+    });
+
+    $("#next-btn").click(function () {
+      currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+      var resultObject = searchObj($("#registercar-field").val(), currentJobList);
+      console.log(resultObject);
+      if (resultObject > -1) {
+        $('#confirmRegusterAleady').modal('show');
+      } else {
+        getCarByLicenseID();
+      }
+    });
+
+    $(".register-car-btn").click(function () {
+      $("#registercar-field").val("");
+      $('#myModalRegister404').modal('hide');
+      $('#registerExpired').modal('hide');
+    });
+
+    $("#confirm-next-btn").click(function () {
+      hasCarRegister();
+    });
+
+    $(".register-car-btn").click(function () {
+      $('#confirmRegusterAleady').modal('hide');
+      $('#myAddCarConfirmModal').modal('hide');
+      setTimeout(function () {
+        $("#myAddCarModal").modal('show');
+      }, 1000)
+    });
+
+    //===Modal service==
+    $("#other-check").change(function () {
+      if ($(this).prop("checked")) {
+        isCheckRepair = false;
+        $("#other-input").toggleClass("hide");
+      } else {
+        isCheckRepair = true;
+        $("#other-input").val("");
+        $("#other-input").toggleClass("hide");
+        $("#other-input").removeClass("validation-error");
+      }
+    });
+
+    $("#other-input").keyup(function () {
+      if (this.value !== "") {
+        isCheckRepair = true;
+      } else {
+        isCheckRepair = false;
+      }
+      if (isCheckRepair && isCheckConsult) {
+        $("#service-next-btn").removeClass("service-next-btn-disable");
+        $("#service-next-btn").addClass("service-next-btn");
+        $("#service-next-btn").prop("disabled", false);
+      } else {
+        $("#service-next-btn").removeClass("service-next-btn");
+        $("#service-next-btn").addClass("service-next-btn-disable");
+        $("#service-next-btn").prop("disabled", true);
+      }
+    });
+
+    $("#other-input-inquiry").keyup(function () {
+      if (this.value !== "") {
+        isCheckConsult = true;
+      } else {
+        isCheckConsult = false;
+      }
+      if (isCheckRepair && isCheckConsult) {
+        $("#service-next-btn").removeClass("service-next-btn-disable");
+        $("#service-next-btn").addClass("service-next-btn");
+        $("#service-next-btn").prop("disabled", false);
+      } else {
+        $("#service-next-btn").removeClass("service-next-btn");
+        $("#service-next-btn").addClass("service-next-btn-disable");
+        $("#service-next-btn").prop("disabled", true);
+      }
+    });
+
+    $("#other-check-inquiry").change(function () {
+      if ($(this).prop("checked")) {
+        isCheckConsult = false;
+        $("#other-input-inquiry").toggleClass("hide");
+      } else {
+        isCheckConsult = true;
+        $("#other-input-inquiry").val("");
+        $("#other-input-inquiry").toggleClass("hide");
+        $("#other-input-inquiry").removeClass("validation-error");
+      }
+    });
+
+    $("[id^=repair-input-]").change(function () {
+      isCheckRepair = false;
+      $("[id^=repair-input-]").each(function () {
+        if ($(this).prop("checked")) {
+          isCheckRepair = true;
+        }
+      });
+
+      if (isCheckRepair && isCheckConsult) {
+        $("#service-next-btn").removeClass("service-next-btn-disable");
+        $("#service-next-btn").addClass("service-next-btn");
+        $("#service-next-btn").prop("disabled", false);
+      } else {
+        $("#service-next-btn").removeClass("service-next-btn");
+        $("#service-next-btn").addClass("service-next-btn-disable");
+        $("#service-next-btn").prop("disabled", true);
+      }
+    });
+
+    $("[id^=consult-input-]").change(function () {
+      isCheckConsult = false;
+      $("[id^=consult-input-]").each(function () {
+        if ($(this).prop("checked")) {
+          isCheckConsult = true;
+        }
+      });
+
+      if (isCheckRepair && isCheckConsult) {
+        $("#service-next-btn").removeClass("service-next-btn-disable");
+        $("#service-next-btn").addClass("service-next-btn");
+        $("#service-next-btn").prop("disabled", false);
+      } else {
+        $("#service-next-btn").removeClass("service-next-btn");
+        $("#service-next-btn").addClass("service-next-btn-disable");
+        $("#service-next-btn").prop("disabled", true);
+      }
+    });
+
+    $("#service-next-btn").click(function () {
+      var km = $("#km-input").val();
+      var otherRepair = $("#other-check").prop("checked");
+      var otherRepairText = $("#other-input").val();
+      var otherConsult = $("#other-check-inquiry").prop("checked");
+      var otherConsultText = $("#other-input-inquiry").val();
+
+      if (km == "") {
+        $("#km-input").addClass("validation-error");
+      } else {
+        $("#km-input").removeClass("validation-error");
+      }
+
+      if (otherRepair && otherRepairText == "") {
+        $("#other-input").addClass("validation-error");
+      } else {
+        $("#other-input").removeClass("validation-error");
+      }
+
+      if (otherConsult && otherConsultText == "") {
+        $("#other-input-inquiry").addClass("validation-error");
+      } else {
+        $("#other-input-inquiry").removeClass("validation-error");
+      }
+
+      if ($("#km-input").hasClass("validation-error") || $("#other-input-inquiry").hasClass("validation-error") || $("#other-input").hasClass("validation-error")) {
+        //alert("Fail");
+      } else {
+        //alert("Success");
+        setJob();
+      }
+    });
+    //==================
+    $(".services-next-btn").click(function () {
+      insertJob();
+    });
+
+    $(".select-services-btn").click(function () {
+      var licenseId = $(this).attr("licenseId")
+      window.location.href = "#/service/?licenseId=" + licenseId;
+    });
+
+    $(".services-mylist-item-register-btn").click(function () {
+      $('#servicesAddModal').modal('hide');
+      setTimeout(function () {
+        window.location.href = "#/register/";
+      }, 1000);
+    });
+
+    $(".services-mylist-item-next-btn").click(function () {
+      $('#servicesAddModal').modal('hide');
+      setTimeout(function () {
+        var licenseId = $('input[name=mylist-item]:checked').val();
+        window.location.href = "#/service/?licenseId=" + licenseId;
+      }, 1000);
+    });
+
+    $("#search-field").on('keyup', function (e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+        var value = $(this).val();
+        $(".services-item-modal > .mylist-item-title").each(function() {
+          if ($(this).text().search(value) > -1) {
+              $(this).parent().show();
+          }
+          else {
+              $(this).parent().hide();
+          }
+        });
+        $(".services-total").text("ทั้งหมด "+$(".services-item-modal:visible").size()+" คัน")
+        //alert($(".services-item-modal").is(":visible"));
+      }
+    });
+    //initialLang();
+  });
+
+  function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+  }
+
+  function initialLang() {
+    var currentLang = langTH;
+    $(".header-title-services").text(currentLang.services.topic);
+    $(".services-cancel-btn").text(currentLang.services.services_cancel_btn);
+    $(".services-next-btn").text(currentLang.services.services_next_btn);
+    //$(".services-expand-item").text(currentLang.services.services_expand_item);
+
+    $(".appointment-modal-title").text(currentLang.services.appointment_modal_title);
+    $(".services-mylist-item-register-btn").text(currentLang.services.services_mylist_item_register_btn);
+    $(".services-mylist-item-next-btn").text(currentLang.services.services_mylist_item_next_btn);
+
+    $("#text-header-register").text(currentLang.services.text_header_register);
+    $("#text-title-register").text(currentLang.services.text_title_register);
+    $("#next-btn").text(currentLang.services.next_btn);    
+
+    $(".text-header-confirm").text(currentLang.services.text_header_confirm);
+    $("#confirm-next-btn").text(currentLang.services.confirm_next_btn);
+
+    $("#services-cancel-all-dialog").text(currentLang.services.services_cancel_all_dialog);
+    $(".services-cancel-dialog-detail").text(currentLang.services.services_cancel_dialog_detail);
+    $("#services-cancel-confirm-btn-all").text(currentLang.services.services_cancel_confirm_btn_all);
+    $(".services-cancel-cancel-btn").text(currentLang.services.services_cancel_cancel_btn);
+
+    $("#services-cancel-confirm-btn").text(currentLang.services.services_cancel_confirm_btn);
+    $(".text-header-register-404").text(currentLang.services.text_header_register_404);
+    $(".text-title-register-404").text(currentLang.services.text_title_register_404);
+    $(".register-car-btn").text(currentLang.services.register_car_btn);
+
+    $("#text-header-register-expired-1").text(currentLang.services.text_header_register_expired_1);
+    $("#text-header-register-expired-2").text(currentLang.services.text_header_register_expired_2);
+
+  }
+
+  function renderJobList() {
+    $(".lds-ring").show();
+    if (localStorage.getItem("currentJobList") !== null) {
+      $(".services-next-btn").prop("disabled", true);
+      $(".services-next-btn").addClass("services-next-btn-inactive");
+      currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+      $.each(currentJobList, function (key, val) {
+        $(".services-next-btn").prop("disabled", false);
+        $(".services-next-btn").removeClass("services-next-btn-inactive");
+        var id = "#service-item-" + key;
+        if ($("#service-item-0").length) {
+          $(".services-cancel-btn").before(getJobTemplate(key, val));
+        } else {
+          $(".services-add-btn").after(getJobTemplate(key, val));
+        }
+        $(id).find(".services-total-checkbox").text("x" + $(id).find("li").length);
+      });
+    } else {
+      $(".services-next-btn").prop("disabled", true);
+      $(".services-next-btn").addClass("services-next-btn-inactive");
+    }
+    setEvent();
+    $(".lds-ring").hide();
+  }
+
+  function getJobTemplate(key, val) {
+    var template = `
+    <div class="services-item" id="service-item-${key}">
+      <span class="service-logo-left ">
+        <img src="./assets/img/${val.car_brand.toLowerCase()}.png" width="62px">
+      </span>
+      <span style="position: absolute;">
+        <div class="service-registercar">
+          ${val.car_license}
+          <span class="services-trash-item" jobByCarLicense="${val.car_license}"><i class="fas fa-trash"></i></span>
+        </div>
+        <div class="services-brandcar-detail">${val.car_series}</div>
+        ${val.servicetask1 != undefined ? '<div class="services-total-checkbox"></div>' : ''}
+        ${val.servicetask1 != undefined ? '<div class="services-expand-item collapsible">บริการที่เลือกทั้งหมด <i class="fas fa-chevron-up"></i></div>' : '<button class="select-services-btn" licenseId="' + val.car_license + '">เลือกบริการ</button>'}
+        <div class="services-expand-item-content">
+          <ul>
+            ${val.servicetask1 ? "<li>" + serviceCheckbox[0] + "</li>" : ""}
+            ${val.servicetask2 ? "<li>" + serviceCheckbox[1] + "</li>" : ""}
+            ${val.servicenote ? "<li>" + val.servicenote + "</li>" : ""}
+            ${val.custcare1 ? "<li>" + cuscareCheckbox[0] + "</li>" : ""}
+            ${val.custcare2 ? "<li>" + cuscareCheckbox[1] + "</li>" : ""}
+            ${val.custcare3 ? "<li>" + cuscareCheckbox[2] + "</li>" : ""}
+            ${val.custcarenote ? "<li>" + val.custcarenote + "</li>" : ""}
+          </ul>
+        </div>
+      </span>
+    </div>
+    `;
+    return template;
+  }
+
+  function setEvent() {
+    $(".services-trash-item").off().click(function () {
+      jobByCarLicense = $(this).attr("jobByCarLicense");
+      $("#deleteCarLicense").text(jobByCarLicense);
+      $("#deleteModal").modal('show');
+    });
+    $(".collapsible").click(function () {
+      $(this).toggleClass("active");
+      $(this).find(".fas").toggleClass("fa-chevron-up").toggleClass("fa-chevron-down");
+      $(this).next().fadeToggle(300);
+      if ($(this).find(".fas").hasClass("fa-chevron-up")) {
+        $(this).parent().parent().css("height", "130px");
+      } else {
+        $(this).parent().parent().css("height", (130 + $(this).next().height()) + "px");
+      }
+    });
+  }
+
+  function removeJobByOrder() {
+    currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+    var resultObject = searchObj(jobByCarLicense, currentJobList);
+    currentJobList.splice(resultObject, 1);
+    localStorage.removeItem("currentJobList");
+    localStorage.setItem("currentJobList", JSON.stringify(currentJobList));
+  }
+
+  function removeJobAll() {
+    currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+    currentJobList = [];
+    localStorage.removeItem("currentJobList");
+    localStorage.setItem("currentJobList", JSON.stringify(currentJobList));
+  }
+
+  function getCarByLicenseID() {
+    $(".lds-ring").show();
+    $.ajax({
+      url: baseURL + "getcars/" + $("#registercar-field").val(),
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.cardata.length > 0) {
+          var expired = result.cardata[0].contract_enddate
+          if (Date.parse(expired) < Date.now()) {
+            $("#registerExpired").modal('show');
+          } else {
+            $("#myAddCarModal").modal("hide");
+            $("#myAddCarConfirmModal").modal("show");
+            currentRegisterLicenseID = $("#registercar-field").val();
+            $("#registercar-field").val("");
+            getCarByLicenseIDConfirm();
+          }
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#login";
+        } else {
+          $('#myModalRegister404').modal('show');
+        }
+      }
+    });
+  }
+
+  function getCarByLicenseIDConfirm() {
+    $.ajax({
+      url: baseURL + "getcars/" + currentRegisterLicenseID,
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      success: function (result) {
+        if (result.cardata.length > 0) {
+          $("#car_brand").text(result.cardata[0].car_brand);
+          $("#car_series").text(result.cardata[0].car_series);
+          $("#car_license").text(result.cardata[0].car_license);
+          $("#business_name").text(result.cardata[0].business_name);
+
+          if (result.cardata[0].carpicture != null && result.cardata[0].carpicture.data.length > 0) {
+            var carImage = _arrayBufferToBase64(result.cardata[0].carpicture.data);
+            $("#car_brand_img").prop("src", "data:image/png;base64," + carImage);
+          }
+
+          $("#car_brand_logo").prop("src", "./assets/img/brand/" + result.cardata[0].car_brand.toLowerCase() + ".png");
+
+          vinID = result.cardata[0].car_vin;
+        }
+      },
+      error: function (xhr, status, error) {
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#/login/";
+        }
+      }
+    });
+  }
+
+  function hasCarRegister() {
+    $(".lds-ring").show();
+    $.ajax({
+      url: baseURL + "checkcarregister/" + vinID,
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.cardata.length > 0) {
+          $("#confirmRegusterAleady").modal('show');
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#/login/";
+        } else {
+          setCarConfirmRegister();
+        }
+      }
+    });
+  }
+
+  function setCarConfirmRegister() {
+    $(".lds-ring").show();
+    $.ajax({
+      url: baseURL + "carconfirmregister/" + vinID,
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.message == "duplicate") {
+          $("#confirmRegusterAleady").modal('show');
+        } else if (result.message == "success") {
+          $("#myAddCarConfirmModal").modal('hide');
+          $("#myAddCarServiceModal").modal('show');
+          getCarByLicenseIDService();
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#/login/";
+        }
+      }
+    });
+  }
+
+  function getCarByLicenseIDService() {
+    $.ajax({
+      url: baseURL + "getcars/" + currentRegisterLicenseID,
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      success: function (result) {
+        if (result.cardata.length > 0) {
+          $("#service-car-brand").text(result.cardata[0].car_brand);
+          $("#service-car-series").text(result.cardata[0].car_series);
+          $("#service-car-license").text(result.cardata[0].car_license);
+
+          $("#service-car-img-logo").prop("src", "./assets/img/brand/" + result.cardata[0].car_brand.toLowerCase() + ".png");
+
+          vinID = result.cardata[0].car_vin;
+
+          setJobList(result.cardata[0]);
+        }
+      },
+      error: function (xhr, status, error) {
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#/login/";
+        }
+      }
+    });
+  }
+
+  function setJob() {
+    currentJob.servicetask1 = $("#repair-input-1").is(":checked") ? 1 : 0;
+    currentJob.servicetask2 = $("#repair-input-2").is(":checked") ? 1 : 0;
+    currentJob.servicenote = $("#other-input").val();
+    currentJob.custcare1 = $("#consult-input-1").is(":checked") ? 1 : 0;
+    currentJob.custcare2 = $("#consult-input-2").is(":checked") ? 1 : 0;
+    currentJob.custcare3 = $("#consult-input-3").is(":checked") ? 1 : 0;
+    currentJob.custcarenote = $("#other-input-inquiry").val();
+    currentJob.car_odo_mile = $("#km-input").val();
+    console.log(currentJob);
+
+    if (localStorage.getItem("currentJobList") !== null) {
+      currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+    }
+
+    currentJobList.push(currentJob);
+    currentJob = {};
+    localStorage.setItem("currentJobList", JSON.stringify(currentJobList));
+    console.log(currentJobList);
+    $("#myAddCarServiceModal").modal('hide');
+    $(".services-item").remove();
+    renderJobList();
+    clearFormService();
+  }
+
+  function setJobList(obj) {
+    currentJob = {
+      "car_brand": obj.car_brand,
+      "car_series": obj.car_series,
+      "car_license": obj.car_license,
+      "car_vinID": vinID
+    };
+  }
+
+  function clearFormService() {
+    $("#repair-input-1").removeAttr('checked');
+    $("#repair-input-2").removeAttr('checked');
+    $("#other-check").removeAttr('checked');
+    $("#other-input").val("");
+
+    if (!$("#other-input").hasClass("hide")) {
+      $("#other-input").addClass("hide")
+    }
+
+    $("#consult-input-1").removeAttr('checked');
+    $("#consult-input-2").removeAttr('checked');
+    $("#consult-input-3").removeAttr('checked');
+    $("#other-check-inquiry").removeAttr('checked');
+    $("#other-input-inquiry").val("");
+
+    if (!$("#other-input-inquiry").hasClass("hide")) {
+      $("#other-input-inquiry").addClass("hide");
+    }
+
+    $("#km-input").val("");
+
+    isCheckRepair = false;
+    isCheckConsult = false;
+  }
+
+  function insertJob() {
+    if (localStorage.getItem("currentJobList") !== null) {
+      window.location.href = "#/appointment/";
+    }
+  }
+
+  function getMyCar() {
+    $(".lds-ring").show();
+    $.ajax({
+      url: baseURL + "getmycar",
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      success: function (result) {
+        var total = result.carlist.length;
+        $(".services-total").text("ทั้งหมด " + total + " คัน");
+        $(".services-select-one").text("เลือก 0/" + total + " คัน");
+
+        if (total > 0) {
+          $("#mylist").html("");
+          $.each(result.carlist, function (key, val) {
+            $("#mylist").append(getMyListTemplate(key, val));
+          });
+          setEventMyList(total);
+          isServicesAddCarModal = true;
+        } else {
+          isServicesAddCarModal = false;
+        }
+        $(".lds-ring").hide();
+      },
+      error: function (xhr, status, error) {
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#/login/";
+        }
+        isServicesAddCarModal = false;
+        $(".lds-ring").hide();
+      }
+    });
+  }
+
+  function getMyListTemplate(key, val) {
+    var template;
+    var templateNormal = `
+      <div class="services-item-modal">
+        <span class=""><img src="./assets/img/${val.car_brand.toLowerCase()}.png" class="mylist-item-img"></span>
+        <div class="mylist-item-line"></div>
+        <div class="mylist-item-title">${val.car_license}</div>
+        <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด ${val.last_service_date}</div>
+        <div class="services-mylist-item-checkbox"><input type="checkbox" id="" name="mylist-item" value="${val.car_license}" car_brand="${val.car_brand}" car_series="${val.car_series}" car_vin_id="${val.car_vin_id}"></div>
+      </div>
+        `;
+    var templateExpired = `
+        <div class="services-item-modal mylist-item-expired">
+            <span class=""><img src="./assets/img/${val.car_brand.toLowerCase()}.png" class="mylist-item-img"></span>
+            <div class="mylist-item-line"></div>
+            <div class="mylist-item-title">${val.car_license}</div>
+            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด ${val.last_service_date}</div>
+            <div class="mylist-item-expired-text">หมดสัญญา</div>
+        </div>
+        `;
+
+    if (val.isexpirecontract == "no") {
+      template = templateNormal;
+    } else {
+      template = templateExpired;
+    }
+
+    return template;
+  }
+
+  function setEventMyList(total) {
+    $('input[name=mylist-item]').off().change(function () {
+      if ($('input[name=mylist-item]:checked').length > 0) {
+        $(".services-select-one").text("เลือก 1/" + total + " คัน");
+        $(".services-mylist-item-next-btn").removeClass("services-mylist-item-next-btn-inactive");
+        $(".services-mylist-item-next-btn").prop("disabled", false);
+        $('input[name=mylist-item]').prop("disabled", true);
+        $(this).prop("disabled", false);
+      } else {
+        $(".services-select-one").text("เลือก 0/" + total + " คัน");
+        $(".services-mylist-item-next-btn").addClass("services-mylist-item-next-btn-inactive");
+        $(".services-mylist-item-next-btn").prop("disabled", true);
+        $('input[name=mylist-item]').prop("disabled", false);
+      }
+    });
+  }
+</script>

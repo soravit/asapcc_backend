@@ -1,0 +1,258 @@
+<div class="center-block register-car-number-box">
+
+    <div class="text-header-register" id="text-header-register">
+        เลขทะเบียนรถยนต์
+    </div>
+    <div class="text-title" id="text-title-register">
+        กรุณาระบุทะเบียนรถของคุณเพื่อรับบริการ
+    </div>
+    <div class="registercar-frame">
+        <img src="./assets/img/frame-car.png" width="100%">
+        <input type="text" id="registercar-field" autocomplete="off" required />
+        <div>
+            <ul id="searchResult"></ul>
+        </div>
+    </div>
+    <button class="register-car-number-btn-disabled" id="next-btn" disabled>ถัดไป</button>
+
+</div>
+
+<div class="modal fade" id="myModalRegister404" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-custom-404">
+        <div class="modal-content modal-dialog-custom">
+            <div class="modal-body modal-dialog-body-404">
+
+                <div class="modal-dialog-bottom">
+                    <div class="icon-register-404">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="text-header-register-404">ไม่พบข้อมูลในระบบ</div>
+                    <div class="text-title-register-404">กรุณาระบุเลขทะเบียนใหม่อีกครั้ง</div>
+
+
+                    <button class="register-car-btn">ระบุเลขทะเบียนใหม่</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="registerExpired" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-custom-404">
+        <div class="modal-content modal-dialog-custom">
+            <div class="modal-body modal-dialog-body-404">
+                <div class="modal-dialog-bottom">
+
+                    <div class="icon-register-404">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="text-header-register-expired">รถสัญญาหมดอายุแล้ว</div>
+                    <button class="register-car-btn">ระบุเลขทะเบียนใหม่</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 100;  //time in ms, 5 second for example
+    var $input = $("#registercar-field");
+    var vinID = "";
+
+    $(document).ready(function () {
+        isLogin();
+        $input.keyup(function () {
+            $("#searchResult").empty();
+            if ($input.val() == "") {
+                $("#next-btn").addClass("register-car-number-btn-disabled");
+                $("#next-btn").removeClass("register-car-number-btn");
+                $("#next-btn").prop("disabled", true);
+            } else {
+                $("#next-btn").addClass("register-car-number-btn");
+                $("#next-btn").removeClass("register-car-number-btn-disabled");
+                $("#next-btn").prop("disabled", false);
+            }
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+
+        $input.on('keydown', function () {
+            clearTimeout(typingTimer);
+        });
+
+        $("#next-btn").click(function () {
+            getCarByLicenseID();
+        });
+
+        $(".register-car-btn").click(function () {
+            $("#registercar-field").val("");
+            $('#myModalRegister404').modal('hide');
+            $('#registerExpired').modal('hide');
+        });
+
+        initialLang();
+
+    });
+
+    function doneTyping() {
+        if ($input.val() == "") {
+            $("#next-btn").addClass("register-car-number-btn-disabled");
+            $("#next-btn").removeClass("register-car-number-btn");
+            $("#next-btn").prop("disabled", true);
+            $("#searchResult").empty();
+        } else {
+            $("#next-btn").addClass("register-car-number-btn");
+            $("#next-btn").removeClass("register-car-number-btn-disabled");
+            $("#next-btn").prop("disabled", false);
+            getMyCarAll();
+        }
+    }
+
+    function initialLang() {
+        var currentLang = langTH;
+        $("#text-header-register").text(currentLang.register.topic);
+        $("#text-title-register").text(currentLang.register.title);
+        $("#next-btn").text(currentLang.register.next_btn);
+
+        $(".text-header-register-404").text(currentLang.register.title404);
+        $(".text-title-register-404").text(currentLang.register.subtitle404);
+        $(".register-car-btn").text(currentLang.register.btn404);
+    }
+
+    function getCarByLicenseID() {
+        $(".lds-ring").show();
+        $.ajax({
+            url: baseURL + "getcars/" + $("#registercar-field").val(),
+            method: "GET",
+            data: {},
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            success: function (result) {
+                $(".lds-ring").hide();
+                if (result.cardata.length > 0) {
+                    var expired = result.cardata[0].contract_enddate
+                    if (Date.parse(expired) < Date.now()) {
+                        $("#registerExpired").modal('show');
+                    } else {
+                        getVinID();
+                        setCarConfirmRegister();
+                        //window.location.href = "#/confirm/?licenseId=" + $("#registercar-field").val();
+                    }
+                }
+            },
+            error: function (xhr, status, error) {
+                $(".lds-ring").hide();
+                if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+                    window.location.href = "#login";
+                } else {
+                    $('#myModalRegister404').modal('show');
+                }
+            }
+        });
+    }
+
+    function getMyCarAll() {
+        $.ajax({
+            url: baseURL + "getcars/" + $("#registercar-field").val(),
+            method: "GET",
+            data: {},
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            success: function (result) {
+                $(".lds-ring").hide();
+                $("#searchResult").empty();
+                if (result.cardata.length > 0) {
+                    $.each(result.cardata, function (key, val) {
+                        var id = val.car_license;
+                        var name = val.car_license;
+                        $("#searchResult").append("<li value='" + id + "'>" + name + "</li>");
+
+                        $("#searchResult li").bind("click", function () {
+                            setText(this);
+                        });
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                $(".lds-ring").hide();
+                $("#searchResult").empty();
+                if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+                    window.location.href = "#login";
+                }
+            }
+        });
+    }
+
+    function setText(element) {
+
+        var value = $(element).text();
+        var userid = $(element).val();
+
+        $("#registercar-field").val(value);
+        $("#searchResult").empty();
+
+
+    }
+
+    function setCarConfirmRegister(){
+        $(".lds-ring").show();
+        $.ajax({
+            url: baseURL+"carconfirmregister/"+vinID,
+            method: "GET",
+            data: {},
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            success: function (result) {
+                $(".lds-ring").hide();
+            
+                if(result.message == "duplicate"){
+                    window.location.href = "#/service/?licenseId="+$("#registercar-field").val();
+                }else if(result.message == "success"){
+                    window.location.href = "#/confirm/?licenseId=" + $("#registercar-field").val();
+                }
+            },
+            error: function (xhr, status, error) {
+                $(".lds-ring").hide();
+                if(xhr.responseJSON.message.search("Unauthorized") > -1){
+                    window.location.href = "#/login/";
+                }
+            }
+        });
+    }
+
+    function getVinID() {
+        $.ajax({
+            url: baseURL+"getcars/"+$("#registercar-field").val(),
+            method: "GET",
+            async: false,
+            data: {},
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            success: function (result) {
+                if(result.cardata.length > 0){
+                    vinID = result.cardata[0].car_vin;
+                }
+            },
+            error: function (xhr, status, error) {
+                if(xhr.responseJSON.message.search("Unauthorized") > -1){
+                    window.location.href = "#/login/";
+                }
+            }
+        });
+    }
+
+</script>

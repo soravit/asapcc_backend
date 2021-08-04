@@ -1,0 +1,145 @@
+<div class="center-block login-box">
+  <div class="header-title">
+    เข้าสู่ระบบ
+  </div>
+  <div class="header-subtitle">กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ</div>
+  <!-- <form action="#" method="post" autocomplete="off"> -->
+  <div class="email-input">
+    <span class="glyphicon glyphicon-envelope email-icon" aria-hidden="true"></span>
+    <input type="text" id="email-field" autocomplete="off" required />
+    <label for="email-field" class="label-input" id="email-lab">อีเมล</label>
+  </div>
+  <div class="password-input">
+    <span class="glyphicon glyphicon-lock password-icon" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-eye-close eyeclose-icon" aria-hidden="true"></span>
+    <input type="password" id="pass-field" autocomplete="new-password" required />
+    <label for="pass-field" class="label-input" id="pass-lab">รหัสผ่าน</label>
+  </div>
+  <div class="submit-error"></div>
+  <!-- <div class="forgot-password">
+    <a href="#" id="forgot-password-link">ลืมรหัสผ่าน?</a>
+  </div> -->
+
+  <button class="submit-login">เข้าสู่ระบบ</button>
+  <!-- </form> -->
+
+  <!-- <div class="login-box-optional">
+    <span class="line"></span>
+    <span class="login-text-optional">หรือเข้าสู่ระบบ</span>
+    <span class="line"></span>
+  </div> -->
+
+  <!-- <div class="login-box-optional">
+    <div class="login-box-optional-entry"><i class="fab fa-google"></i></div>
+    <div class="login-box-optional-entry"><i class="fab fa-facebook"></i></div>
+    <div class="login-box-optional-entry"><i class="fab fa-apple" style="font-size: xx-large;"></i></div>
+  </div>
+  <div class="login-box-optional">
+    <div class="register-with-us">ลงทะเบียนกับเราหรือยัง ?</div>
+    <div class="register">ลงทะเบียน</div>
+  </div> -->
+
+</div>
+
+<script>
+
+  $(document).ready(function () {
+
+    isLogin();
+    $(".container-custom").css({ "background-image": "none", "background-repeat": "no-repeat", "background-color": "#f7f7fa" });
+    $(".text-header").html('<p class="m-text-header-welcome"></p>');
+    $("#logo").show();
+    $("#back-icon").hide();
+    $(".lds-ring").hide();
+
+    $(".eyeclose-icon").click(function () {
+      $(this).toggleClass("glyphicon-eye-close glyphicon-eye-open");
+      var input = $("#pass-field");
+      if (input.attr("type") == "password") {
+        input.attr("type", "text");
+      } else {
+        input.attr("type", "password");
+      }
+    });
+    $(".submit-login").click(function () {
+
+      $(".lds-ring").show();
+
+      var email = $("#email-field").val();
+      var password = $("#pass-field").val();
+
+      if (email == "" || !isEmail(email)) {
+        $(".email-input").addClass("validation-error");
+      } else {
+        $(".email-input").removeClass("validation-error");
+      }
+
+      if (password == "") {
+        $(".password-input").addClass("validation-error");
+      } else {
+        $(".password-input").removeClass("validation-error");
+      }
+
+      if (email != "" && password != "") {
+        $(".submit-login").toggleClass("submit-login-progress");
+        $.ajax({
+          url: baseURL + "login",
+          method: "POST",
+          data: { email: $("#email-field").val(), password: $("#pass-field").val() },
+          success: function (result) {
+            $(".lds-ring").hide();
+            if (result.token) {
+              localStorage.setItem("token", result.token);
+              window.location.href = "#/welcome/";
+            }
+            $(".submit-login").toggleClass("submit-login-progress");
+          },
+          error: function (xhr, status, error) {
+            $(".lds-ring").hide();
+            var err = eval("(" + xhr.responseText + ")");
+            $(".submit-error").text(err.message);
+            $(".submit-login").toggleClass("submit-login-progress");
+          }
+        });
+      } else {
+        $(".lds-ring").hide();
+      }
+    });
+
+    $(".register-car-btn").click(function () {
+      window.location.href = "#register";
+    });
+
+    $("#content").show();
+
+    initialLang();
+
+  });
+
+  function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+  }
+
+  function initialLang() {
+    var currentLang = langTH;
+    $(".header-title").text(currentLang.login.topic);
+    $(".header-subtitle").text(currentLang.login.title);
+    $("#email-lab").text(currentLang.login.email);
+    $("#pass-lab").text(currentLang.login.password);
+    $("#forgot-password-link").text(currentLang.login.forgot);
+    $(".submit-login").text(currentLang.login.submit_btn);
+    $(".login-text-optional").text(currentLang.login.label_optional_1);
+    $(".register-with-us").text(currentLang.login.label_optional_2);
+    $(".register").text(currentLang.login.register_btn);
+
+    $(".text-header-welcome").text(currentLang.welcome.topic);
+    $("#title-welcome-1").text(currentLang.welcome.title_1);
+    $("#subtitle-welcome-1").text(currentLang.welcome.subtitle_1);
+    $("#title-welcome-2").text(currentLang.welcome.title_2);
+    $("#subtitle-welcome-2").text(currentLang.welcome.subtitle_2);
+    $("#title-welcome-3").text(currentLang.welcome.title_3);
+    $("#subtitle-welcome-3").text(currentLang.welcome.subtitle_3);
+    $(".register-car-btn").text(currentLang.welcome.register_btn);
+  }
+</script>

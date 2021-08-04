@@ -1,0 +1,204 @@
+<div class="center-block mylist-box">
+    <div class="mylist-header">
+        รายการของฉัน
+    </div>
+    <button class="mylist-add-btn" disabled><i class="fas fa-plus"></i> เพิ่มรถ</button>
+
+
+
+    <span class="confirm-register-bank-logo"><img id="business_img" src="../assets/img/bangkok.png" width="44px"></span>
+    <span class="confirm-register-bank" id="confirm-register-bank">
+        Bangkok Bank Public Company Limited
+    </span>
+    <div class="mylist-divider"></div>
+    <span class="mylist-total">ทั้งหมด 0 คัน</span>
+    <span class="mylist-sort">เรียงจาก : รถที่เข้ารับบริการล่าสุด</span>
+    <br>
+
+    <div id="mylist" style="position:relative;display: inline-block;">
+
+    </div>
+    <button class="mylist-next-btn mylist-next-btn-inactive" disabled>เริ่มเลือกบริการ</button>
+</div>
+
+<div class="modal fade" id="myAddCarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-custom modal-dialog-custom-1">
+            <div class="modal-body">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="text-header-register" id="text-header-register">
+                    เลขทะเบียนรถยนต์
+                </div>
+                <div class="text-title" id="text-title-register">
+                    กรุณาระบุทะเบียนรถของคุณเพื่อรับบริการ
+                </div>
+                <div class="registercar-frame">
+                    <img src="../assets/img/frame-car.png" width="100%">
+                    <input type="text" id="registercar-field" autocomplete="off" required />
+                </div>
+                <button class="register-car-number-btn-disabled" id="next-btn">ถัดไป</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var currentJob = {};
+    var currentJobList = [];
+
+    $(document).ready(function () {
+
+        $(".mylist-next-btn").click(function () {
+            var licenseId = $('input[name=mylist-item]:checked').val();
+            window.location.href = "#/service/?licenseId=" + licenseId;
+        });
+
+        $(".mylist-add-btn").click(function () {
+            addCarToServices();
+        });
+        isLogin();
+        getMyCar();
+        showMenu();
+        //initialLang();
+    });
+
+    function initialLang() {
+        var currentLang = langTH;
+        $(".header-title-service").text(currentLang.service.topic);
+
+    }
+
+    function getMyCar() {
+        $.ajax({
+            url: baseURL + "getmycar",
+            method: "GET",
+            data: {},
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            success: function (result) {
+                $(".mylist-total").text("ทั้งหมด " + result.carlist.length + " คัน");
+                if (result.carlist.length > 0) {
+                    $("#mylist").html("");
+                    $.each(result.carlist, function (key, val) {
+                        $("#mylist").append(getJobTemplate(key, val));
+                        $("#confirm-register-bank").text(val.business_name);
+                        if (val.carpicture != null && val.carpicture.data.length > 0) {
+                            var businessImage = _arrayBufferToBase64(val.carpicture.data);
+                            $("#business_img").prop("src", "data:image/png;base64," + businessImage);
+                        }
+                    });
+                    setEvent();
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+                    window.location.href = "#/login/";
+                }
+            }
+        });
+    }
+
+    function getJobTemplate(key, val) {
+        var template;
+        var templateNormal = `
+        <div class="mylist-item">
+            <span class=""><img src="../assets/img/${val.car_brand.toLowerCase()}.png" class="mylist-item-img"></span>
+            <div class="mylist-item-line"></div>
+            <div class="mylist-item-title">${val.car_license}</div>
+            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด ${val.last_service_date}</div>
+            <div class="mylist-item-checkbox"><input type="checkbox" id="" name="mylist-item" value="${val.car_license}" car_brand="${val.car_brand}" car_series="${val.car_series}" car_vin_id="${val.car_vin_id}"></div>
+        </div>
+        `;
+        var templateExpired = `
+        <div class="mylist-item mylist-item-expired">
+            <span class=""><img src="../assets/img/${val.car_brand.toLowerCase()}.png" class="mylist-item-img"></span>
+            <div class="mylist-item-line"></div>
+            <div class="mylist-item-title">${val.car_license}</div>
+            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด ${val.last_service_date}</div>
+            <div class="mylist-item-expired-text">หมดสัญญา</div>
+        </div>
+        `;
+
+        if (val.isexpirecontract == "no") {
+            template = templateNormal;
+        } else {
+            template = templateExpired;
+        }
+
+        return template;
+    }
+
+    function setEvent() {
+        $('input[name=mylist-item]').off().change(function () {
+            if ($('input[name=mylist-item]:checked').length > 0) {
+                $(".mylist-next-btn").removeClass("mylist-next-btn-inactive");
+                $(".mylist-next-btn").prop("disabled", false);
+                $(".mylist-add-btn").prop("disabled", false);
+                $('input[name=mylist-item]').prop("disabled", true);
+                $(this).prop("disabled", false);
+            } else {
+                $(".mylist-next-btn").addClass("mylist-next-btn-inactive");
+                $(".mylist-next-btn").prop("disabled", true);
+                $(".mylist-add-btn").prop("disabled", true);
+                $('input[name=mylist-item]').prop("disabled", false);
+            }
+        });
+
+    }
+
+    function addCarToServices() {
+        var obj = $('input[name=mylist-item]:checked');
+        var car_license = obj.val();
+
+        if (localStorage.getItem("currentJobList") !== null) {
+            currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+            var resultObject = searchObj(car_license, currentJobList);
+            if (resultObject > -1) {
+                removeJobByOrder(car_license);
+                setJob();
+            }else{
+                setJob();
+            }
+        }else{
+            setJob();
+        }
+
+    }
+
+    function removeJobByOrder(car_license) {
+        currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+        var resultObject = searchObj(car_license, currentJobList);
+        currentJobList.splice(resultObject, 1);
+        localStorage.removeItem("currentJobList");
+        localStorage.setItem("currentJobList", JSON.stringify(currentJobList));
+    }
+
+    function setJob() {
+
+        var obj = $('input[name=mylist-item]:checked');
+        var car_brand = obj.attr("car_brand");
+        var car_series = obj.attr("car_series");
+        var car_vin_id = obj.attr("car_vin_id");
+        var car_license = obj.val();
+
+        currentJob = {
+            "car_brand": car_brand,
+            "car_series": car_series,
+            "car_license": car_license,
+            "car_vinID": car_vin_id
+        };
+
+        currentJobList.push(currentJob);
+        currentJob = {};
+        localStorage.setItem("currentJobList", JSON.stringify(currentJobList));
+        window.location.href = "#/services/";
+    }
+</script>

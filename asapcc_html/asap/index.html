@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>asap</title>
+    <meta http-equiv="Content-Language" content="th" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/custom.css">
+    <link href="./assets/fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/tabbar.css">
+
+    <link rel="stylesheet" href="./assets/tel-input/css/intlTelInput.css">
+    <!-- <link rel="stylesheet" href="./assets/tel-input/css/demo.css"> -->
+    <link rel="stylesheet" href="./assets/datepicker/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="./assets/datepicker/css/font-awesome.min.css">
+    <!--load all styles -->
+    <link rel="stylesheet" href="./assets/leafletjs/leaflet.css?date=2807641518"/>
+    <link rel="stylesheet" href="./assets/css/autocomplete.css"/>
+
+</head>
+
+<body class="container-custom">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar" id="menu-btn">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand navbar-brand-custom" href="#"><img src="./assets/img/logo.png" alt=""></a>
+            </div>
+            <span class="text-header"></span>
+            <div id="navbar" class="navbar-collapse collapse">
+
+                <!-- <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#/login" class="navbar-brand-navigate-login">เข้าสู่ระบบ</a></li>
+                    <form class="navbar-form navbar-left">
+                        <button class="btn btn-default navbar-brand-navigate-register">ลงทะเบียน</button>
+                    </form>
+                    <li class="dropdown navbar-brand-navigate-lang">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> TH
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">TH</a></li>
+                            <li><a href="#">EN</a></li>
+                        </ul>
+                    </li>
+                </ul> -->
+            </div>
+            <!--/.navbar-collapse -->
+        </div>
+    </nav>
+
+    <div id="content">
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-dialog-custom">
+                <div class="modal-body">
+                    <div class="modal-dialog-top">
+                        <img src="./assets/img/modal.png" width="70%">
+                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button> -->
+                    </div>
+                    <div class="modal-dialog-bottom">
+                        <div class="text-header-welcome">บริการผู้ช่วยส่วนตัว</div>
+                        <div class="text-title-welcome-box">
+                            <i class="fas fa-tools icon-box-welcome"></i>
+                            <div class="text-title-welcome" id="title-welcome-1">
+                                บริการซ่อมและบำรุงรักษารถยนต์
+                            </div>
+                            <div class="text-subtitle-welcome" id="subtitle-welcome-1">
+                                จองเวลากับศูนย์ซ่อมรถยนต์เพื่อ
+                                รับบริการบำรุงรักษา ใกล้คุณ
+                            </div>
+                        </div>
+
+                        <div class="text-title-welcome-box">
+                            <i class="fas fa-clipboard-list icon-box-welcome"></i>
+                            <div class="text-title-welcome" id="title-welcome-2">
+                                ตรวจสอบสถานะ
+                            </div>
+                            <div class="text-subtitle-welcome" id="subtitle-welcome-2">
+                                ตรวจสอบสถานะการซ่อมรถของคุณ หรือ สถานะรถทดแทน
+                            </div>
+                        </div>
+
+                        <div class="text-title-welcome-box">
+                            <i class="fas fa-comments icon-box-welcome"></i>
+                            <div class="text-title-welcome" id="title-welcome-3">
+                                บริการให้คำปรึกษา
+                            </div>
+                            <div class="text-subtitle-welcome" id="subtitle-welcome-3">
+                                รับคำแนะนำโดยผู้ช่วยส่วนตัว
+                            </div>
+                        </div>
+                        <button class="register-car-btn" data-dismiss="modal" aria-label="Close">ลงทะเบียนรถ</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/jquery.routes.js"></script>
+    <script src="./assets/js/lang.js"></script>
+    <script src="./assets/js/env.js"></script>
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+
+    <script src="./assets/js/utils.js"></script>
+    <script src="./assets/datepicker/js/moment-with-locales.min.js"></script>
+    <script src="./assets/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="./assets/openmap/OpenLayers.js"></script>
+    <script src="./assets/leafletjs/leaflet.js?date=2807641518"></script>
+
+    <script type="text/javascript">
+        var newsModule = {
+            index: function () {
+                $('#content').load('login.html').show();
+            },
+            login: function () {
+                $('#content').load('login.html').show();
+            },
+            register: function () {
+                $('#content').load('register.html').show();
+            },
+            welcome: function () {
+                $('#content').load('welcome.html').show();
+            },
+            confirm: function () {
+                $('#content').load('confirm.html').show();
+            },
+            service: function () {
+                $('#content').load('service.html').show();
+            },
+            services: function () {
+                $('#content').load('services.html').show();
+            },
+            appointment: function () {
+                $('#content').load('appointment.html').show();
+            },
+            appointmentinfo: function () {
+                $('#content').load('appointment-info.html').show();
+            },
+            appointmentdate: function () {
+                $('#content').load('appointment-date.html').show();
+            },
+            confirmbook: function () {
+                $('#content').load('confirm-book.html').show();
+            },
+            mylist: function () {
+                $('#content').load('mylist.html').show();
+            }
+        };
+        $.routes.add('', newsModule.index);
+        $.routes.add('/login/', newsModule.login);
+        $.routes.add('/register/', newsModule.register);
+        $.routes.add('/welcome/', newsModule.welcome);
+        $.routes.add('/confirm/', newsModule.confirm);
+        $.routes.add('/service/', newsModule.service);
+        $.routes.add('/services/', newsModule.services);
+        $.routes.add('/appointment/', newsModule.appointment);
+        $.routes.add('/appointmentinfo/', newsModule.appointmentinfo);
+        $.routes.add('/appointmentdate/', newsModule.appointmentdate);
+        $.routes.add('/confirmbook/', newsModule.confirmbook);
+        $.routes.add('/mylist/', newsModule.mylist);
+
+        $(document).ready(function () {
+
+            isLogin();
+
+            $(".navbar-brand-navigate-register").click(function () {
+                window.location.href = "#";
+            });
+
+            initialLang();
+        });
+
+        function initialLang() {
+            var currentLang = langTH;
+            $(".navbar-brand-navigate-login").text(currentLang.nav.btn_1);
+            $(".navbar-brand-navigate-register").text(currentLang.nav.btn_2);
+        }
+
+        function isLogin() {
+            $("#content").hide();
+            $(".lds-ring").show();
+
+            if(window.location.href.search("confirmbook") == -1){
+                $(".container-custom").css({ "background-image": "none", "background-repeat": "no-repeat", "background-color": "#f7f7fa" });
+            }
+
+            if(window.location.href.search("welcome") == -1){
+                $('#myModal').modal('hide');
+            }
+
+            if (localStorage.getItem("token")) {
+                $.ajax({
+                    url: baseURL + "customerprofile",
+                    method: "GET",
+                    data: {},
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Authorization": "Bearer " + localStorage.getItem("token")
+                    },
+                    success: function (result) {
+                        $("#content").show();
+                        $(".lds-ring").hide();
+
+                        if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "#/login" ||  window.location.hash == "#/login/") {
+                            window.location.href = '#/welcome/';
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        if (window.location.hash == "") {
+                            window.location.href = '#/';
+                        } else {
+                            window.location.href = "#/login/";
+                        }
+                        $(".lds-ring").hide();
+                    }
+                });
+            } else {
+                $(".lds-ring").hide();
+                window.location.href = "#/login/";
+            }
+        }
+
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        function _arrayBufferToBase64(buffer) {
+            var binary = '';
+            var bytes = new Uint8Array(buffer);
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return window.btoa(binary);
+        }
+
+        function searchObj(nameKey, myArray) {
+            console.log(myArray.length);
+            for (var i = 0; i < myArray.length; i++) {
+                if (myArray[i].car_license.trim() === nameKey.trim()) {
+                    return i;
+                }
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

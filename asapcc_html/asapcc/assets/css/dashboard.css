@@ -1,0 +1,147 @@
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+
+.container-custom {
+    background-color: #f7f7fa;
+}
+
+.navbar-custom {
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+.navbar-brand-custom {
+    float: left;
+    height: 50px;
+    padding: 5px 5px;
+}
+
+.navbar-brand>img {
+    max-height: 100%;
+    height: 100%;
+    -o-object-fit: contain;
+    object-fit: contain;
+}
+
+.navbar-brand-navigate-login {
+    font-family: SukhumvitSet;
+    color: #2a2c31 !important;
+}
+
+.navbar-brand-navigate-register {
+    font-size: 20px;
+    color: #2a2c31;
+    background-color: #ffffff;
+}
+
+.navbar-brand-navigate-lang>a, .navbar-inverse .navbar-nav>li>a {
+    color: #2a2c31;
+    background-color: transparent;
+}
+
+.navbar-brand-navigate-lang>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+    color: #2a2c31;
+    background-color: transparent;
+}
+
+.navbar-inverse .navbar-brand-navigate-lang.open>a, .navbar-inverse .navbar-brand-navigate-lang.open>a:focus, .navbar-inverse .navbar-brand-navigate-lang.open>a:hover {
+    color: #2a2c31;
+    background-color: #ffffff;
+}
+
+.username-text{
+    display: block;
+    text-align: center;
+    color:#3f4346;
+}
+
+.dashboard-container{
+    position: absolute;
+    top: 95px;
+}
+
+.select-custom{
+    height: 40px;
+}
+
+.btn-primary-custom{
+    color: #337ab7;
+    background-color: #ffffff;
+    height: 40px;
+}
+
+.btn-danger-custom{
+    color: #d9534f;
+    background-color: #ffffff;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.btn-default-custom{
+    /* color: #337ab7;
+    background-color: #ffffff; */
+    height: 40px;
+}
+
+.status-box{
+    display: inline-block;
+    padding: 10px;
+}
+
+.btn-danger-cancel{
+    color: #d9534f;
+    background-color: #ffffff;
+}
+
+.btn-danger-save{
+    color: #ffffff;
+    background-color: #d9534f;
+}
+
+.note-textarea {
+    width: 440px;
+    height: 84px;
+    /* margin: 24.5px 0.5px 40px 0; */
+    /* padding: 16px 14px 46px 14px; */
+    border-radius: 5px;
+    border: solid 1px #d3d3d3;
+    background-color: #ffffff;
+    display: inline-table;
+    /* position: relative; */
+    /* top: 70px; */
+}
+
+.jobstatus-label{
+    color: #aeaeae;
+    font-size: 10pt;
+}
+
+.jobstatus-blue{
+    color:#3da7f0;
+}
+.jobstatus-row{
+    margin-left: 10px;
+    margin-right: 0px;
+    margin-top: 15px;
+}
+
+.jobstatus-textarea{
+    width: 100%;
+}
+
+.jobstatus-dropdown{
+    width:80%;
+}
+
+.jobstatus-input{
+    width:80% !important;
+}
+
+.jobstatus-datetime{
+    height: initial;
+    width:80%;
+}
+
+.jobstatus-select{
+    width: 80%;
+    height: 35px;
+}

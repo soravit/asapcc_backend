@@ -1,0 +1,53 @@
+
+<script>
+
+  $(document).ready(function () {
+
+    if ($(window).width() <= 425) {
+      $('#myModal').modal('hide');
+      $("#menu-btn").hide();
+    } else {
+      $('#myModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+
+    $(window).on('resize', function () {
+      var win = $(this); 
+      if (win.width() <= 425) {
+        $("#menu-btn").hide();
+      }
+    });
+
+    $(".register-car-btn").click(function(){
+      window.location.href = "#/register/";
+    });
+
+    isLogin();
+    initialLang();
+
+  });
+
+  function initialLang() {
+    var currentLang = langTH;
+    $(".header-title").text(currentLang.login.topic);
+    $(".header-subtitle").text(currentLang.login.title);
+    $("#email-lab").text(currentLang.login.email);
+    $("#pass-lab").text(currentLang.login.password);
+    $("#forgot-password-link").text(currentLang.login.forgot);
+    $(".submit-login").text(currentLang.login.submit_btn);
+    $(".login-text-optional").text(currentLang.login.label_optional_1);
+    $(".register-with-us").text(currentLang.login.label_optional_2);
+    $(".register").text(currentLang.login.register_btn);
+
+    $(".text-header-welcome").text(currentLang.welcome.topic);
+    $("#title-welcome-1").text(currentLang.welcome.title_1);
+    $("#subtitle-welcome-1").text(currentLang.welcome.subtitle_1);
+    $("#title-welcome-2").text(currentLang.welcome.title_2);
+    $("#subtitle-welcome-2").text(currentLang.welcome.subtitle_2);
+    $("#title-welcome-3").text(currentLang.welcome.title_3);
+    $("#subtitle-welcome-3").text(currentLang.welcome.subtitle_3);
+    $(".register-car-btn").text(currentLang.welcome.register_btn);
+  }
+</script>

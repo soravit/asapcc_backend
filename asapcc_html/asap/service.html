@@ -1,0 +1,308 @@
+<div class="center-block service-box">
+  <div class="header-title-service">
+    เลือกบริการ
+  </div>
+
+  <div style="position: absolute;">
+    <span class="service-logo-left ">
+      <img src="./assets/img/bmw.png" width="62px" id="service-car-img-logo">
+    </span>
+    <span style="position: absolute;">
+      <div class="service-registercar" id="service-car-license">
+        กต 245
+      </div>
+      <div class="service-brandcar" id="service-car-brand">BMW</div>
+    </span>
+    <span class="service-brandcar-detail" id="service-car-series">Series 3 330e M Sport</span>
+  </div>
+
+  <div class="service-topic-box">
+    <div class="service-topic" id="service-topic-1">บริการซ่อมและบำรุงรักษารถยนต์</div>
+  </div>
+
+  <span class="service-checkbox"><input type="checkbox" id="repair-input-1"> <span class="service-checkbox-label"
+      id="service-checkbox-label-1-1">เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง</span> </span>
+  <span class="service-checkbox"><input type="checkbox" id="repair-input-2"> <span class="service-checkbox-label"
+      id="service-checkbox-label-1-2">เปลี่ยนยาง</span></span>
+  <br>
+  <span class="service-checkbox"><input type="checkbox" id="other-check"> <span class="service-checkbox-label"
+      id="service-checkbox-label-1-3">ปัญหาอื่นๆ (โปรดระบุ)</span></span>
+  <br>
+  <span class="service-checkbox"><input type="text" id="other-input" class="service-input-other hide"> </span>
+  <span class="service-checkbox"><input type="number" id="km-input" class="service-input-km"
+      placeholder="เลขไมล์                                  กม."> </span>
+
+  <div class="service-topic-box">
+    <div class="service-topic" id="service-topic-2">บริการให้คำปรึกษา</div>
+  </div>
+
+  <span class="service-checkbox"><input type="checkbox" id="consult-input-1"><span class="service-checkbox-label"
+      id="service-checkbox-label-2-1">สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์</span></span>
+  <span class="service-checkbox"><input type="checkbox" id="consult-input-2"> <span class="service-checkbox-label"
+      id="service-checkbox-label-2-2">สอบถามสถานะรถซ่อม</span></span>
+  <br>
+  <span class="service-checkbox"><input type="checkbox" id="consult-input-3"> <span class="service-checkbox-label"
+      id="service-checkbox-label-2-3">สอบถามสถานะรถทดแทน</span></span>
+  <span class="service-checkbox"><input type="checkbox" id="other-check-inquiry"> <span class="service-checkbox-label"
+      id="service-checkbox-label-2-4">สอบถามอื่นๆ (โปรดระบุ)</span> </span>
+  <span class="service-checkbox"> <span class="service-checkbox-label"></span></span>
+  <span class="service-checkbox"><span style="width:223px;margin-left: 16px;"></span> </span>
+  <span class="service-checkbox"><input type="text" id="other-input-inquiry" class="service-input-km hide"> </span>
+
+  <div class="service-divider"></div>
+
+  <textarea id="service-textarea" class="service-textarea" rows="4" cols="50" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)"></textarea>
+  <button class="service-next-btn-disable" id="next-btn" disabled>ถัดไป</button>
+
+</div>
+
+
+<script>
+
+  var isCheckRepair = false;
+  var isCheckConsult = true;
+  var vinID = "";
+  var currentJob = {};
+  var currentJobList = [];
+  var carLicense = "";
+
+  $(document).ready(function () {
+
+    $("#other-check").change(function () {
+      if ($(this).prop("checked")) {
+        isCheckRepair = false;
+        $("#other-input").toggleClass("hide");
+      } else {
+        isCheckRepair = true;
+        $("#other-input").val("");
+        $("#other-input").toggleClass("hide");
+        $("#other-input").removeClass("validation-error");
+      }
+    });
+
+    $("#other-input").keyup(function () {
+      if (this.value !== "") {
+        isCheckRepair = true;
+      } else {
+        isCheckRepair = false;
+      }
+      if (isCheckRepair && isCheckConsult) {
+        $("#next-btn").removeClass("service-next-btn-disable");
+        $("#next-btn").addClass("service-next-btn");
+        $("#next-btn").prop("disabled", false);
+      } else {
+        $("#next-btn").removeClass("service-next-btn");
+        $("#next-btn").addClass("service-next-btn-disable");
+        $("#next-btn").prop("disabled", true);
+      }
+    });
+
+    $("#other-input-inquiry").keyup(function () {
+      if (this.value !== "") {
+        isCheckConsult = true;
+      } else {
+        isCheckConsult = false;
+      }
+      if (isCheckRepair && isCheckConsult) {
+        $("#next-btn").removeClass("service-next-btn-disable");
+        $("#next-btn").addClass("service-next-btn");
+        $("#next-btn").prop("disabled", false);
+      } else {
+        $("#next-btn").removeClass("service-next-btn");
+        $("#next-btn").addClass("service-next-btn-disable");
+        $("#next-btn").prop("disabled", true);
+      }
+    });
+
+    $("#other-check-inquiry").change(function () {
+      if ($(this).prop("checked")) {
+        isCheckConsult = false;
+        $("#other-input-inquiry").toggleClass("hide");
+      } else {
+        isCheckConsult = true;
+        $("#other-input-inquiry").val("");
+        $("#other-input-inquiry").toggleClass("hide");
+        $("#other-input-inquiry").removeClass("validation-error");
+      }
+    });
+
+    $("[id^=repair-input-]").change(function () {
+      isCheckRepair = false;
+      $("[id^=repair-input-]").each(function () {
+        if ($(this).prop("checked")) {
+          isCheckRepair = true;
+        }
+      });
+
+      if (isCheckRepair && isCheckConsult) {
+        $("#next-btn").removeClass("service-next-btn-disable");
+        $("#next-btn").addClass("service-next-btn");
+        $("#next-btn").prop("disabled", false);
+      } else {
+        $("#next-btn").removeClass("service-next-btn");
+        $("#next-btn").addClass("service-next-btn-disable");
+        $("#next-btn").prop("disabled", true);
+      }
+    });
+
+    $("[id^=consult-input-]").change(function () {
+      isCheckConsult = false;
+      $("[id^=consult-input-]").each(function () {
+        if ($(this).prop("checked")) {
+          isCheckConsult = true;
+        }
+      });
+
+      if (isCheckRepair && isCheckConsult) {
+        $("#next-btn").removeClass("service-next-btn-disable");
+        $("#next-btn").addClass("service-next-btn");
+        $("#next-btn").prop("disabled", false);
+      } else {
+        $("#next-btn").removeClass("service-next-btn");
+        $("#next-btn").addClass("service-next-btn-disable");
+        $("#next-btn").prop("disabled", true);
+      }
+    });
+
+    $("#next-btn").click(function () {
+      var km = $("#km-input").val();
+      var otherRepair = $("#other-check").prop("checked");
+      var otherRepairText = $("#other-input").val();
+      var otherConsult = $("#other-check-inquiry").prop("checked");
+      var otherConsultText = $("#other-input-inquiry").val();
+
+      if (km == "") {
+        $("#km-input").addClass("validation-error");
+      } else {
+        $("#km-input").removeClass("validation-error");
+      }
+
+      if (otherRepair && otherRepairText == "") {
+        $("#other-input").addClass("validation-error");
+      } else {
+        $("#other-input").removeClass("validation-error");
+      }
+
+      if (otherConsult && otherConsultText == "") {
+        $("#other-input-inquiry").addClass("validation-error");
+      } else {
+        $("#other-input-inquiry").removeClass("validation-error");
+      }
+
+      if ($("#km-input").hasClass("validation-error") || $("#other-input-inquiry").hasClass("validation-error") || $("#other-input").hasClass("validation-error")) {
+        //alert("Fail");
+      } else {
+        //alert("Success");
+        if (localStorage.getItem("currentJobList") !== null) {
+          currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
+          var resultObject = searchObj(carLicense, currentJobList);
+          if (resultObject > -1) {
+            updateJob(currentJobList[resultObject]);
+            localStorage.setItem("currentJobList", JSON.stringify(currentJobList));
+            window.location.href = "#/services/";
+          } else {
+            //alert(resultObject);
+            setJob();
+          }
+        } else {
+          setJob();
+        }
+      }
+    });
+
+    isLogin();
+    initialLang();
+    getCarByLicenseID();
+  });
+
+  function initialLang() {
+    var currentLang = langTH;
+    $(".header-title-service").text(currentLang.service.topic);
+    $("#service-topic-1").text(currentLang.service.service_topic_1);
+    $("#service-topic-2").text(currentLang.service.service_topic_2);
+
+    $("#service-checkbox-label-1-1").text(currentLang.service.service_checkbox_label_1_1);
+    $("#service-checkbox-label-1-2").text(currentLang.service.service_checkbox_label_1_2);
+    $("#service-checkbox-label-1-3").text(currentLang.service.service_checkbox_label_1_3);
+
+    $("#service-checkbox-label-2-1").text(currentLang.service.service_checkbox_label_2_1);
+    $("#service-checkbox-label-2-2").text(currentLang.service.service_checkbox_label_2_2);
+    $("#service-checkbox-label-2-3").text(currentLang.service.service_checkbox_label_2_3);
+    $("#service-checkbox-label-2-4").text(currentLang.service.service_checkbox_label_2_4);
+
+    $("#km-input").attr("placeholder", currentLang.service.mile_label);
+    $(".service-textarea").attr("placeholder", currentLang.service.service_textarea);
+
+  }
+
+  function getCarByLicenseID() {
+    $.ajax({
+      url: baseURL + "getcars/" + getParameterByName('licenseId'),
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      success: function (result) {
+        if (result.cardata.length > 0) {
+          $("#service-car-brand").text(result.cardata[0].car_brand);
+          $("#service-car-series").text(result.cardata[0].car_series);
+          $("#service-car-license").text(result.cardata[0].car_license);
+
+          $("#service-car-img-logo").prop("src", "./assets/img/brand/" + result.cardata[0].car_brand.toLowerCase() + ".png");
+
+          vinID = result.cardata[0].car_vin;
+          carLicense = result.cardata[0].car_license;
+          setJobList(result.cardata[0]);
+        }
+      },
+      error: function (xhr, status, error) {
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#/login/";
+        }
+      }
+    });
+  }
+
+  function setJob() {
+    currentJob.servicetask1 = $("#repair-input-1").is(":checked") ? 1 : 0;
+    currentJob.servicetask2 = $("#repair-input-2").is(":checked") ? 1 : 0;
+    currentJob.servicenote = $("#other-input").val();
+    currentJob.custcare1 = $("#consult-input-1").is(":checked") ? 1 : 0;
+    currentJob.custcare2 = $("#consult-input-2").is(":checked") ? 1 : 0;
+    currentJob.custcare3 = $("#consult-input-3").is(":checked") ? 1 : 0;
+    currentJob.custcarenote = $("#other-input-inquiry").val();
+    currentJob.car_odo_mile = $("#km-input").val();
+    currentJob.usertasknote = $("#service-textarea").val();
+
+    currentJobList.push(currentJob);
+    currentJob = {};
+    localStorage.setItem("currentJobList", JSON.stringify(currentJobList));
+    window.location.href = "#/services/";
+  }
+
+  function setJobList(obj) {
+    currentJob = {
+      "car_brand": obj.car_brand,
+      "car_series": obj.car_series,
+      "car_license": obj.car_license,
+      "car_vinID": vinID
+    };
+  }
+
+  function updateJob(obj) {
+    obj.servicetask1 = $("#repair-input-1").is(":checked") ? 1 : 0;
+    obj.servicetask2 = $("#repair-input-2").is(":checked") ? 1 : 0;
+    obj.servicenote = $("#other-input").val();
+    obj.custcare1 = $("#consult-input-1").is(":checked") ? 1 : 0;
+    obj.custcare2 = $("#consult-input-2").is(":checked") ? 1 : 0;
+    obj.custcare3 = $("#consult-input-3").is(":checked") ? 1 : 0;
+    obj.custcarenote = $("#other-input-inquiry").val();
+    obj.car_odo_mile = $("#km-input").val();
+    obj.usertasknote = $("#service-textarea").val();
+
+    localStorage.setItem("currentJobList", JSON.stringify(currentJobList));
+    window.location.href = "#/services/";
+  }
+</script>

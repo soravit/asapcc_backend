@@ -516,7 +516,7 @@ exports.exportjob=(req,res,next) => {
                     csvFields = ["Id", "Title", "Description", "Published"];
                     csvParser = new CsvParser({ csvFields });
                 
-                    csvData = csvParser.parse(row2);
+                    csvData = csvParser.parse(row);
                 
                     res.setHeader("Content-Type", "text-csv"); // text-csv
                     res.setHeader("Content-Disposition", "attachment; filename=tutorials.csv");
@@ -544,7 +544,7 @@ exports.exportjob=(req,res,next) => {
                     csvFields = ["Id", "Title", "Description", "Published"];
                     csvParser = new CsvParser({ csvFields });
                 
-                    csvData = csvParser.parse(row2);
+                    csvData = csvParser.parse(row);
                 
                     res.setHeader("Content-Type", "text-csv"); // text-csv
                     res.setHeader("Content-Disposition", "attachment; filename=tutorials.csv");
@@ -619,7 +619,7 @@ exports.exportjob=(req,res,next) => {
                     csvFields = ["Id", "Title", "Description", "Published"];
                     csvParser = new CsvParser({ csvFields });
                 
-                    csvData = csvParser.parse(row2);
+                    csvData = csvParser.parse(row);
                 
                     res.setHeader("Content-Type", "text-csv"); // text-csv
                     res.setHeader("Content-Disposition", "attachment; filename=tutorials.csv");
@@ -685,7 +685,7 @@ exports.exportjob=(req,res,next) => {
                 csvFields = ["Id", "Title", "Description", "Published"];
                 csvParser = new CsvParser({ csvFields });
             
-                csvData = csvParser.parse(row2);
+                csvData = csvParser.parse(row);
             
                 res.setHeader("Content-Type", "text-csv"); // text-csv
                 res.setHeader("Content-Disposition", "attachment; filename=tutorials.csv");
