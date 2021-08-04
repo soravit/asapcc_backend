@@ -1521,8 +1521,8 @@
       ordercondition = $("#filter-ordercondition").val();
 
       $.ajax({
-        //"url": baseURL + "back/downloadcsv",
-        url: "https://50a6daee3a3c.ngrok.io/" + "api/back/downloadcsv",
+        "url": baseURL + "back/downloadcsv",
+        //url: "https://50a6daee3a3c.ngrok.io/" + "api/back/downloadcsv",
         data: {
           startdate: dateStart ? dateStart : "",
           enddate: dateEnd ? dateEnd : "",
