@@ -47,7 +47,7 @@ exports.loginEmp=(req,res,next) => {
     EmployeeModel.findEmpByCode({emp_code:emp_code})
     .then(([row]) => {
         if(row.length !== 0) {
-            return bcrypt.compare(password, row[0].password)
+            /*return bcrypt.compare(password, row[0].password)
                 .then((result) => {
                     if(!result) {
                         res.status(401)
@@ -78,7 +78,32 @@ exports.loginEmp=(req,res,next) => {
                             message: "Authentication failed",
                             error:error
                         })
-                })
+                })*/
+
+                if(row[0].password!=password) {
+                    res.status(401)
+                        .json({
+                            message: "Authentication failed"
+                        })
+                } else {
+                    let jwtToken = jwt.sign({
+                        emp_code: row[0].employee_code,
+                        employee_fullname: row[0].employee_fullname,
+                        employee_default_customer_type: row[0].employee_default_customer_type
+                    },process.env.TOKEN_SECRET, {
+                        expiresIn: process.env.TOKEN_EXPIRE_IN
+                    });
+              
+
+                    res.status(200).json({
+                        token: jwtToken,
+                        expiresIn: 3600,
+                        emp_code: row[0].employee_code,
+                        employee_default_customer_type: row[0].employee_default_customer_type,
+                        employee_fullname: row[0].employee_fullname
+                    });
+                }
+
         } else {
             res.status(401)
             .json({
