@@ -1544,7 +1544,7 @@
         //"dataType": "text/csv",
         "success": function (data) {
           var hiddenElement = document.createElement('a');
-          hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(data);
+          hiddenElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(data);
           hiddenElement.target = '_blank';
           hiddenElement.download = 'output.csv';
           hiddenElement.click();
