@@ -359,7 +359,7 @@ exports.csvcar=(req,res,next)=>{
             .on("end", () => {
 
                 fs.unlinkSync(filePath);   // remove temp file
-                //EmployeeModel.clearcartable(); // clear car table
+                EmployeeModel.clearcartable(); // clear car table
                 
                 for(i=0;i<csvData.length;i++){
               
@@ -406,7 +406,7 @@ exports.csvservicepoint=(req,res,next)=>{
             .on("end", () => {
 
                 fs.unlinkSync(filePath);   // remove temp file
-                //EmployeeModel.clearservicepointable(); // clear  table
+                EmployeeModel.clearservicepointable(); // clear  table
                 
                 for(i=0;i<csvData.length;i++){
               
