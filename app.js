@@ -1,5 +1,6 @@
 const express = require('express') // ใช้ framework express.js
 const bodyParser = require('body-parser')
+const path = require('path')
 var cors = require('cors')
 
 const app = express();
@@ -19,6 +20,10 @@ app.use(bodyParser.raw());
  
 app.use('/api',cars)
 
+app.use('/asapcc',express.static(path.join(__dirname+ '/asapcc_html/asapcc')))
+app.use('/asap',express.static(path.join(__dirname+ '/asapcc_html/asap')))
+
 app.listen(5000,()=> {
     console.log('running at 5000')
 })
+
