@@ -16,7 +16,11 @@ class JobModel {
     }
  
  
- 
+    static findCustomerByJobno ({job_id=''}) {
+       
+        return db.execute('SELECT * FROM asapcc_job_main WHERE WHERE final_job_id="'+job_id+'"')
+        
+    }
     
  
 static updatejobid_complete({customer_code=''}){

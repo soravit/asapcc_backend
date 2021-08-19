@@ -52,6 +52,62 @@ exports.confirmJob=(req,res,next)=> {
 
 
        
+     a=row2[0].final_job_id;
+     b=row2[0].customer_firstname;
+     c=row2[0].customer_lastname;
+     d=row2[0].customer_email;
+     e="";
+ 
+     JobModel.getcarlist_confirmed_sendmail({job_id:a}).then(([row3]) => {
+     
+             for(i=0;i<row3.length;i++){
+                 e=e+"<li>"+row3[i].car_license+" : "+row3[i].final_job_id+""+"</li>";
+
+                  // Update car info to job table
+
+                 JobModel.findcarvininjobtable({final_job_id:row3[i].final_job_id}).then(([row4]) => {
+                     
+                     a=row4[0].job_car_vin_id
+                     b=row4[0].final_job_id
+                     c=row2[0].customer_name
+                     d=row2[0].customer_email
+                     e=row2[0].customer_telephone
+                     console.log(c)
+              
+                      
+                     CarsModel.findCarByVin({vinid:a}).then(([row5]) => {
+                         console.log(a)
+                         console.log(b)
+                         JobModel.updatecardatainjobtable({final_job_id:b,car_license:row5[0].car_license,car_brand:row5[0].car_brand,car_series:row5[0].car_series,car_model:row5[0].car_model,car_engine_no:row5[0].car_engine_no,car_customer_type:row5[0].car_customer_type,business_name:row5[0].business_name,contract_startdate:row5[0].contract_startdate,contract_enddate:row5[0].contract_enddate,customer_name:c,customer_email:d,customer_telephone:e})
+                     });
+
+
+             
+                 });
+
+                 // Update service point data
+
+                 console.log(row3[i].final_job_id+'bbbb')
+      
+                 EmployeeModel.findservicepointcodeinjobtable_beforeconfirm({final_job_id:row3[i].final_job_id}).then(([row]) => {
+                     console.log(row[0].final_job_id+'aaa')
+                     a= row[0].job_service_point_code
+                     b=row[0].final_job_id
+             
+                     ServicePoint.findServicePointByCode({code:a}).then(([row2]) => {
+                         console.log(a)
+                 
+                         /*`service_point_name` = '1', `branch_name` = '1', `full_address` = '1', `amphor_name_th` = '1', `province_name_th` = '1', `post_code` = '1', `telephone` = '1', `mobiletel` = '1', `lattitude` = '1', `longtitude` = '1', `service_group`*/
+                         EmployeeModel.updateservicepointdatainjobtable({final_job_id:b,service_point_name:row2[0].service_point_name,branch_name:row2[0].branch_name,full_address:row2[0].full_address,amphor_name_th:row2[0].amphor_name_th,province_name_th:row2[0].province_name_th,post_code:row2[0].post_code,telephone:row2[0].telephone,mobiletel:row2[0].mobiletel,lattitude:row2[0].lattitude,longtitude:row2[0].longtitude,service_group:row2[0].service_group})
+             
+                     });
+      
+                });
+             
+             }
+
+            });
+
 
         
 
@@ -66,86 +122,7 @@ exports.confirmJob=(req,res,next)=> {
             result: 'true'
         });
 
-        ///// EMAIL SENDER
-        a=row2[0].job_id;
-        b=row2[0].customer_firstname;
-        c=row2[0].customer_lastname;
-        d=row2[0].customer_email;
-        e="";
-    
-        JobModel.getcarlist_confirmed_sendmail({job_id:a}).then(([row3]) => {
-        
-                for(i=0;i<row3.length;i++){
-                    e=e+"<li>"+row3[i].car_license+" : "+row3[i].final_job_id+""+"</li>";
-
-                     // Update car info to job table
-
-                    JobModel.findcarvininjobtable({final_job_id:row3[i].final_job_id}).then(([row4]) => {
-                        
-                        a=row4[0].job_car_vin_id
-                        b=row4[0].final_job_id
-                        c=row2[0].customer_firstname+' '+row2[0].customer_lastname
-                        d=row2[0].customer_email
-                        e=row2[0].customer_telephone
-                        console.log(c)
-                 
-                         
-                        CarsModel.findCarByVin({vinid:a}).then(([row5]) => {
-                            console.log(a)
-                            console.log(b)
-                            JobModel.updatecardatainjobtable({final_job_id:b,car_license:row5[0].car_license,car_brand:row5[0].car_brand,car_series:row5[0].car_series,car_model:row5[0].car_model,car_engine_no:row5[0].car_engine_no,car_customer_type:row5[0].car_customer_type,business_name:row5[0].business_name,contract_startdate:row5[0].contract_startdate,contract_enddate:row5[0].contract_enddate,customer_name:c,customer_email:d,customer_telephone:e})
-                        });
-
-
-                
-                    });
-
-                    // Update service point data
-
-                    console.log(row3[i].final_job_id+'bbbb')
-         
-                    EmployeeModel.findservicepointcodeinjobtable_beforeconfirm({final_job_id:row3[i].final_job_id}).then(([row]) => {
-                        console.log(row[0].final_job_id+'aaa')
-                        a= row[0].job_service_point_code
-                        b=row[0].final_job_id
-                
-                        ServicePoint.findServicePointByCode({code:a}).then(([row2]) => {
-                            console.log(a)
-                    
-                            /*`service_point_name` = '1', `branch_name` = '1', `full_address` = '1', `amphor_name_th` = '1', `province_name_th` = '1', `post_code` = '1', `telephone` = '1', `mobiletel` = '1', `lattitude` = '1', `longtitude` = '1', `service_group`*/
-                            EmployeeModel.updateservicepointdatainjobtable({final_job_id:b,service_point_name:row2[0].service_point_name,branch_name:row2[0].branch_name,full_address:row2[0].full_address,amphor_name_th:row2[0].amphor_name_th,province_name_th:row2[0].province_name_th,post_code:row2[0].post_code,telephone:row2[0].telephone,mobiletel:row2[0].mobiletel,lattitude:row2[0].lattitude,longtitude:row2[0].longtitude,service_group:row2[0].service_group})
-                
-                        });
-         
-                   });
-                
-                }
-
-                // รายละเอียดอีเมล
-                    transporter.sendMail({
-                        from: 'ASAP_CallCenter <'+process.env.GMAILUSER+'>',   // ผู้ส่ง
-                        to: ""+b+" "+c+" <"+d+">",// ผู้รับ
-                        subject: "ASAP Call Center : Confirm Job "+a+"",                      // หัวข้อ
-                        text: "Hello,",                         // ข้อความ
-                        html: "<b>คำนัดหมายของท่านคือหมายเลข "+a+" ได้นัดหมายเรียบร้อยแล้ว มีทะเบียนรถที่เข้ารับบริการดังนี้ <br><ol>"+e+"</ol> <br>หากมีข้อสงสัยให้ติดต่อกลับที่ โทรศัพท์ 0-12-345678 </b><br>ASAP Call Center",                
-                    // ข้อความ
-                    }, (err, info) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            console.log(info.messageId);
-                        }
-                    });
-        
-            });
-            ////// END EMAIL
-
-
-            ////// SMS
-
-
-            ////// END SMS
-
+       
     });
   
 });
