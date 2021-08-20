@@ -1469,7 +1469,7 @@
           if (result.servicepoint.length > 0) {
             $("#filter-branch").html("<option value='' selected disabled>เลือกสาขาผู้ให้บริการ</option>");
             $.each(result.servicepoint, function (key, val) {
-              $("#filter-branch").append("<option value='" + val.service_point_name + "'>" + val.service_point_name + "</option>");
+              $("#filter-branch").append("<option value='" + val.branch_name + "'>" + val.service_point_name + " ("+ val.branch_name +")</option>");
             });
           }
         },

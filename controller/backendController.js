@@ -875,7 +875,7 @@ exports.searchjob=(req,res,next) => {
             arr1.push('service_group = "'+req.body.service_group+'"')
         }
         if(req.body.branch!=''){
-            arr1.push('service_point_name LIKE "%'+req.body.branch+'%"')
+            arr1.push('branch_name LIKE "%'+req.body.branch+'%"')
         }
         if(req.body.emp_name_assign!=''){
             arr1.push('job_create_ticket_by_emp_name = "'+req.body.emp_name_assign+'"')
@@ -928,7 +928,7 @@ exports.searchjob=(req,res,next) => {
             arr1.push('service_group = "'+req.body.service_group+'"')
         }
         if(req.body.branch!=''){
-            arr1.push('service_point_name LIKE "%'+req.body.branch+'%"')
+            arr1.push('branch_name LIKE "%'+req.body.branch+'%"')
         }
         if(req.body.emp_name_assign!=''){
             arr1.push('job_create_ticket_by_emp_name = "'+req.body.emp_name_assign+'"')
