@@ -18,7 +18,7 @@ class JobModel {
  
     static findCustomerByJobno ({job_id=''}) {
        
-        return db.execute('SELECT * FROM asapcc_job_main WHERE WHERE final_job_id="'+job_id+'"')
+        return db.execute('SELECT * FROM asapcc_job_main WHERE final_job_id="'+job_id+'"')
         
     }
     
@@ -34,7 +34,7 @@ static updatejobid_complete({customer_code=''}){
 
 static getjobid_complete({customer_code=''}){
 
-    return db.execute('SELECT j.job_id,c.customer_code,c.customer_firstname,c.customer_lastname,c.customer_email,c.customer_telephone FROM `asapcc_job_main` j INNER JOIN asapcc_customer_db c ON j.job_customer_id=c.customer_code WHERE j.job_customer_id=? order by j.job_id desc LIMIT 1',[customer_code])
+    return db.execute('SELECT j.job_id,j.final_job_id,c.customer_code,c.customer_firstname,c.customer_lastname,c.customer_email,c.customer_telephone FROM `asapcc_job_main` j INNER JOIN asapcc_customer_db c ON j.job_customer_id=c.customer_code WHERE j.job_customer_id=? order by j.job_id desc LIMIT 1',[customer_code])
     
     // frontend ส่ง job order มาก่อน แล้วเว้นว่าง job id ไว้ ให้ระบบรันต่อในหน้า confirm และส่ง mail
 

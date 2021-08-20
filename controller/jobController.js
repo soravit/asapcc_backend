@@ -44,15 +44,16 @@ exports.insertJob=(req,res,next)=> {
 } 
 
 exports.confirmJob=(req,res,next)=> { 
+    aaaaa=req.user.customer_code;
     JobModel.updatejobid_complete({customer_code:req.user.customer_code}).then(([row]) => {
         
         JobModel.updatejobid_complete2();
 
-        JobModel.getjobid_complete({customer_code:req.user.customer_code}).then(([row2]) => {
+        JobModel.getjobid_complete({customer_code:aaaaa}).then(([row2]) => {
 
 
        
-     a=row2[0].final_job_id;
+     a=row2[0].job_id;
      b=row2[0].customer_firstname;
      c=row2[0].customer_lastname;
      d=row2[0].customer_email;
@@ -69,7 +70,7 @@ exports.confirmJob=(req,res,next)=> {
                      
                      a=row4[0].job_car_vin_id
                      b=row4[0].final_job_id
-                     c=row2[0].customer_name
+                     c=row2[0].customer_firstname+' '+row2[0].customer_lastname
                      d=row2[0].customer_email
                      e=row2[0].customer_telephone
                      console.log(c)

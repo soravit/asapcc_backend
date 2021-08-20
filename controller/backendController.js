@@ -41,6 +41,7 @@ const upload = multer({ storage: storage, fileFilter: csvFilter });
 
 const EmployeeModel = require('../model/employeeModel');
 const ServicePoint = require('../model/servicepointModel');
+const JobModel = require('../model/jobModel');
 
 exports.loginEmp=(req,res,next) => {
     const { emp_code='', password} = req.body;
