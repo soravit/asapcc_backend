@@ -4,7 +4,7 @@ const FormData = require('form-data');
 const jwt = require('jsonwebtoken') // ใช้ระบบ jwt token
 const dotenv = require('dotenv'); // ดึงค่า .env ใช้
 const fs = require('fs');
-
+const nodemailer = require("nodemailer");
 const CsvParser = require("json2csv").Parser
 
 
@@ -12,7 +12,15 @@ const CsvParser = require("json2csv").Parser
 dotenv.config();
 // access config var
 process.env.TOKEN_SECRET;
- 
+ // กำหนดค่าเกี่ยวกับ email ที่จะใช้ส่ง
+let transporter = nodemailer.createTransport({
+    host: 'gmail',
+    service: 'Gmail',
+    auth: {
+        user: process.env.GMAILUSER,
+        pass: process.env.GMAILPASS,
+    },
+});
 
 const multer = require('multer');
 const csv = require('fast-csv');
@@ -346,12 +354,13 @@ exports.jobupdate=(req,res,next)=>{
       // insert final service point data
      // EmployeeModel.findservicepointcodeinjobtable({final_job_id:req.body.final_job_id}).then(([row]) => {
         a= req.body.job_service_point_code_confirm
+		b=req.body.job_appoint_confirm_datetime
         console.log(a)
  
         ServicePoint.findServicePointByCode({code:a}).then(([row2]) => {
     
             /*`service_point_name` = '1', `branch_name` = '1', `full_address` = '1', `amphor_name_th` = '1', `province_name_th` = '1', `post_code` = '1', `telephone` = '1', `mobiletel` = '1', `lattitude` = '1', `longtitude` = '1', `service_group`*/
-             EmployeeModel.updateservicepointdatainjobtable({final_job_id:req.body.final_job_id,service_point_name:row2[0].service_point_name,branch_name:row2[0].branch_name,full_address:row2[0].full_address,amphor_name_th:row2[0].amphor_name_th,province_name_th:row2[0].province_name_th,post_code:row2[0].post_code,telephone:row2[0].telephone,mobiletel:row2[0].mobiletel,lattitude:row2[0].lattitude,longtitude:row2[0].longtitude,service_group:row2[0].service_group})
+             EmployeeModel.updateservicepointdatainjobtable({final_job_id:req.body.final_job_id,service_point_name:row2[0].service_point_name,branch_name:row2[0].branch_name,full_address:row2[0].full_address,amphor_name_th:row2[0].amphor_name_th,province_name_th:row2[0].province_name_th,post_code:row2[0].post_code,telephone:row2[0].telephone,mobiletel:row2[0].mobiletel,lattitude:row2[0].lattitude,longtitude:row2[0].longtitude,service_group:row2[0].service_group,service_code:a,cfdate:b})
  
         });
          
