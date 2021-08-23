@@ -68,7 +68,7 @@
       <div class='col-sm-2'>
         <div class="form-group">
           <div class='input-group date' id='dateStart'>
-            <input type='text' class="form-control" style="height:40px;" placeholder="วันที่เริ่มต้น" />
+            <input type='text' class="form-control" style="height:40px;" placeholder="วันที่เริ่มต้น" disabled />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -78,7 +78,7 @@
       <div class='col-sm-2'>
         <div class="form-group">
           <div class='input-group date' id='dateEnd'>
-            <input type='text' class="form-control" style="height:40px;" placeholder="วันที่สิ้นสุด" />
+            <input type='text' class="form-control" style="height:40px;" placeholder="วันที่สิ้นสุด" disabled />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -1386,7 +1386,7 @@
         success: function (result) {
 
           if (result.custgroup.length > 0) {
-            $("#filter-customergroup").html("<option value='' selected disabled>เลือกกลุ่มลูกค้า</option>");
+            $("#filter-customergroup").html("<option value='' selected >ดูทั้งหมด</option>");
             $.each(result.custgroup, function (key, val) {
               $("#filter-customergroup").append("<option value='" + val.car_customer_type + "'>" + val.car_customer_type + "</option>");
             });
@@ -1413,7 +1413,7 @@
         success: function (result) {
 
           if (result.joblist.length > 0) {
-            $("#filter-statusjob").html("<option value='' selected disabled>เลือกสถานะงาน</option>");
+            $("#filter-statusjob").html("<option value='' selected >ดูทั้งหมด</option>");
             $.each(result.joblist, function (key, val) {
               $("#filter-statusjob").append("<option value='" + val.job_status + "'>" + val.job_status + "</option>");
             });
@@ -1440,7 +1440,7 @@
         success: function (result) {
 
           if (result.serviceglist.length > 0) {
-            $("#filter-service_group").html("<option value='' selected disabled>เลือกกลุ่มผู้ให้บริการ</option>");
+            $("#filter-service_group").html("<option value='' selected >ดูทั้งหมด</option>");
             $.each(result.serviceglist, function (key, val) {
               $("#filter-service_group").append("<option value='" + val.service_group + "'>" + val.service_group + "</option>");
             });
@@ -1467,7 +1467,7 @@
         success: function (result) {
 
           if (result.servicepoint.length > 0) {
-            $("#filter-branch").html("<option value='' selected disabled>เลือกสาขาผู้ให้บริการ</option>");
+            $("#filter-branch").html("<option value='' selected >ดูทั้งหมด</option>");
             $.each(result.servicepoint, function (key, val) {
               $("#filter-branch").append("<option value='" + val.branch_name + "'>" + val.service_point_name + " ("+ val.branch_name +")</option>");
             });
@@ -1494,8 +1494,8 @@
         success: function (result) {
 
           if (result.emplist.length > 0) {
-            $("#filter-emp_name_assign").html("<option value='' selected disabled>เลือกพนักงานที่รับเรื่อง</option>");
-            $("#filter-emp_name_jobclose").html("<option value='' selected disabled>เลือกพนักงานที่ปิดเรื่อง</option>");
+            $("#filter-emp_name_assign").html("<option value='' selected >ดูทั้งหมด</option>");
+            $("#filter-emp_name_jobclose").html("<option value='' selected >ดูทั้งหมด</option>");
             $.each(result.emplist, function (key, val) {
               $("#filter-emp_name_assign").append("<option value='" + val.employee_fullname + "'>" + val.employee_fullname + "</option>");
               $("#filter-emp_name_jobclose").append("<option value='" + val.employee_fullname + "'>" + val.employee_fullname + "</option>");
