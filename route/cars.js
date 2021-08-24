@@ -10,8 +10,9 @@ dotenv.config();
 // Set global directory
 global.__basedir = process.env.ROOTDIR;
  
+
 // Multer Upload Storage
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, __basedir + '/uploads/')
     },
@@ -27,8 +28,8 @@ const csvFilter = (req, file, cb) => {
     } else {
         cb("Please upload only csv file.", false);
     }
-};
-const upload = multer({ storage: storage, fileFilter: csvFilter });
+};*/
+const upload = multer({ dest: __basedir + '/uploads/' });
 
 const { carsGet,carsGetByLicense,carCheckRegister,carConfirmRegister,carsRemove,getMyCar } = require('../controller/carsController')
 const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor,servicePointByCode } = require('../controller/servicepointController')

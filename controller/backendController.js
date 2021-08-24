@@ -22,11 +22,12 @@ let transporter = nodemailer.createTransport({
     },
 });
 
-const multer = require('multer');
+//const multer = require('multer');
 const csv = require('fast-csv');
 // Set global directory
 global.__basedir = process.env.ROOTDIR;
 
+/*
 // Multer Upload Storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -36,7 +37,7 @@ const storage = multer.diskStorage({
         cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname)
     }
 });
-
+console.log("a");
 // Filter for CSV file
 const csvFilter = (req, file, cb) => {
     if (file.mimetype.includes("csv")) {
@@ -45,7 +46,7 @@ const csvFilter = (req, file, cb) => {
         cb("Please upload only csv file.", false);
     }
 };
-const upload = multer({ storage: storage, fileFilter: csvFilter });
+const upload = multer({ storage: storage, fileFilter: csvFilter });*/
 
 const EmployeeModel = require('../model/employeeModel');
 const ServicePoint = require('../model/servicepointModel');
