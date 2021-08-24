@@ -834,13 +834,13 @@
           {
             "targets": 2, data: 'customer',
             "render": function (data, type, row) {
-              return (row.customer_firstname ? row.customer_firstname : "") + " " + (row.customer_lastname ? row.customer_lastname : "") + "<br>" + (row.customer_telephone ? row.customer_telephone : "") + "<br>" + (row.customer_business_name ? row.customer_business_name : "");
+              return (row.customer_name ? row.customer_name : "") + "<br>" + (row.customer_telephone ? row.customer_telephone : "") + "<br>" + (row.business_name ? row.business_name : "");
             }
           },
           {
             "targets": 3, data: 'car_info',
             "render": function (data, type, row) {
-              return (row.car_license == null ? "" : row.car_license) + "<br>" + (row.car_brand == null ? "" : row.car_brand) + " " + (row.car_series == null ? "" : row.car_series) + " " + (row.car_model == null ? "" : row.car_model);
+              return (row.car_brand == null ? "" : row.car_brand) + " " + (row.car_license == null ? "" : row.car_license) + "<br> " + (row.car_series == null ? "" : row.car_series) + "<br> " + (row.car_model == null ? "" : row.car_model);
             }
           },
           {
@@ -852,7 +852,7 @@
           {
             "targets": 5, data: 'service_point_name',
             "render": function (data, type, row) {
-              return (row.service_point_name == null ? "" : row.service_point_name) + "<br>" + (row.service_point_tel == null ? "" : row.service_point_tel) + "<br>" + (row.job_appoint_confirm_datetime == null ? "" : row.job_appoint_confirm_datetime);
+              return (row.service_point_name == null ? "" : row.service_point_name +' '+ row.branch_name) + "<br>" + (row.telephone == null ? "" : row.telephone) + "<br>" + (row.job_appoint_confirm_datetime == null ? "" : row.job_appoint_confirm_datetime);
             }
           },
           {
@@ -867,7 +867,7 @@
           {
             "targets": 7, data: 'record_time',
             "render": function (data, type, row) {
-              return (row.createticketby == null ? "" : "รับเรื่อง " + row.createticketby + "<br> ") + (row.summaryby == null ? "" : "สรุป " + row.summaryby + "<br>") + (row.closeby == null ? "" : "ปิดเรื่อง " + row.closeby);
+              return (row.job_create_ticket_by_emp_name == null ? "" : "รับเรื่อง " + row.job_create_ticket_datetime + " " + row.job_create_ticket_by_emp_name + "<br> ") + (row.job_summary_ticket_by_emp_name == null ? "" : "สรุป " + row.job_summary_ticket_datetime + " " + row.job_summary_ticket_by_emp_name + "<br>") + (row.job_closed_ticket_by_emp_name == null ? "" : "ปิดเรื่อง " + row.job_closed_ticket_datetime + " " + row.job_closed_ticket_by_emp_name);
             }
           }
         ],

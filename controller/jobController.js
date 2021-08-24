@@ -29,7 +29,7 @@ const ServicePoint = require('../model/servicepointModel');
 
 /* job_orderss:req.body.job_order,job_customer_id:req.user.customer_code,job_car_vin_id:req.body.job_car_vin_id,job_service_point_code:req.body.job_service_point_code,job_appoint_datetime:req.body.job_appoint_datetime,servicetask1:req.body.servicetask1,servicetask2:req.body.servicetask2,servicenote:req.body.servicenote,custcare1:req.body.custcare1,custcare2:req.body.custcare2,custcare3:req.body.custcare3,custcarenote:req.body.custcarenote,car_odo_mile:req.body.car_odo_mile,usertasknote:req.body.usertasknote */
 
-
+/* //job order=1
 exports.insertJob=(req,res,next)=> { 
 
 
@@ -48,8 +48,69 @@ exports.insertJob=(req,res,next)=> {
 
     
 } 
+*/
+
 
  /* แก้เป็นแยก job job ให้ทับเลขเลย /1  /2  /3  /4  แล้วส่งเมลสรุปรายการให้ลูกค้าตอนนี้ด้วย */ 
+
+
+ /// new JOB function
+exports.insertJob=(req,res,next)=> { 
+
+
+
+
+
+    // วิ่ง insert job แยกแต่ละ row ตามที่ลูกค้าติ๊กถูกเลย
+
+    if(req.body.servicetask1!=''){ // ใส่ service note / job appointment... etc เข้าไปทุกอันด้วย
+        JobModel.insertJobs().then(([row]) => {
+            res.status(200).json({
+                message: 'insert job success ',
+                result: 'true'
+            });
+        });
+    }
+
+    if(req.body.servicetask2!=''){
+        JobModel.insertJobs().then(([row]) => {
+            res.status(200).json({
+                message: 'insert job success ',
+                result: 'true'
+            });
+        });
+    }
+
+    if(req.body.custcare1!=''){ // ใส่ cust care note เข้าไปทุกอันด้วย
+        JobModel.insertJobs().then(([row]) => {
+            res.status(200).json({
+                message: 'insert job success ',
+                result: 'true'
+            });
+        });
+    }
+
+    if(req.body.custcare2!=''){
+        JobModel.insertJobs().then(([row]) => {
+            res.status(200).json({
+                message: 'insert job success ',
+                result: 'true'
+            });
+        });
+    }
+
+    if(req.body.custcare3!=''){
+        JobModel.insertJobs().then(([row]) => {
+            res.status(200).json({
+                message: 'insert job success ',
+                result: 'true'
+            });
+        });
+    }
+
+   
+}
+
 
 exports.confirmJob=(req,res,next)=> { 
     aaaaa=req.user.customer_code;

@@ -44,7 +44,8 @@ class EmployeeModel {
     }
 
     static updateJob({job_note='',job_service_point_code_confirm='',job_appoint_confirm_datetime='',servicetask1='',servicetask2='',servicenote='',custcare1='',custcare2='',custcare3='',custcarenote='',car_odo_mile='',job_callcenter_note='',job_status='',final_job_id=''}){
-        return db.execute('UPDATE asapcc_job_main SET job_note = ?, job_service_point_code_confirm = ?, job_appoint_confirm_datetime = ?, servicetask1 = ?, servicetask2 = ?, servicenote = ?, custcare1 = ?, custcare2 = ?, custcare3 = ?, custcarenote = ?, car_odo_mile = ?,job_callcenter_note=?,job_status=? WHERE final_job_id = ?',[job_note,job_service_point_code_confirm,job_appoint_confirm_datetime,servicetask1,servicetask2,servicenote,custcare1,custcare2,custcare3,custcarenote,car_odo_mile,job_callcenter_note,job_status,final_job_id])
+  
+        return db.execute('UPDATE asapcc_job_main SET job_note = ?, job_service_point_code_confirm = ?, job_appoint_confirm_datetime = ? WHERE final_job_id = ?',[job_note,job_service_point_code_confirm,job_appoint_confirm_datetime,final_job_id])
     }
 
 
