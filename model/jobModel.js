@@ -23,7 +23,7 @@ class JobModel {
     }
     
  
-static updatejobid_complete({customer_code=''}){
+static updatejobid_complete({customer_code=''}){ // แก้ format job id ด้วย YYMM00001
 
     return db.execute('UPDATE `asapcc_job_main` SET `job_id` = (select current_job_no+1 from asapcc_constant_jobno where auto_id=1),final_job_id=CONCAT((select current_job_no+1 from asapcc_constant_jobno where auto_id=1),"/",job_order) WHERE auto_id IN ( select * from (select auto_id from asapcc_job_main where (job_id is NULL or job_id="") and job_customer_id=? order by job_order asc) as tmp_a )',[customer_code])
     
