@@ -16,7 +16,17 @@
   <link rel="stylesheet" type="text/css" href="./assets/datatables/datatables.min.css" />
   <link rel="stylesheet" type="text/css"
     href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css" />
-</head>
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=eJ5JJYNzabVh-aDLmVsvNr4Wh4CQ3W_IefLkwf0FdpiDWvDANOe2roIt-n1ZxNGuLMqA1oRdoopO2bdH0F0CgaHaEnfcqwOshI33d2NLsm8KS8_y8STYYd7W4piiR410ppSng3VOw4esN0JRPyO_cMRnR6dxnIZjFT1PDQeaqD-sOVbBAno99iRSX2WGj5o1K5t2AkYQR_kpXY-tfRIkL7vuRnHbxXIDeluiMOKfWICOkj1KtDkba_wWRm8XAzF_AMekbuJGgT5BFeTtsoeGAV1VDXDmwlOzv9ElY3mSxVtFpyAO35IaCf8X1RHYs3uTg0aGLmuTlH7neFTC9iwh5TOBu9D7UIQ8FAFYCufoZ3IZg30yITHbpSF6GAYNr2su603Zxerk0fEa0HiLz2zUEkgg0Es-bbBWEPh8gC8zyX9SbQX6zCQzM8wDu0--DXcUWAlCKcnKTVQLLwoC1ck23ZUmtSwrL964uIz4qSGf-Ik" charset="UTF-8"></script><style>
+    .text-blue{
+      color: #75abcc;
+      font-weight: bold;
+    }
+    body{
+      font-family: 'Kanit', sans-serif;
+    }
+  </style>
+  </head>
 
 <body class="container-custom">
 
@@ -756,6 +766,7 @@
 
           if (result.custgroup.length > 0) {
             $("#customer-group").html("");
+            $("#customer-group").append("<option value=\"\">ดูทั้งหมด</option>");
             $.each(result.custgroup, function (key, val) {
               $("#customer-group").append("<option value='" + val.car_customer_type + "'>" + val.car_customer_type + "</option>");
             });
@@ -828,37 +839,61 @@
           {
             "targets": 1, data: 'job_info',
             "render": function (data, type, row) {
-              return row.final_job_id + "<br>" + row.job_appoint_datetime;
+              if(row.job_status.toLowerCase() == "new"){
+                return "<span class='text-blue'>"+row.final_job_id + "<br>" + row.job_appoint_datetime+"</span>";
+              }else{
+                return row.final_job_id + "<br>" + row.job_appoint_datetime;
+              }
             }
           },
           {
             "targets": 2, data: 'customer',
             "render": function (data, type, row) {
-              return (row.customer_name ? row.customer_name : "") + "<br>" + (row.customer_telephone ? row.customer_telephone : "") + "<br>" + (row.business_name ? row.business_name : "");
+              if(row.job_status.toLowerCase() == "new"){
+                return "<span class='text-blue'>"+(row.customer_name ? row.customer_name : "") + "<br>" + (row.customer_telephone ? row.customer_telephone : "") + "<br>" + (row.business_name ? row.business_name : "")+"</span>";
+              }else{
+                return (row.customer_name ? row.customer_name : "") + "<br>" + (row.customer_telephone ? row.customer_telephone : "") + "<br>" + (row.business_name ? row.business_name : "");
+              }
             }
           },
           {
             "targets": 3, data: 'car_info',
             "render": function (data, type, row) {
-              return (row.car_brand == null ? "" : row.car_brand) + " " + (row.car_license == null ? "" : row.car_license) + "<br> " + (row.car_series == null ? "" : row.car_series) + "<br> " + (row.car_model == null ? "" : row.car_model);
+              if(row.job_status.toLowerCase() == "new"){
+                return "<span class='text-blue'>"+(row.car_brand == null ? "" : row.car_brand) + " " + (row.car_license == null ? "" : row.car_license) + "<br> " + (row.car_series == null ? "" : row.car_series) + "<br> " + (row.car_model == null ? "" : row.car_model)+"</span>";
+              }else{
+                return (row.car_brand == null ? "" : row.car_brand) + " " + (row.car_license == null ? "" : row.car_license) + "<br> " + (row.car_series == null ? "" : row.car_series) + "<br> " + (row.car_model == null ? "" : row.car_model);
+              }
             }
           },
           {
             "targets": 4, data: 'servicetask1',
             "render": function (data, type, row) {
-              return (row.servicetask1 == "1" ? "เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง" : "") + "<br>" + (row.servicetask2 == "1" ? "เปลี่ยนยาง" : "") + "<br>" + row.servicenote + "<br>" + (row.custcare1 == "1" ? "สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์" : "") + "<br>" + (row.custcare2 == "1" ? "สอบถามสถานะรถซ่อม" : "") + "<br>" + (row.custcare3 == "1" ? "สอบถามสถานะรถทดแทน" : "") + "<br>" + row.custcarenote;
+              if(row.job_status.toLowerCase() == "new"){
+                return "<span class='text-blue'>"+(row.servicetask1 == "1" ? "เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง" : "") + "<br>" + (row.servicetask2 == "1" ? "เปลี่ยนยาง" : "") + "<br>" + row.servicenote + "<br>" + (row.custcare1 == "1" ? "สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์" : "") + "<br>" + (row.custcare2 == "1" ? "สอบถามสถานะรถซ่อม" : "") + "<br>" + (row.custcare3 == "1" ? "สอบถามสถานะรถทดแทน" : "") + "<br>" + row.custcarenote+"</span>";
+              }else{
+                return "<span class='text-blue'>"+(row.servicetask1 == "1" ? "เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง" : "") + "<br>" + (row.servicetask2 == "1" ? "เปลี่ยนยาง" : "") + "<br>" + row.servicenote + "<br>" + (row.custcare1 == "1" ? "สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์" : "") + "<br>" + (row.custcare2 == "1" ? "สอบถามสถานะรถซ่อม" : "") + "<br>" + (row.custcare3 == "1" ? "สอบถามสถานะรถทดแทน" : "") + "<br>" + row.custcarenote+"</span>";
+              }
             }
           },
           {
             "targets": 5, data: 'service_point_name',
             "render": function (data, type, row) {
-              return (row.service_point_name == null ? "" : row.service_point_name +' '+ row.branch_name) + "<br>" + (row.telephone == null ? "" : row.telephone) + "<br>" + (row.job_appoint_confirm_datetime == null ? "" : row.job_appoint_confirm_datetime);
+              if(row.job_status.toLowerCase() == "new"){
+                return "<span class='text-blue'>"+(row.service_point_name == null ? "" : row.service_point_name +' '+ row.branch_name) + "<br>" + (row.telephone == null ? "" : row.telephone) + "<br>" + (row.job_appoint_confirm_datetime == null ? "" : row.job_appoint_confirm_datetime)+"</span>";
+              }else{
+                return (row.service_point_name == null ? "" : "<span class='text-blue'>"+row.service_point_name +' '+ row.branch_name+"</span>") + "<br>" + (row.telephone == null ? "" : row.telephone) + "<br>" + (row.job_appoint_confirm_datetime == null ? "" : row.job_appoint_confirm_datetime);
+              }
             }
           },
           {
             "targets": 6, data: 'usertasknote',
             "render": function (data, type, row) {
-              return row.usertasknote;
+              if(row.job_status.toLowerCase() == "new"){
+                return "<span class='text-blue'>"+row.usertasknote+"</span>";
+              }else{
+                return "<span class=''>"+row.usertasknote+"</span>";
+              }
             }
           },
           // {
@@ -867,7 +902,7 @@
           {
             "targets": 7, data: 'record_time',
             "render": function (data, type, row) {
-              return (row.job_create_ticket_by_emp_name == null ? "" : "รับเรื่อง " + row.job_create_ticket_datetime + " " + row.job_create_ticket_by_emp_name + "<br> ") + (row.job_summary_ticket_by_emp_name == null ? "" : "สรุป " + row.job_summary_ticket_datetime + " " + row.job_summary_ticket_by_emp_name + "<br>") + (row.job_closed_ticket_by_emp_name == null ? "" : "ปิดเรื่อง " + row.job_closed_ticket_datetime + " " + row.job_closed_ticket_by_emp_name);
+              return (row.job_create_ticket_by_emp_name == null ? "" : "<span class='text-blue'>รับเรื่อง</span> " + row.job_create_ticket_datetime + " " + row.job_create_ticket_by_emp_name + "<br> ") + (row.job_summary_ticket_by_emp_name == null ? "" : "<span class='text-blue'>สรุป</span> " + row.job_summary_ticket_datetime + " " + row.job_summary_ticket_by_emp_name + "<br>") + (row.job_closed_ticket_by_emp_name == null ? "" : "<span class='text-blue'>ปิดเรื่อง</span> " + row.job_closed_ticket_datetime + " " + row.job_closed_ticket_by_emp_name);
             }
           }
         ],
@@ -893,15 +928,14 @@
       $("#jobStatusModal").modal('show');
       $('#jobStatusDateTime').datetimepicker({
         defaultDate: new Date(),
-        format: 'YYYY-MMM-DD HH:mm',
-        extraFormats: ['ddd, DD MMM YYYY', 'DD/MM/YYYY'],
+        format: 'YYYY-MM-DD HH:mm:ss',
+        // extraFormats: ['ddd, DD MMM YYYY', 'DD/MM/YYYY'],
       }).on('blur', function () {
 
       });
       resetJobStatusDetailForm();
       getServicePointProvince();
       var currentTime = new Date();
-      $("#jobStatusDateTime").find("input").val(formatDate(Date.now()) + " " + currentTime.getHours() + ":" + currentTime.getMinutes());
       $("#jobstatus-jobInfo").text(final_job_id);
       getJobStatusDetailById(final_job_id);
     }
@@ -946,7 +980,7 @@
 
             getServicepoinConfirmByCode(item.job_service_point_code_confirm);
 
-            $("#jobStatusDateTime").find("input").val(item.job_appoint_confirm_datetime ? item.job_appoint_confirm_datetime : formatDate(Date.now()) + " " + currentTime.getHours() + ":" + currentTime.getMinutes());
+           $("#jobStatusDateTime").find("input").val(item.job_appoint_confirm_datetime ? item.job_appoint_confirm_datetime : formatDate(Date.now()) + " " + currentTime.getHours() + ":" + currentTime.getMinutes());
             $("#jobstatus-job_note").text(item.job_note ? item.job_note : "");
 
             $("#jobstatus-current").val(item.job_status);
@@ -1202,7 +1236,7 @@
         async: false,
         success: function (result) {
           if (result.message == "success") {
-            $("#jobstatus-job_note").val("");
+            //$("#jobstatus-job_note").val("");
             $("#jobStatusModal").modal('hide');
             //getDatatable();
             getDatatableFilter();
@@ -1321,7 +1355,7 @@
       emp_name_assign = $("#filter-emp_name_assign").val();
       emp_name_jobclose = $("#filter-emp_name_jobclose").val();
       ordercondition = $("#filter-ordercondition").val();
-
+      $("#customer-group").val(employee_default_customer_type);
       $.ajax({
         "url": baseURL + "back/searchjob",
         data: {

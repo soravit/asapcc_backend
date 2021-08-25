@@ -90,6 +90,8 @@ class EmployeeModel {
     }
 
     static updateservicepointdatainjobtable({final_job_id='',service_point_name='',branch_name='',full_address='',amphor_name_th='',province_name_th='',post_code='',telephone='',mobiletel='',lattitude='',longtitude='',service_group='',service_code='',cfdate=''}){
+        console.log("UPDATE `asapcc_job_main` SET `service_point_name` = ?, `branch_name` = ?, `full_address` = ?, `amphor_name_th` = ?, `province_name_th` = ?, `post_code` = ?, `telephone` = ?, `mobiletel` = ?, `lattitude` = ?, `longtitude` = ?, `service_group` = ?, `job_service_point_code_confirm` = ?,`job_appoint_confirm_datetime`=? WHERE `asapcc_job_main`.`final_job_id` = ?",[service_point_name,branch_name,full_address,amphor_name_th,province_name_th,post_code,telephone,mobiletel,lattitude,longtitude,service_group,service_code,cfdate,final_job_id])
+  
         return db.execute("UPDATE `asapcc_job_main` SET `service_point_name` = ?, `branch_name` = ?, `full_address` = ?, `amphor_name_th` = ?, `province_name_th` = ?, `post_code` = ?, `telephone` = ?, `mobiletel` = ?, `lattitude` = ?, `longtitude` = ?, `service_group` = ?, `job_service_point_code_confirm` = ?,`job_appoint_confirm_datetime`=? WHERE `asapcc_job_main`.`final_job_id` = ?",[service_point_name,branch_name,full_address,amphor_name_th,province_name_th,post_code,telephone,mobiletel,lattitude,longtitude,service_group,service_code,cfdate,final_job_id])
     }
 

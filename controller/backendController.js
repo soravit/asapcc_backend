@@ -287,17 +287,104 @@ exports.jobsummary=(req,res,next)=>{
 
 exports.jobclose=(req,res,next)=>{
     // ปิดเรื่อง
-
-  
-
-
-
-    // send sms/email confirm อีกรอบ
-
-    EmployeeModel.updateJobClose({final_job_id:req.body.final_job_id,emp_code:req.user.emp_code,empname:req.user.employee_fullname});
+    console.log("close job")
+    jid=req.body.final_job_id;
+    EmployeeModel.updateJobClose({final_job_id:jid,emp_code:req.user.emp_code,empname:req.user.employee_fullname});
     res.status(200).json({
         message:"success"
     });
+    console.log(jid)
+    e="";
+
+    JobModel.findJobSinglerow({job_id:jid}).then(([row]) => {
+        console.log(jid)
+        console.log(row)
+        console.log("aaa")
+
+
+        if(row[0].servicetask1!='' && row[0].servicenote==''){ // ใส่ service note / job appointment... etc เข้าไปทุกอันด้วย
+          
+            e=e+"<li>เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง</li>";
+           
+            
+        } else if(row[0].servicetask1!='' && row[0].servicenote!=''){ // ใส่ service note / job appointment... etc เข้าไปทุกอันด้วย
+            
+            e=e+"<li>เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง</li>";
+            e=e+"<li>"+row[0].servicenote+"</li>";
+            
+        } else
+    
+        if(row[0].servicetask2!='' && row[0].servicenote==''){
+        
+            e=e+"<li>เปลี่ยนยาง</li>";
+          
+        } else if(row[0].servicetask2!='' && row[0].servicenote!=''){
+          
+            e=e+"<li>เปลี่ยนยาง</li>";
+            e=e+"<li>"+row[0].servicenote+"</li>";
+           
+        } else
+    
+        if(row[0].custcare1!='' && row[0].custcarenote==''){ // ใส่ cust care note เข้าไปทุกอันด้วย
+           
+            e=e+"<li>สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์</li>";
+            
+        } else if(row[0].custcare1!='' && row[0].custcarenote!=''){ // ใส่ cust care note เข้าไปทุกอันด้วย
+            
+            e=e+"<li>สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์</li>";
+            e=e+"<li>"+row[0].custcarenote+"</li>";
+           
+        } else 
+    
+        if(row[0].custcare2!='' && row[0].custcarenote==''){
+            
+            e=e+"<li>สอบถามสถานะรถซ่อม</li>";
+           
+        } else  if(row[0].custcare2!='' && row[0].custcarenote!=''){
+           
+            e=e+"<li>สอบถามสถานะรถซ่อม</li>";
+            e=e+"<li>"+row[0].custcarenote+"</li>";
+            
+        } else
+    
+        if(row[0].custcare3!='' && row[0].custcarenote==''){
+         
+            e=e+"<li>สอบถามสถานะรถทดแทน</li>";
+            
+        } else if(row[0].custcare3!='' && row[0].custcarenote!='') {
+        
+            e=e+"<li>สอบถามสถานะรถทดแทน</li>";
+            e=e+"<li>"+row[0].custcarenote+"</li>";
+           
+        }
+
+        // Send email summary job JOB ID 2108XXXXX
+console.log(process.env.GMAILUSER,row[0].customer_name,row[0].customer_email,row[0].final_job_id,e)
+     
+            transporter.sendMail({
+                from: 'ASAP_CallCenter <'+process.env.GMAILUSER+'>',   // ผู้ส่ง
+                to: ""+row[0].customer_name+" <"+row[0].customer_email+">",// ผู้รับ
+                subject: "ASAP Call Center : Job "+row[0].final_job_id+"",                      // หัวข้อ
+                text: "Hello,",                         // ข้อความ
+                html: "<b>คำนัดหมาย "+row[0].final_job_id+" ได้นัดหมายเรียบร้อยแล้ว ทะเบียนรถ "+row[0].car_license+" <br>มีรายการดังนี้:<ol>"+e+"</ol> <br>ที่ศูนย์บริการ "+row[0].service_point_name+" ("+row[0].branch_name+")<br>"+row[0].full_address+" <br>เวลา "+row[0].job_appoint_confirm_datetime+"<br>หากมีข้อสงสัยให้ติดต่อกลับที่ โทรศัพท์ 0-12-345678 </b><br>ASAP Call Center",                
+            // ข้อความ
+            }, (err, info) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(info.messageId);
+                }
+            });
+  
+
+    });
+  
+//แก้ไขส่งเมลใหม่ด้วย
+/*
+
+    // send sms/email confirm อีกรอบ
+
+   
 
      ///// EMAIL SENDER
     JobModel.findCustomerByJobno({job_id:req.body.final_job_id}).then(([row2]) => {
@@ -345,7 +432,7 @@ exports.jobclose=(req,res,next)=>{
          ////// END SMS
 
        
-    });
+    });*/
 }
 
 
