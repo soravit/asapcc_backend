@@ -78,7 +78,7 @@ e="";
         JobModel.insertJobs({job_orderss:order,job_customer_id:req.user.customer_code,job_car_vin_id:req.body.job_car_vin_id,job_service_point_code:req.body.job_service_point_code,job_appoint_datetime:req.body.job_appoint_datetime,servicetask1:req.body.servicetask1,servicetask2:'',servicenote:req.body.servicenote,custcare1:'',custcare2:'',custcare3:'',custcarenote:'',car_odo_mile:req.body.car_odo_mile,usertasknote:req.body.usertasknote}).then(([row]) => {
              
         });
-    }
+    } 
 
     if(req.body.servicetask2!='' && req.body.servicenote==''){
         order=order+1;
@@ -93,7 +93,7 @@ e="";
         JobModel.insertJobs({job_orderss:order,job_customer_id:req.user.customer_code,job_car_vin_id:req.body.job_car_vin_id,job_service_point_code:req.body.job_service_point_code,job_appoint_datetime:req.body.job_appoint_datetime,servicetask1:'',servicetask2:req.body.servicetask2,servicenote:req.body.servicenote,custcare1:'',custcare2:'',custcare3:'',custcarenote:'',car_odo_mile:req.body.car_odo_mile,usertasknote:req.body.usertasknote}).then(([row]) => {
            
         });
-    }
+    } 
 
     if(req.body.custcare1!='' && req.body.custcarenote==''){ // ใส่ cust care note เข้าไปทุกอันด้วย
         order=order+1;
@@ -108,7 +108,7 @@ e="";
         JobModel.insertJobs({job_orderss:order,job_customer_id:req.user.customer_code,job_car_vin_id:req.body.job_car_vin_id,job_service_point_code:req.body.job_service_point_code,job_appoint_datetime:req.body.job_appoint_datetime,servicetask1:'',servicetask2:'',servicenote:'',custcare1:req.body.custcare1,custcare2:'',custcare3:'',custcarenote:req.body.custcarenote,car_odo_mile:req.body.car_odo_mile,usertasknote:req.body.usertasknote}).then(([row]) => {
           
         });
-    }
+    }  
 
     if(req.body.custcare2!='' && req.body.custcarenote==''){
         order=order+1;
@@ -123,7 +123,7 @@ e="";
         JobModel.insertJobs({job_orderss:order,job_customer_id:req.user.customer_code,job_car_vin_id:req.body.job_car_vin_id,job_service_point_code:req.body.job_service_point_code,job_appoint_datetime:req.body.job_appoint_datetime,servicetask1:'',servicetask2:'',servicenote:'',custcare1:'',custcare2:req.body.custcare2,custcare3:'',custcarenote:req.body.custcarenote,car_odo_mile:req.body.car_odo_mile,usertasknote:req.body.usertasknote}).then(([row]) => {
           
         });
-    }
+    }  
 
     if(req.body.custcare3!='' && req.body.custcarenote==''){
         order=order+1;
