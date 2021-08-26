@@ -302,60 +302,32 @@ exports.jobclose=(req,res,next)=>{
         console.log("aaa")
 
 
-        if(row[0].servicetask1!='' && row[0].servicenote==''){ // ใส่ service note / job appointment... etc เข้าไปทุกอันด้วย
+        if(row[0].servicetask1=='1'){ // ใส่ service note / job appointment... etc เข้าไปทุกอันด้วย
           
             e=e+"<li>เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง</li>";
            
             
-        } else if(row[0].servicetask1!='' && row[0].servicenote!=''){ // ใส่ service note / job appointment... etc เข้าไปทุกอันด้วย
-            
-            e=e+"<li>เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง</li>";
-            e=e+"<li>"+row[0].servicenote+"</li>";
-            
-        } else
-    
-        if(row[0].servicetask2!='' && row[0].servicenote==''){
+        } else if(row[0].servicetask2=='1' ){
         
             e=e+"<li>เปลี่ยนยาง</li>";
           
-        } else if(row[0].servicetask2!='' && row[0].servicenote!=''){
-          
-            e=e+"<li>เปลี่ยนยาง</li>";
-            e=e+"<li>"+row[0].servicenote+"</li>";
-           
-        } else
-    
-        if(row[0].custcare1!='' && row[0].custcarenote==''){ // ใส่ cust care note เข้าไปทุกอันด้วย
+        }  else if(row[0].servicenote!=''){
+            e=e+"<li>สอบถามอื่นๆ: "+row[0].servicenote+"</li>";
+
+        } else if(row[0].custcare1=='1' ){ // ใส่ cust care note เข้าไปทุกอันด้วย
            
             e=e+"<li>สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์</li>";
             
-        } else if(row[0].custcare1!='' && row[0].custcarenote!=''){ // ใส่ cust care note เข้าไปทุกอันด้วย
-            
-            e=e+"<li>สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์</li>";
-            e=e+"<li>"+row[0].custcarenote+"</li>";
-           
-        } else 
-    
-        if(row[0].custcare2!='' && row[0].custcarenote==''){
+        }  else if(row[0].custcare2=='1'){
             
             e=e+"<li>สอบถามสถานะรถซ่อม</li>";
            
-        } else  if(row[0].custcare2!='' && row[0].custcarenote!=''){
-           
-            e=e+"<li>สอบถามสถานะรถซ่อม</li>";
-            e=e+"<li>"+row[0].custcarenote+"</li>";
-            
-        } else
-    
-        if(row[0].custcare3!='' && row[0].custcarenote==''){
+        } else  if(row[0].custcare3=='1' ){
          
             e=e+"<li>สอบถามสถานะรถทดแทน</li>";
             
-        } else if(row[0].custcare3!='' && row[0].custcarenote!='') {
-        
-            e=e+"<li>สอบถามสถานะรถทดแทน</li>";
-            e=e+"<li>"+row[0].custcarenote+"</li>";
-           
+        }  else if(row[0].custcarenote!=''){
+            e=e+"<li>สอบถามบริการอื่นๆ: "+row[0].custcarenote+"</li>";
         }
 
         // Send email summary job JOB ID 2108XXXXX
@@ -659,9 +631,9 @@ exports.exportjob=(req,res,next) => {
     // order condition
     orderstring=''
     if(req.body.ordercondition=='datecreated_newfirst'){
-        orderstring='ORDER BY job_add_datetime DESC'
+        orderstring='ORDER BY final_job_id DESC'
     } else if(req.body.ordercondition=='datecreated_newlast'){
-        orderstring='ORDER BY job_add_datetime ASC'
+        orderstring='ORDER BY final_job_id ASC'
     } else if(req.body.ordercondition=='dateclose_newfirst'){
         orderstring='ORDER BY job_closed_ticket_datetime DESC'
     } else if(req.body.ordercondition=='dateclose_newlast'){
@@ -700,9 +672,9 @@ exports.exportjob=(req,res,next) => {
         });
 
     } else if(req.body.startdate!='' && req.body.enddate!='' && req.body.customergroup=='' && (req.body.carlicense=='' && req.body.customername=='' && req.body.statusjob=='' && req.body.service_group=='' && req.body.branch=='' && req.body.emp_name_assign=='' && req.body.emp_name_jobclose=='')){
-        EmployeeModel.searchjob_all({order:orderstring,daterange:'WHERE job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
+        EmployeeModel.searchjob_all({order:orderstring,daterange:'WHERE DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
            
-            EmployeeModel.statsearchjob_all2({daterange:'WHERE job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
+            EmployeeModel.statsearchjob_all2({daterange:'WHERE DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
 
                 let tutorials = [];
 
@@ -842,8 +814,8 @@ exports.exportjob=(req,res,next) => {
         }
   
 
-        EmployeeModel.searchjob_filter({othersearch:searchstring,order:orderstring,daterange:'AND job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
-            EmployeeModel.statsearchjob_filter2({othersearch:searchstring,daterange:'AND job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
+        EmployeeModel.searchjob_filter({othersearch:searchstring,order:orderstring,daterange:'AND DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
+            EmployeeModel.statsearchjob_filter2({othersearch:searchstring,daterange:'AND DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
           
                 let tutorials = [];
 
@@ -913,9 +885,9 @@ exports.searchjob=(req,res,next) => {
     // order condition
     orderstring=''
     if(req.body.ordercondition=='datecreated_newfirst'){
-        orderstring='ORDER BY job_add_datetime DESC'
+        orderstring='ORDER BY final_job_id DESC'
     } else if(req.body.ordercondition=='datecreated_newlast'){
-        orderstring='ORDER BY job_add_datetime ASC'
+        orderstring='ORDER BY final_job_id ASC'
     } else if(req.body.ordercondition=='dateclose_newfirst'){
         orderstring='ORDER BY job_closed_ticket_datetime DESC'
     } else if(req.body.ordercondition=='dateclose_newlast'){
@@ -939,9 +911,9 @@ exports.searchjob=(req,res,next) => {
         });
 
     } else if(req.body.startdate!='' && req.body.enddate!='' && req.body.customergroup=='' && (req.body.carlicense=='' && req.body.customername=='' && req.body.statusjob=='' && req.body.service_group=='' && req.body.branch=='' && req.body.emp_name_assign=='' && req.body.emp_name_jobclose=='')){
-        EmployeeModel.searchjob_all({order:orderstring,daterange:'WHERE job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
+        EmployeeModel.searchjob_all({order:orderstring,daterange:'WHERE DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
            
-            EmployeeModel.statsearchjob_all2({daterange:'WHERE job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
+            EmployeeModel.statsearchjob_all2({daterange:'WHERE DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
 
             res.status(200).json({
                 joblist: row,
@@ -1046,8 +1018,8 @@ exports.searchjob=(req,res,next) => {
         }
   
 
-        EmployeeModel.searchjob_filter({othersearch:searchstring,order:orderstring,daterange:'AND job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
-            EmployeeModel.statsearchjob_filter2({othersearch:searchstring,daterange:'AND job_add_datetime BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
+        EmployeeModel.searchjob_filter({othersearch:searchstring,order:orderstring,daterange:'AND DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
+            EmployeeModel.statsearchjob_filter2({othersearch:searchstring,daterange:'AND DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {
           
             res.status(200).json({
                 joblist: row,

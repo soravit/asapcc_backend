@@ -17,7 +17,7 @@
   <link rel="stylesheet" type="text/css"
     href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
-  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=eJ5JJYNzabVh-aDLmVsvNr4Wh4CQ3W_IefLkwf0FdpiDWvDANOe2roIt-n1ZxNGuLMqA1oRdoopO2bdH0F0CgaHaEnfcqwOshI33d2NLsm8KS8_y8STYYd7W4piiR410ppSng3VOw4esN0JRPyO_cMRnR6dxnIZjFT1PDQeaqD-sOVbBAno99iRSX2WGj5o1K5t2AkYQR_kpXY-tfRIkL7vuRnHbxXIDeluiMOKfWICOkj1KtDkba_wWRm8XAzF_AMekbuJGgT5BFeTtsoeGAV1VDXDmwlOzv9ElY3mSxVtFpyAO35IaCf8X1RHYs3uTg0aGLmuTlH7neFTC9iwh5TOBu9D7UIQ8FAFYCufoZ3IZg30yITHbpSF6GAYNr2su603Zxerk0fEa0HiLz2zUEkgg0Es-bbBWEPh8gC8zyX9SbQX6zCQzM8wDu0--DXcUWAlCKcnKTVQLLwoC1ck23ZUmtSwrL964uIz4qSGf-Ik" charset="UTF-8"></script><style>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=R6rlngBiJTnYGlg2utlKFpB0aVGIOETnvevHHHictRuqX3ZkGQlF9IsrvK3CTn5_jspa5hiyXNCe4M5D3qnUm6_e29DRl8TzEm7wqiD5HG_jgkqLmU7GtRMKshb0_a9FLp9KpcN4s7VNdyI1aryZuU4rIOnckXk2tycPHJT9I0N-_aeYv30b4oocgflmVHlxApNi1BfNz7kLO0iTTpcYz9XGdtT5_nn4vRikQ0YK1jOrH5UqA0xGdi4uVOW7QZCf94kJACuy0s0G4Wzd6X_lVahcvLPBcP7nGNgO7Kd8ubW8pj8XYol-a8QKZzZRgodnnIUyhWgTjoUSNqBe-_EWCtUaEia7bt5dMvbLEfdLpnQSwshpXSi7rckiMw-m9kPZEnHKU9R4ux1pHkWED9_t6Ik-usTcbxCQ0BLdVzef_a89CT8BUQNM6ap2D5o3sVVTxXNxp4h0aVqNLSK9KJ9cTJVYMAC7DWHW4Jd8CxcQxlY" charset="UTF-8"></script><style>
     .text-blue{
       color: #75abcc;
       font-weight: bold;
@@ -842,7 +842,7 @@
               if(row.job_status.toLowerCase() == "new"){
                 return "<span class='text-blue'>"+row.final_job_id + "<br>" + row.job_appoint_datetime+"</span>";
               }else{
-                return row.final_job_id + "<br>" + row.job_appoint_datetime;
+                return (row.final_job_id == null ? "" : row.final_job_id+"<br>")  + (row.job_appoint_datetime == null ? "" : row.job_appoint_datetime);
               }
             }
           },
@@ -870,9 +870,9 @@
             "targets": 4, data: 'servicetask1',
             "render": function (data, type, row) {
               if(row.job_status.toLowerCase() == "new"){
-                return "<span class='text-blue'>"+(row.servicetask1 == "1" ? "เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง" : "") + "<br>" + (row.servicetask2 == "1" ? "เปลี่ยนยาง" : "") + "<br>" + row.servicenote + "<br>" + (row.custcare1 == "1" ? "สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์" : "") + "<br>" + (row.custcare2 == "1" ? "สอบถามสถานะรถซ่อม" : "") + "<br>" + (row.custcare3 == "1" ? "สอบถามสถานะรถทดแทน" : "") + "<br>" + row.custcarenote+"</span>";
+                return "<span class='text-blue'>"+(row.servicetask1 == "1" ? "เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง"+ "<br>" : "")  + (row.servicetask2 == "1" ? "เปลี่ยนยาง"+ "<br>" : "")  + (row.servicenote ? row.servicenote + "<br>" : "") + (row.custcare1 == "1" ? "สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์"+ "<br>" : "") + (row.custcare2 == "1" ? "สอบถามสถานะรถซ่อม"+ "<br>" : "") + (row.custcare3 == "1" ? "สอบถามสถานะรถทดแทน"+ "<br>" : "") + row.custcarenote+"</span>";
               }else{
-                return "<span class='text-blue'>"+(row.servicetask1 == "1" ? "เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง" : "") + "<br>" + (row.servicetask2 == "1" ? "เปลี่ยนยาง" : "") + "<br>" + row.servicenote + "<br>" + (row.custcare1 == "1" ? "สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์" : "") + "<br>" + (row.custcare2 == "1" ? "สอบถามสถานะรถซ่อม" : "") + "<br>" + (row.custcare3 == "1" ? "สอบถามสถานะรถทดแทน" : "") + "<br>" + row.custcarenote+"</span>";
+                return "<span class='text-blue'>"+(row.servicetask1 == "1" ? "เช็คระยะเปลี่ยนถ่ายน้ำมันเครื่อง"+ "<br>" : "")  + (row.servicetask2 == "1" ? "เปลี่ยนยาง"+ "<br>" : "")  + (row.servicenote ? row.servicenote + "<br>" : "") + (row.custcare1 == "1" ? "สอบถามสถานะป้ายภาษี พรบ. กรมธรรม์"+ "<br>" : "") + (row.custcare2 == "1" ? "สอบถามสถานะรถซ่อม"+ "<br>" : "") + (row.custcare3 == "1" ? "สอบถามสถานะรถทดแทน"+ "<br>" : "") + row.custcarenote+"</span>";
               }
             }
           },
@@ -902,7 +902,7 @@
           {
             "targets": 7, data: 'record_time',
             "render": function (data, type, row) {
-              return (row.job_create_ticket_by_emp_name == null ? "" : "<span class='text-blue'>รับเรื่อง</span> " + row.job_create_ticket_datetime + " " + row.job_create_ticket_by_emp_name + "<br> ") + (row.job_summary_ticket_by_emp_name == null ? "" : "<span class='text-blue'>สรุป</span> " + row.job_summary_ticket_datetime + " " + row.job_summary_ticket_by_emp_name + "<br>") + (row.job_closed_ticket_by_emp_name == null ? "" : "<span class='text-blue'>ปิดเรื่อง</span> " + row.job_closed_ticket_datetime + " " + row.job_closed_ticket_by_emp_name);
+              return "<span class='text-blue'>รับเรื่อง</span> " +(row.job_create_ticket_by_emp_name == null ? "" : row.job_create_ticket_datetime + " " + row.job_create_ticket_by_emp_name ) + "<br> "+ "<span class='text-blue'>สรุป</span> " +(row.job_summary_ticket_by_emp_name == null ? "" :  row.job_summary_ticket_datetime + " " + row.job_summary_ticket_by_emp_name ) + "<br>"+ "<span class='text-blue'>ปิดเรื่อง</span> " +(row.job_closed_ticket_by_emp_name == null ? "" : row.job_closed_ticket_datetime + " " + row.job_closed_ticket_by_emp_name);
             }
           }
         ],
@@ -1268,12 +1268,12 @@
         success: function (result) {
           if (result.message == "success") {
             $("#jobstatusNewModal").modal('hide');
-            setTimeout(function () {
-              openModalJobStatusDetail(currentJobID);
-            }, 1000);
-            setTimeout(function () {
-              validateForm();
-            }, 2000);
+            // setTimeout(function () {
+            //   openModalJobStatusDetail(currentJobID);
+            // }, 1000);
+            // setTimeout(function () {
+            //   validateForm();
+            // }, 2000);
           }
           $(".lds-ring").hide();
         },

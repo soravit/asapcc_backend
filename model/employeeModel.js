@@ -102,18 +102,18 @@ class EmployeeModel {
 
     ///// Search job new
     static searchjob_all({order='',daterange=''}){
-        //console.log('SELECT * FROM asapcc_job_main '+daterange+' '+order+'')
+        console.log('SELECT * FROM asapcc_job_main '+daterange+' '+order+'')
         return db.execute('SELECT * FROM asapcc_job_main '+daterange+' '+order+'')
     }
 
     static searchjob_filter({othersearch='',order='',daterange=''}){
-        //console.log('SELECT * FROM asapcc_job_main WHERE '+othersearch+' '+daterange+' '+order+'')
+        console.log('SELECT * FROM asapcc_job_main WHERE '+othersearch+' '+daterange+' '+order+'')
         return db.execute('SELECT * FROM asapcc_job_main WHERE '+othersearch+' '+daterange+' '+order+'')
     }
 
      ///// stat Search job new
       static statsearchjob_all(){
-       
+      
         return db.execute('SELECT (SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="new") AS NEWJOB,(SELECT COUNT(*) FROM asapcc_job_main   WHERE job_status="onprocess") AS ONPROCESS,(SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="finished") AS FINISHED')
     }
 
