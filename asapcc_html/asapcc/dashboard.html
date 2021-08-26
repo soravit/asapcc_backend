@@ -1163,7 +1163,7 @@
           if (result.servicepoint.length > 0) {
 
             $.each(result.servicepoint, function (key, val) {
-              $("#jobstatus-service_point_name").text(val.service_point_name);
+              $("#jobstatus-service_point_name").text(val.service_point_name+' '+val.branch_name);
             });
 
           }
