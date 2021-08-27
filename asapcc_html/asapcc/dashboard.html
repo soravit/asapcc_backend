@@ -17,7 +17,7 @@
   <link rel="stylesheet" type="text/css"
     href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
-  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=R6rlngBiJTnYGlg2utlKFpB0aVGIOETnvevHHHictRuqX3ZkGQlF9IsrvK3CTn5_jspa5hiyXNCe4M5D3qnUm6_e29DRl8TzEm7wqiD5HG_jgkqLmU7GtRMKshb0_a9FLp9KpcN4s7VNdyI1aryZuU4rIOnckXk2tycPHJT9I0N-_aeYv30b4oocgflmVHlxApNi1BfNz7kLO0iTTpcYz9XGdtT5_nn4vRikQ0YK1jOrH5UqA0xGdi4uVOW7QZCf94kJACuy0s0G4Wzd6X_lVahcvLPBcP7nGNgO7Kd8ubW8pj8XYol-a8QKZzZRgodnnIUyhWgTjoUSNqBe-_EWCtUaEia7bt5dMvbLEfdLpnQSwshpXSi7rckiMw-m9kPZEnHKU9R4ux1pHkWED9_t6Ik-usTcbxCQ0BLdVzef_a89CT8BUQNM6ap2D5o3sVVTxXNxp4h0aVqNLSK9KJ9cTJVYMAC7DWHW4Jd8CxcQxlY" charset="UTF-8"></script><style>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=lKQ6JJJISdUr5j1D65lCJoYNrivi1Jn7wr9P4szn5vDxCJ3qeUAfei7pHbSt5etpStM2B-6d86_TXJdwkg-bG119PKqrYnEtxaevc9rBSRSXOLeooK-5chgYLn5kgyBvtNHZR9F-fIhrfdJ8Toqgn-SzmRlzY1mPg5nLLJfEvHNEWLU8UjU9WCPdZB_qBf0KxsuF3fODg_bLpSLzpZY1JMhBQMgtD1OHcYNFRM3x3cs6Js9_JRxQBZOkw6g3RIWn94fJ8fpwOn2ODcr4xSzRvMv0jaOiCrHdm9tzry7w6mdDaG3lRWdhvLBsc001tRqPW4aQF0luQTyCfkTfEgERZvjlXOpFJ3Z_JAYaJ1LLoAny3OvGBMESv0rmbbbOBzzNVcXlEXGWvBtFIDGmrr5t2dGCmycVBoXIsX_g9ntQZoPHkhXObuSeM3Q_Xadyh65h28b1RlS4IjZLvqKDnvMqkcNTZPOLRcjyXeIgikDB98k" charset="UTF-8"></script><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=R6rlngBiJTnYGlg2utlKFpB0aVGIOETnvevHHHictRuqX3ZkGQlF9IsrvK3CTn5_jspa5hiyXNCe4M5D3qnUm6_e29DRl8TzEm7wqiD5HG_jgkqLmU7GtRMKshb0_a9FLp9KpcN4s7VNdyI1aryZuU4rIOnckXk2tycPHJT9I0N-_aeYv30b4oocgflmVHlxApNi1BfNz7kLO0iTTpcYz9XGdtT5_nn4vRikQ0YK1jOrH5UqA0xGdi4uVOW7QZCf94kJACuy0s0G4Wzd6X_lVahcvLPBcP7nGNgO7Kd8ubW8pj8XYol-a8QKZzZRgodnnIUyhWgTjoUSNqBe-_EWCtUaEia7bt5dMvbLEfdLpnQSwshpXSi7rckiMw-m9kPZEnHKU9R4ux1pHkWED9_t6Ik-usTcbxCQ0BLdVzef_a89CT8BUQNM6ap2D5o3sVVTxXNxp4h0aVqNLSK9KJ9cTJVYMAC7DWHW4Jd8CxcQxlY" charset="UTF-8"></script><style>
     .text-blue{
       color: #75abcc;
       font-weight: bold;
@@ -221,7 +221,7 @@
           </div>
 
           <div class="service-topic-box">
-            <div class="service-topic">สถานที่และเวลาที่ลูกค้าต้องการ</div>
+            <div class="service-topic">สถานที่และเวลาที่ลูกค้าต้องการ : <span id="service_point_app_"></span></div>
           </div>
           <div class="row jobstatus-row">
             <div class="col-sm-6">
@@ -235,10 +235,12 @@
           </div>
 
           <div class="service-topic-box">
-            <div class="service-topic">สถานที่และเวลาที่ยืนยันนัดหมาย</div>
+            <div class="service-topic">สถานที่และเวลาที่ยืนยันนัดหมาย : <span id="service_point_app_cf"></span></div>
           </div>
           <div class="row jobstatus-row">
+          
             <div class="col-sm-6">
+
               <div class="row jobstatus-label">จังหวัด</div>
               <!-- <div class="row">B-Quik โลตัส สมุทรปราการ</div> -->
               <div class="row">
@@ -952,8 +954,23 @@
         success: function (result) {
 
           if (result.jobdata.length > 0) {
+
+
+
+
             var currentTime = new Date();
             var item = result.jobdata[0];
+
+
+            $("#service_point_app_").html(item.job_service_point_code); // m edit
+
+
+                      // m edit
+                      if(item.job_appoint_confirm_datetime!=''){
+                        $("#service_point_app_cf").html(item.job_service_point_code_confirm); // m edit
+                         console.log('mmm'+item.service_point_name+' '+item.branch_name);
+                      }
+                  
 
             $("#jobstatus-customer_name").text(item.customer_name ? item.customer_name : "-");
             $("#jobstatus-customer_telephone").text(item.customer_telephone ? item.customer_telephone : "-");
@@ -1051,6 +1068,9 @@
         },
         async: false,
         success: function (result) {
+
+         
+
           $(".lds-ring").hide();
           if (result.province.length > 0) {
             $("#jobstatus-province_name_th").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกจังหวัด</option>');
@@ -1163,7 +1183,7 @@
           if (result.servicepoint.length > 0) {
 
             $.each(result.servicepoint, function (key, val) {
-              $("#jobstatus-service_point_name").text(val.service_point_name+' '+val.branch_name);
+              $("#jobstatus-service_point_name").text(val.service_point_name+' '+val.branch_name); // m edit
             });
 
           }
@@ -1190,6 +1210,8 @@
         async: false,
         success: function (result) {
           if (result.servicepoint.length > 0) {
+
+  
 
             $.each(result.servicepoint, function (key, val) {
               if (val.province_name_th) {
@@ -1268,6 +1290,9 @@
         success: function (result) {
           if (result.message == "success") {
             $("#jobstatusNewModal").modal('hide');
+            setTimeout(function () {
+              getDatatableFilter();
+            }, 1000);
             // setTimeout(function () {
             //   openModalJobStatusDetail(currentJobID);
             // }, 1000);
