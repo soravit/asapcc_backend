@@ -123,10 +123,24 @@ class EmployeeModel {
         return db.execute("SELECT * FROM asapcc_job_main WHERE final_job_id='"+final_job_id+"' LIMIT 1")
     }
 
+
+// Default search job
+static searchjob_default({order=''}){ 
+
+    return db.execute('SELECT * FROM asapcc_job_main WHERE job_status IN("new","onprocess") OR (job_status IN("finished") AND DATE(job_add_datetime)=DATE(NOW())) '+order+'')
+   
+}
+static statsearchjob_default(){ 
+    return db.execute('SELECT (SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="new" ) AS NEWJOB,(SELECT COUNT(*) FROM asapcc_job_main   WHERE job_status="onprocess") AS ONPROCESS,(SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="finished" AND DATE(job_add_datetime)=DATE(NOW())) AS FINISHED')
+  
+}
+
+
     ///// Search job new
-    static searchjob_all({order='',daterange=''}){
-        console.log('SELECT * FROM asapcc_job_main '+daterange+' '+order+'')
+    static searchjob_all({order='',daterange=''}){ 
+
         return db.execute('SELECT * FROM asapcc_job_main '+daterange+' '+order+'')
+       
     }
 
     static searchjob_filter({othersearch='',order='',daterange=''}){
@@ -135,9 +149,11 @@ class EmployeeModel {
     }
 
      ///// stat Search job new
-      static statsearchjob_all(){
+      static statsearchjob_all(){ 
       
         return db.execute('SELECT (SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="new") AS NEWJOB,(SELECT COUNT(*) FROM asapcc_job_main   WHERE job_status="onprocess") AS ONPROCESS,(SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="finished") AS FINISHED')
+      
+
     }
 
     static statsearchjob_all2({daterange=''}){
