@@ -35,7 +35,7 @@ const { carsGet,carsGetByLicense,carCheckRegister,carConfirmRegister,carsRemove,
 const { servicePointAll,servicePointSearchName,servicePointSearchLocation,servicePointProvince,servicePointAmphor,servicePointByCode } = require('../controller/servicepointController')
 const { CustomerGet,CustomerProfile,CustomerLogin,CustomerProfileEdit } = require('../controller/customerController')
 const { lastServicePoint,insertJob,confirmJob } = require('../controller/jobController')
-const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint,getJobSingle,searchjob,statusjoblist,servicegroup,employeelist,exportjob} = require('../controller/backendController')
+const { loginEmp,genHash,getAllJob,getAllJobOrderByJobNo,jobcreateticket,jobsummary,jobclose,jobupdate,custgroup,success,getAllJobOrderByJobNo2,csvcar,csvservicepoint,csvemployee,getJobSingle,searchjob,statusjoblist,servicegroup,employeelist,exportjob} = require('../controller/backendController')
 const { verifyUserToken } = require("../middleware/auth");
  
 
@@ -91,13 +91,14 @@ router.get('/back/getalljob_orderbyjobno/:startdate/:enddate',verifyUserToken,ge
 
 router.post('/back/uploadcsvcar',verifyUserToken,upload.single("file"),csvcar); // 
 router.post('/back/uploadcsvservicepoint',verifyUserToken,upload.single("file"),csvservicepoint); // 
+router.post('/back/uploadcsvemployee',verifyUserToken,upload.single("file"),csvemployee); // 
 
 router.post('/back/getjobsingle',verifyUserToken,getJobSingle); //// แสดง job เดี่ยวๆ
 router.post('/back/searchjob',verifyUserToken,searchjob); // ค้นหา job อันใหม่
  
 
 
-// api export excel เป็นไฟล์ excel เลย return เป็น URL download
+// api export csv 
 router.post('/back/downloadcsv',exportjob); // 
 
 

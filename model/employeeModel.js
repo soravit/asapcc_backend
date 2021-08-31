@@ -68,8 +68,27 @@ class EmployeeModel {
         return db.execute('TRUNCATE asapcc_car_db') 
     }
 
+    static clearcarnull(){
+        return db.execute('DELETE FROM asapcc_car_db WHERE car_license=\'\'') 
+    }
+
     static clearservicepointable(){
         return db.execute('TRUNCATE asapcc_service_point') 
+    }
+
+   
+
+    static clearservicepointnull(){
+        return db.execute('DELETE FROM asapcc_service_point WHERE service_code=\'\'') 
+    }
+
+
+    static clearemptable(){
+        return db.execute('TRUNCATE asapcc_employee_db') 
+    }
+
+    static clearempnull(){
+        return db.execute('DELETE FROM asapcc_employee_db WHERE employee_code=\'\'') 
     }
 
     static insertcarimport({car_license='',car_brand='',car_series='',car_model='',car_vin='',car_engine_no='',car_customer_type='',business_name='',contract_startdate='',contract_enddate=''}){
@@ -78,6 +97,10 @@ class EmployeeModel {
 
     static insertservicepointimport({service_code='',service_point_name='',branch_name='',full_address='',amphor_name_th='',province_name_th='',post_code='',telephone='',mobiletel='',lattitude='',longtitude='',service_group=''}){
         return db.execute("INSERT INTO `asapcc_service_point` (`auto_id`, `service_code`, `service_point_name`, `branch_name`, `full_address`, `amphor_name_th`, `province_name_th`, `post_code`, `telephone`, `mobiletel`, `lattitude`, `longtitude`, `branchpicture`, `service_group`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL,?)",[service_code,service_point_name,branch_name,full_address,amphor_name_th,province_name_th,post_code,telephone,mobiletel,lattitude,longtitude,service_group]);
+    }
+
+    static insertemployeeimport({employee_code='',password='',employee_fullname='',employee_default_customer_type='',emp_role=''}){
+        return db.execute("INSERT INTO `asapcc_employee_db` (`auto_id`, `employee_code`, `password`, `employee_fullname`, `employee_default_customer_type`, `emp_role`) VALUES (NULL, ?, ?, ?, ?, ?)",[employee_code,password,employee_fullname,employee_default_customer_type,emp_role]);
     }
 
     static findservicepointcodeinjobtable({final_job_id=''}){

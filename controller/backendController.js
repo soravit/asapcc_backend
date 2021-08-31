@@ -99,7 +99,8 @@ exports.loginEmp=(req,res,next) => {
                     let jwtToken = jwt.sign({
                         emp_code: row[0].employee_code,
                         employee_fullname: row[0].employee_fullname,
-                        employee_default_customer_type: row[0].employee_default_customer_type
+                        employee_default_customer_type: row[0].employee_default_customer_type,
+                        emp_role: row[0].emp_role
                     },process.env.TOKEN_SECRET, {
                         expiresIn: process.env.TOKEN_EXPIRE_IN
                     });
@@ -110,7 +111,8 @@ exports.loginEmp=(req,res,next) => {
                         expiresIn: 3600,
                         emp_code: row[0].employee_code,
                         employee_default_customer_type: row[0].employee_default_customer_type,
-                        employee_fullname: row[0].employee_fullname
+                        employee_fullname: row[0].employee_fullname,
+                        emp_role: row[0].emp_role
                     });
                 }
 
@@ -478,19 +480,24 @@ exports.csvcar=(req,res,next)=>{
             .on("end", () => {
 
                 fs.unlinkSync(filePath);   // remove temp file
-                EmployeeModel.clearcartable(); // clear car table
+                EmployeeModel.clearcartable().then(([row]) => { // clear car table
                 
-                for(i=0;i<csvData.length;i++){
-              
-                   EmployeeModel.insertcarimport({car_license:csvData[i].car_license,car_brand:csvData[i].car_brand,car_series:csvData[i].car_series,car_model:csvData[i].car_model,car_vin:csvData[i].car_vin,car_engine_no:csvData[i].car_engine_no,car_customer_type:csvData[i].car_customer_type,business_name:csvData[i].business_name,contract_startdate:csvData[i].contract_startdate,contract_enddate:csvData[i].contract_enddate});
-                }
+                    for(i=0;i<csvData.length;i++){
+                
+                    EmployeeModel.insertcarimport({car_license:rowdata.car_license,car_brand:rowdata.car_brand,car_series:rowdata.car_series,car_model:rowdata.car_model,car_vin:rowdata.car_vin,car_engine_no:rowdata.car_engine_no,car_customer_type:rowdata.car_customer_type,business_name:rowdata.business_name,contract_startdate:rowdata.contract_startdate,contract_enddate:rowdata.contract_enddate});
+                    }
 
-                console.log(csvData)
+                    console.log(csvData)
 
-                res.status(200).send({
-                    message:
-                        "Upload/import the CSV data into database successfully: " + req.file.originalname,
+                    EmployeeModel.clearcarnull().then(([row]) => {
+
+                    res.status(200).send({
+                        message:
+                            "Upload/import the CSV data into database successfully: " + req.file.originalname,
+                    });
                 });
+
+            });
 
             });
     } catch (error) {
@@ -499,6 +506,8 @@ exports.csvcar=(req,res,next)=>{
             message: "Could not upload the file: " + req.file.originalname,
         });
     }
+
+    
 }
 
 exports.csvservicepoint=(req,res,next)=>{
@@ -525,19 +534,24 @@ exports.csvservicepoint=(req,res,next)=>{
             .on("end", () => {
 
                 fs.unlinkSync(filePath);   // remove temp file
-                EmployeeModel.clearservicepointable(); // clear  table
+                EmployeeModel.clearservicepointable().then(([row]) => { // clear  table
                 
-                for(i=0;i<csvData.length;i++){
-              
-                   EmployeeModel.insertservicepointimport({service_code:csvData[i].service_code,service_point_name:csvData[i].service_point_name,branch_name:csvData[i].branch_name,full_address:csvData[i].full_address,amphor_name_th:csvData[i].amphor_name_th,province_name_th:csvData[i].province_name_th,post_code:csvData[i].post_code,telephone:csvData[i].telephone,mobiletel:csvData[i].mobiletel,lattitude:csvData[i].lattitude,longtitude:csvData[i].longtitude,service_group:csvData[i].service_group});
-                }
+                        for(i=0;i<csvData.length;i++){
+                    
+                        EmployeeModel.insertservicepointimport({service_code:rowdata.service_code,service_point_name:rowdata.service_point_name,branch_name:rowdata.branch_name,full_address:rowdata.full_address,amphor_name_th:rowdata.amphor_name_th,province_name_th:rowdata.province_name_th,post_code:rowdata.post_code,telephone:rowdata.telephone,mobiletel:rowdata.mobiletel,lattitude:rowdata.lattitude,longtitude:rowdata.longtitude,service_group:rowdata.service_group});
+                        }
 
-                console.log(csvData)
+                        console.log(csvData)
 
-                res.status(200).send({
-                    message:
-                        "Upload/import the CSV data into database successfully: " + req.file.originalname,
-                });
+                        EmployeeModel.clearservicepointnull().then(([row]) => {
+                            res.status(200).send({
+                                message:
+                                    "Upload/import the CSV data into database successfully: " + req.file.originalname,
+                            });
+                        });
+
+                       
+                    });
 
             });
     } catch (error) {
@@ -546,7 +560,74 @@ exports.csvservicepoint=(req,res,next)=>{
             message: "Could not upload the file: " + req.file.originalname,
         });
     }
+   
 }
+
+exports.csvemployee=(req,res,next)=>{
+    try {
+        if (req.file == undefined) {
+            return res.status(500).send({
+                message: "Please upload a CSV file!"
+            });
+        }
+
+        // Import CSV File to MongoDB database
+        let csvData = [];
+        let filePath = __basedir + '/uploads/' + req.file.filename;
+        fs.createReadStream(filePath)
+            .pipe(csv.parse({ headers: true }))
+            .on("error", (error) => {
+                console.log("err")
+                throw error.message;
+                
+            })
+            .on("data", (row) => {
+                csvData.push(row);
+            })
+            .on("end", () => {
+
+                fs.unlinkSync(filePath);   // remove temp file
+                EmployeeModel.clearemptable().then(([row]) => {
+
+
+                 
+
+                        for (rowdata of csvData){
+                      
+                           EmployeeModel.insertemployeeimport({employee_code:rowdata.emp_username,password:rowdata.emp_password,employee_fullname:rowdata.emp_fullname,employee_default_customer_type:rowdata.emp_service_group_name,emp_role:rowdata.emp_role});
+                        }
+        
+          
+        
+                        console.log(csvData)
+        
+                        EmployeeModel.clearempnull().then(([row]) => {
+
+                            res.status(200).send({
+                                message:
+                                    "Upload/import the CSV data into database successfully: " + req.file.originalname,
+                            });
+
+
+                        });
+        
+                        
+
+                    
+                }); // clear  table
+                
+               
+
+            });
+    } catch (error) {
+        console.log("catch error-", error);
+        res.status(500).send({
+            message: "Could not upload the file: " + req.file.originalname,
+        });
+    }
+  
+}
+
 
 exports.getJobSingle=(req,res,next)=>{
     // get  single job
