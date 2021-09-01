@@ -56,13 +56,17 @@ static getcarlist_confirmed_sendmail({job_id=''}){
 
 }
 
+static getcarlicense_injobtable({job_id=''}){
+    return db.execute('SELECT * FROM `asapcc_job_main` WHERE job_id=? LIMIT 1',[job_id])
+}
+
 static updatejobid_complete2(){
 
  return db.execute('UPDATE asapcc_constant_jobno SET current_job_no=current_job_no+1 WHERE auto_id=1;')
 }
 
 static updatecardatainjobtable({final_job_id='',car_license='',car_brand='',car_series='',car_model='',car_engine_no='',car_customer_type='',business_name='',contract_startdate='',contract_enddate='',customer_name='',customer_email='',customer_telephone=''}){
-    console.log("UPDATE `asapcc_job_main` SET `car_license` = ?, `car_brand` = ?, `car_series` = ?, `car_model` = ?, `car_engine_no` = ?, `car_customer_type` = ?, `business_name` = ?, `contract_startdate` = ?, `contract_enddate`=?,`customer_name`=?,`customer_email`=?,`customer_telephone` = ? WHERE `asapcc_job_main`.`final_job_id` = ?",[car_license,car_brand,car_series,car_model,car_engine_no,car_customer_type,business_name,contract_startdate,contract_enddate,customer_name,customer_email,customer_telephone,final_job_id])
+ 
     return db.execute("UPDATE `asapcc_job_main` SET `car_license` = ?, `car_brand` = ?, `car_series` = ?, `car_model` = ?, `car_engine_no` = ?, `car_customer_type` = ?, `business_name` = ?, `contract_startdate` = ?, `contract_enddate`=?,`customer_name`=?,`customer_email`=?,`customer_telephone` = ? WHERE `asapcc_job_main`.`final_job_id` = ?",[car_license,car_brand,car_series,car_model,car_engine_no,car_customer_type,business_name,contract_startdate,contract_enddate,customer_name,customer_email,customer_telephone,final_job_id])
 }
 
