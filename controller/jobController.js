@@ -278,7 +278,7 @@ check1(req);
 }
 
 exports.confirmJob=(req,res,next)=> { 
-carlicense=''
+ 
 
     JobModel.updatejobid_complete({customer_code:req.user.customer_code}).then(([row999]) => {
 
@@ -298,12 +298,7 @@ carlicense=''
                         */
 
                         for await (rowdata of row){ // ต้องทำ await for ด้วย ไม่งั้น query update กระโดดไปมา เบื่อมาก
-                    if(rowdata.car_license!=''){
-                       
-                        carlicense=rowdata.car_license;
-                        console.log(carlicense);
-                    }
-                           
+               
                             
                         // Update carinfo
                         JobModel.updatecardatainjobtable({final_job_id:rowdata.final_job_id,car_license:rowdata.car_license,car_brand:rowdata.car_brand,car_series:rowdata.car_series,car_model:rowdata.car_model,car_engine_no:rowdata.car_engine_no,car_customer_type:rowdata.car_customer_type,business_name:rowdata.business_name,contract_startdate:rowdata.contract_startdate,contract_enddate:rowdata.contract_enddate,customer_name:rowdata.customer_firstname+' '+rowdata.customer_lastname,customer_email:rowdata.customer_email,customer_telephone:rowdata.customer_telephone}).then(([row22]) => {     
@@ -325,36 +320,38 @@ carlicense=''
 
 
         }); // บวก เลขหลัก job id ให้สูงขึ้น
-    
-
-               
+     
 
                     JobModel.getjobid_complete({customer_code:req.user.customer_code}).then(([row2]) => {
                         //console.log(row2)
                         //carlicense=row2[0].car_license;
-                        transporter.sendMail({
-                            from: 'ASAP_CallCenter <'+process.env.GMAILUSER+'>',   // ผู้ส่ง
-                            to: ""+row2[0].customer_firstname+" "+row2[0].customer_lastname+" <"+row2[0].customer_email+">",// ผู้รับ
-                            subject: "ASAP Call Center : Job "+row2[0].job_id+"",                      // หัวข้อ
-                            text: "Hello,",                         // ข้อความ
-                            html: "<b>คำนัดหมายของท่านคือหมายเลข "+row2[0].job_id+" ได้นัดหมายเรียบร้อยแล้ว ทะเบียนรถ "+carlicense+" <br>มีรายการดังนี้:<ol>"+e+"</ol> <br>หากมีข้อสงสัยให้ติดต่อกลับที่ โทรศัพท์ 0-12-345678 </b><br>ASAP Call Center",                
-                        // ข้อความ
-                        }, (err, info) => {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                console.log(info.messageId);
-                            }
-                        });
 
-                    res.status(200).json({
-                        message: 'confirm job success ',
-                        jobid: row2[0].job_id,
-                        result: 'true'
-                    });
+                        JobModel.getcarlicense_incartable({vin:row2[0].job_car_vin_id}).then(([row23]) => {
+                                console.log(row23);
+                                    transporter.sendMail({
+                                        from: 'ASAP_CallCenter <'+process.env.GMAILUSER+'>',   // ผู้ส่ง
+                                        to: ""+row2[0].customer_firstname+" "+row2[0].customer_lastname+" <"+row2[0].customer_email+">",// ผู้รับ
+                                        subject: "ASAP Call Center : Job "+row2[0].job_id+"",                      // หัวข้อ
+                                        text: "Hello,",                         // ข้อความ
+                                        html: "<b>คำนัดหมายของท่านคือหมายเลข "+row2[0].job_id+" ได้นัดหมายเรียบร้อยแล้ว ทะเบียนรถ "+row23.car_license+" <br>มีรายการดังนี้:<ol>"+e+"</ol> <br>หากมีข้อสงสัยให้ติดต่อกลับที่ โทรศัพท์ 0-12-345678 </b><br>ASAP Call Center",                
+                                    // ข้อความ
+                                    }, (err, info) => {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            console.log(info.messageId);
+                                        }
+                                    });
+
+                                res.status(200).json({
+                                    message: 'confirm job success ',
+                                    jobid: row2[0].job_id,
+                                    result: 'true'
+                                });
                 });
+            });
 
-    });//ย้ำอีกรอบกันหลุด เพราะมันชอบหลุดตอน row สุดท้าย
+    }); 
 
 
 }
