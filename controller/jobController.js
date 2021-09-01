@@ -149,12 +149,17 @@ function check7(req){
   
    // run6(req)
 
-   JobModel.updatejobid_complete({customer_code:req.user.customer_code}).then(([row]) => { JobModel.updatejobid_complete2();
+  /* JobModel.updatejobid_complete({customer_code:req.user.customer_code}).then(([row]) => { 
+JobModel.updatejobid_complete2();
+    res.status(200).json({
+        message: 'insert job success ',
+        result: 'true'
+    });*/
 
     res.status(200).json({
         message: 'insert job success ',
         result: 'true'
-    });
+ 
 
 });//ย้ำอีกรอบกันหลุด เพราะมันชอบหลุดตอน row สุดท้าย
   
@@ -275,12 +280,13 @@ check1(req);
 exports.confirmJob=(req,res,next)=> { 
 
     JobModel.updatejobid_complete({customer_code:req.user.customer_code}).then(([row999]) => {
-
+    
 
                 //async await for https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
 
                     // update car info & service point info เพื่อทำ report ง่ายขึ้น
                     JobModel.findcarlistnocarinfoinjobtable({customer_code:req.user.customer_code}).then(([row]) => {
+                        JobModel.updatejobid_complete2();
                         console.log(row); 
 
 

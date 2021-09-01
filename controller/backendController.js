@@ -482,8 +482,7 @@ exports.csvcar=(req,res,next)=>{
                 fs.unlinkSync(filePath);   // remove temp file
                 EmployeeModel.clearcartable().then(([row]) => { // clear car table
                 
-                    for(i=0;i<csvData.length;i++){
-                
+                        for (rowdata of csvData){
                     EmployeeModel.insertcarimport({car_license:rowdata.car_license,car_brand:rowdata.car_brand,car_series:rowdata.car_series,car_model:rowdata.car_model,car_vin:rowdata.car_vin,car_engine_no:rowdata.car_engine_no,car_customer_type:rowdata.car_customer_type,business_name:rowdata.business_name,contract_startdate:rowdata.contract_startdate,contract_enddate:rowdata.contract_enddate});
                     }
 
@@ -536,7 +535,7 @@ exports.csvservicepoint=(req,res,next)=>{
                 fs.unlinkSync(filePath);   // remove temp file
                 EmployeeModel.clearservicepointable().then(([row]) => { // clear  table
                 
-                        for(i=0;i<csvData.length;i++){
+                    for (rowdata of csvData){
                     
                         EmployeeModel.insertservicepointimport({service_code:rowdata.service_code,service_point_name:rowdata.service_point_name,branch_name:rowdata.branch_name,full_address:rowdata.full_address,amphor_name_th:rowdata.amphor_name_th,province_name_th:rowdata.province_name_th,post_code:rowdata.post_code,telephone:rowdata.telephone,mobiletel:rowdata.mobiletel,lattitude:rowdata.lattitude,longtitude:rowdata.longtitude,service_group:rowdata.service_group});
                         }

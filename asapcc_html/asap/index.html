@@ -5,7 +5,10 @@
     <title>asap</title>
     <meta http-equiv="Content-Language" content="th" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/custom.css">
     <link href="./assets/fontawesome/css/all.css" rel="stylesheet">
@@ -16,8 +19,8 @@
     <link rel="stylesheet" href="./assets/datepicker/css/bootstrap-datetimepicker.css">
     <link rel="stylesheet" href="./assets/datepicker/css/font-awesome.min.css">
     <!--load all styles -->
-    <link rel="stylesheet" href="./assets/leafletjs/leaflet.css?date=2807641518"/>
-    <link rel="stylesheet" href="./assets/css/autocomplete.css"/>
+    <link rel="stylesheet" href="./assets/leafletjs/leaflet.css?date=2807641518" />
+    <link rel="stylesheet" href="./assets/css/autocomplete.css" />
 
 </head>
 
@@ -203,11 +206,11 @@
             $("#content").hide();
             $(".lds-ring").show();
 
-            if(window.location.href.search("confirmbook") == -1){
+            if (window.location.href.search("confirmbook") == -1) {
                 $(".container-custom").css({ "background-image": "none", "background-repeat": "no-repeat", "background-color": "#f7f7fa" });
             }
 
-            if(window.location.href.search("welcome") == -1){
+            if (window.location.href.search("welcome") == -1) {
                 $('#myModal').modal('hide');
             }
 
@@ -224,7 +227,7 @@
                         $("#content").show();
                         $(".lds-ring").hide();
 
-                        if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "#/login" ||  window.location.hash == "#/login/") {
+                        if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "#/login" || window.location.hash == "#/login/") {
                             window.location.href = '#/welcome/';
                         }
                     },
@@ -270,7 +273,6 @@
                 }
             }
         }
-
 
     </script>
 </body>

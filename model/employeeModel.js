@@ -69,7 +69,7 @@ class EmployeeModel {
     }
 
     static clearcarnull(){
-        return db.execute('DELETE FROM asapcc_car_db WHERE car_license=\'\'') 
+        return db.execute('DELETE FROM asapcc_car_db WHERE car_license=""') 
     }
 
     static clearservicepointable(){
@@ -79,7 +79,7 @@ class EmployeeModel {
    
 
     static clearservicepointnull(){
-        return db.execute('DELETE FROM asapcc_service_point WHERE service_code=\'\'') 
+        return db.execute('DELETE FROM asapcc_service_point WHERE service_code=""') 
     }
 
 
@@ -88,7 +88,7 @@ class EmployeeModel {
     }
 
     static clearempnull(){
-        return db.execute('DELETE FROM asapcc_employee_db WHERE employee_code=\'\'') 
+        return db.execute('DELETE FROM asapcc_employee_db WHERE employee_code=""') 
     }
 
     static insertcarimport({car_license='',car_brand='',car_series='',car_model='',car_vin='',car_engine_no='',car_customer_type='',business_name='',contract_startdate='',contract_enddate=''}){
