@@ -298,8 +298,12 @@ carlicense=''
                         */
 
                         for await (rowdata of row){ // ต้องทำ await for ด้วย ไม่งั้น query update กระโดดไปมา เบื่อมาก
-                    
-                            carlicense=rowdata.car_license;
+                    if(rowdata.car_license!=''){
+                       
+                        carlicense=rowdata.car_license;
+                        console.log(carlicense);
+                    }
+                           
                             
                         // Update carinfo
                         JobModel.updatecardatainjobtable({final_job_id:rowdata.final_job_id,car_license:rowdata.car_license,car_brand:rowdata.car_brand,car_series:rowdata.car_series,car_model:rowdata.car_model,car_engine_no:rowdata.car_engine_no,car_customer_type:rowdata.car_customer_type,business_name:rowdata.business_name,contract_startdate:rowdata.contract_startdate,contract_enddate:rowdata.contract_enddate,customer_name:rowdata.customer_firstname+' '+rowdata.customer_lastname,customer_email:rowdata.customer_email,customer_telephone:rowdata.customer_telephone}).then(([row22]) => {     
