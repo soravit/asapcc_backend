@@ -333,7 +333,7 @@ exports.confirmJob=(req,res,next)=> {
                                         to: ""+row2[0].customer_firstname+" "+row2[0].customer_lastname+" <"+row2[0].customer_email+">",// ผู้รับ
                                         subject: "ASAP Call Center : Job "+row2[0].job_id+"",                      // หัวข้อ
                                         text: "Hello,",                         // ข้อความ
-                                        html: "<b>คำนัดหมายของท่านคือหมายเลข "+row2[0].job_id+" ได้นัดหมายเรียบร้อยแล้ว ทะเบียนรถ "+row23.car_license+" <br>มีรายการดังนี้:<ol>"+e+"</ol> <br>หากมีข้อสงสัยให้ติดต่อกลับที่ โทรศัพท์ 0-12-345678 </b><br>ASAP Call Center",                
+                                        html: "<b>คำนัดหมายของท่านคือหมายเลข "+row2[0].job_id+" ได้นัดหมายเรียบร้อยแล้ว ทะเบียนรถ "+row23[0].car_license+" <br>มีรายการดังนี้:<ol>"+e+"</ol> <br>หากมีข้อสงสัยให้ติดต่อกลับที่ โทรศัพท์ 0-12-345678 </b><br>ASAP Call Center",                
                                     // ข้อความ
                                     }, (err, info) => {
                                         if (err) {
