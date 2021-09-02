@@ -25,7 +25,12 @@ class ServicePoint {
     }
 
     static findServicePointByLocation({province='',amphor=''}){
-        return db.execute('SELECT * FROM asapcc_service_point WHERE province_name_th LIKE "'+province+'" AND amphor_name_th LIKE "'+amphor+'"');
+        if(amphor==''){
+            return db.execute('SELECT * FROM asapcc_service_point WHERE province_name_th LIKE "'+province+'"');
+        } else {
+            return db.execute('SELECT * FROM asapcc_service_point WHERE province_name_th LIKE "'+province+'" AND amphor_name_th LIKE "'+amphor+'"');
+        }
+       
     }
 
     static getProvinceList(){
