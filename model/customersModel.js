@@ -21,6 +21,10 @@ class CustomersModel {
 
     }
 
+    static checkCountJob({customer_code=''}){
+        return db.execute('select IFNULL((SELECT IF(COUNT(job_appoint_confirm_datetime)>0,"yes","no") FROM asapcc_job_main WHERE job_customer_id=? LIMIT 1),"no") as checka',[customer_code])
+    }
+
     static syncCustomerProfile ({customer_code='',customer_firstname='',customer_lastname='',customer_telephone='',customer_auth_token='',customer_address1='',customer_address2='',cust_username='',cust_email='',customer_birthday='',provinceId='',zipCode=''}) {
       
         return db.execute('UPDATE asapcc_customer_db SET customer_firstname=?, customer_lastname=?, customer_telephone=?, customer_auth_token=?, customer_address1=?, customer_address2=?, customer_username=?, customer_email=?, customer_birthday=?, provinceId=?, zipCode=? WHERE customer_code=?',[customer_firstname,customer_lastname,customer_telephone,customer_auth_token,customer_address1,customer_address2,cust_username,cust_email,customer_birthday,provinceId,zipCode,customer_code])

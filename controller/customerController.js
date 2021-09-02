@@ -231,12 +231,16 @@ exports.CustomerLogin = (req, res, next) => {
                             process.env.TOKEN_SECRET, {
                                 expiresIn: process.env.TOKEN_EXPIRE_IN
                             });
-                            res.status(200).json({
-                                token: jwtToken,
-                                expiresIn: process.env.TOKEN_EXPIRE_IN,
-                            });
 
-                        })
+                            CustomersModel.checkCountJob({customer_code:response2.data['data'].id}).then(([row999]) => {
+                                res.status(200).json({
+                                    token: jwtToken,
+                                    expiresIn: process.env.TOKEN_EXPIRE_IN,
+                                    firstlogin: row999[0].checka
+                              
+                                });
+                        });
+                        });
                     }
                     
                 })   
