@@ -22,8 +22,8 @@ class CustomersModel {
     }
 
     static checkCountJob({customer_code=''}){ // อันนี้ยังบั๊คอยู่  กับเช็ค getmycar ให้เรียงตามวันที่เข้ารับบริการได้จริง
-        console.log('select IFNULL((SELECT IF(COUNT(job_appoint_confirm_datetime)>0,"yes","no") FROM asapcc_job_main WHERE job_customer_id=? LIMIT 1),"no") as checka')
-        return db.execute('select IFNULL((SELECT IF(COUNT(job_appoint_confirm_datetime)>0,"yes","no") FROM asapcc_job_main WHERE job_customer_id=? LIMIT 1),"no") as checka',[customer_code])
+ 
+        return db.execute('select IFNULL((SELECT IF(COUNT(job_appoint_confirm_datetime)>0,"no","yes") FROM asapcc_job_main WHERE job_customer_id=? ),"yes") as checka',[customer_code])
     }
 
     static syncCustomerProfile ({customer_code='',customer_firstname='',customer_lastname='',customer_telephone='',customer_auth_token='',customer_address1='',customer_address2='',cust_username='',cust_email='',customer_birthday='',provinceId='',zipCode=''}) {
