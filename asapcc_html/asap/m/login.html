@@ -90,7 +90,11 @@
             $(".lds-ring").hide();
             if (result.token) {
               localStorage.setItem("token", result.token);
-              window.location.href = "#/welcome/";
+              if(result.firstlogin.toLowerCase() == "yes"){
+                window.location.href = "#/welcome/";
+              }else{
+                window.location.href = "#/mylist/";
+              }
             }
             $(".submit-login").toggleClass("submit-login-progress");
           },

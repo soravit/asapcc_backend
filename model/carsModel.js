@@ -21,7 +21,7 @@ class CarsModel {
 
 
     static findCarByLicense({carlicense=''}){
-      
+      console.log('SELECT * FROM asapcc_car_db WHERE car_license LIKE "%'+carlicense+'%" AND contract_enddate > DATE_FORMAT(NOW(), "%Y-%m-%d")')
         return db.execute('SELECT * FROM asapcc_car_db WHERE car_license LIKE "%'+carlicense+'%" AND contract_enddate > DATE_FORMAT(NOW(), "%Y-%m-%d")');
     }
 

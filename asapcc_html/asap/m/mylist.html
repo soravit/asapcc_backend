@@ -2,14 +2,14 @@
     <div class="mylist-header">
         รายการของฉัน
     </div>
-    <button class="mylist-add-btn" disabled><i class="fas fa-plus"></i> เพิ่มรถ</button>
+    <button class="mylist-add-btn"><i class="fas fa-plus"></i> เพิ่มรถ</button>
 
 
 
-    <span class="confirm-register-bank-logo"><img id="business_img" src="../assets/img/bangkok.png" width="44px"></span>
+    <!-- <span class="confirm-register-bank-logo"><img id="business_img" src="../assets/img/bangkok.png" width="44px"></span>
     <span class="confirm-register-bank" id="confirm-register-bank">
         Bangkok Bank Public Company Limited
-    </span>
+    </span> -->
     <div class="mylist-divider"></div>
     <span class="mylist-total">ทั้งหมด 0 คัน</span>
     <span class="mylist-sort">เรียงจาก : รถที่เข้ารับบริการล่าสุด</span>
@@ -60,7 +60,8 @@
         });
 
         $(".mylist-add-btn").click(function () {
-            addCarToServices();
+            // addCarToServices();
+            window.location.href = "#/register/";
         });
         isLogin();
         getMyCar();

@@ -18,6 +18,14 @@
     </div>
     <div class='col-sm-6'>
       <div class="form-group">
+        <select class="form-control" id="amphor-field">
+          <option value="" selected ><span class="glyphicon glyphicon-map-marker marker-icon"
+              aria-hidden="true"></span> เลือกอำเภอ (ทั้งหมด)</option>
+        </select>
+      </div>
+    </div>  
+    <div class='col-sm-6'>
+      <div class="form-group">
         <select class="form-control" id="service-center-field">
           <option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon"
               aria-hidden="true"></span> เลือกศูนย์บริการ</option>
@@ -104,8 +112,21 @@
     }, 2000);
 
     $("#province-field").change(function () {
+      clearMap();
       $("#service-center-field").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกศูนย์บริการ</option>');
       getServicepointamphor($(this).val());
+      validationForm();
+    });
+
+    $("#amphor-field").change(function () {
+      clearMap();
+      var obj = {
+        province_name_th : $("#province-field").val(),
+        amphor_name_th : $("#amphor-field").val()
+      }
+      $("#service-center-field").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกศูนย์บริการ</option>');
+      searchServicePointByLoc(obj);
+     
       validationForm();
     });
 
@@ -148,7 +169,7 @@
 
           var planes = [];
           $.each(result.servicepoint, function (key, val) {
-            planes.push([val.branch_name, val.lattitude, val.longtitude]);
+            planes.push([val.service_point_name+" "+val.branch_name, val.lattitude, val.longtitude]);
           });
 
           map = L.map('Map').setView([13.767246756409243, 100.49440032288396], 10);
@@ -218,9 +239,12 @@
       },
       async: true,
       success: function (result) {
+        
         if (result.amphor.length > 0) {
-
+          
+          $("#amphor-field").html('<option value="" selected ><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกอำเภอ (ทั้งหมด)</option>');
           $.each(result.amphor, function (key, val) {
+            $("#amphor-field").append("<option value='" + val.amphor_name_th + "' serviceCode='" + val.service_code + "''>" + val.amphor_name_th + "</option>");
             searchServicePointByLoc(val);
           });
 
@@ -236,6 +260,7 @@
   }
 
   function searchServicePointByLoc(val) {
+    // alert("a")
     $.ajax({
       url: baseURL + "searchservicepointbyloc?province=" + val.province_name_th + "&amphor=" + val.amphor_name_th,
       method: "GET",
@@ -247,11 +272,14 @@
       async: true,
       success: function (result) {
         $(".lds-ring").hide();
+        
         if (result.servicepoint.length > 0) {
 
           $.each(result.servicepoint, function (key, val) {
             $("#service-center-field").append("<option value='" + val.amphor_name_th + "' serviceCode='" + val.service_code + "''>" + val.branch_name + "</option>");
           });
+
+          getServicePointByLoc();
 
         }
       },
@@ -264,10 +292,10 @@
     });
   }
 
-  function getServicePointByLoc() {
+  function getServicePointByLocAmphor() {
     $(".lds-ring").show();
     var province = $("#province-field").val();
-    var amphor = $("#service-center-field").val();
+    var amphor = $("#amphor-field").val();
     $.ajax({
       url: baseURL + "searchservicepointbyloc?province=" + province + "&amphor=" + amphor,
       method: "GET",
@@ -279,10 +307,11 @@
       async: true,
       success: function (result) {
         $(".lds-ring").hide();
+
         if (result.servicepoint.length > 0) {
           var planes = [];
           $.each(result.servicepoint, function (key, val) {
-            planes.push([val.branch_name, val.lattitude, val.longtitude]);
+            planes.push([val.service_point_name+" "+ val.branch_name, val.lattitude, val.longtitude]);
           });
 
           map.off();
@@ -312,8 +341,89 @@
         if (xhr.responseJSON.message.search("Unauthorized") > -1) {
           window.location.href = "#login";
         }
+        //clearMap();
       }
     });
+  }
+
+  function getServicePointByLoc() {
+    $(".lds-ring").show();
+    var province = $("#province-field").val();
+    var amphor =  ($("#amphor-field").val() ? $("#amphor-field").val() : ($("#service-center-field").val() ? $("#service-center-field").val() : ""));
+    var branch_name = $("#service-center-field option:selected").text();
+    var branch_name_val = $("#service-center-field").val();
+    
+    $.ajax({
+      url: baseURL + "searchservicepointbyloc?province=" + province + "&amphor=" + amphor,
+      method: "GET",
+      data: {},
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+      },
+      async: true,
+      success: function (result) {
+        $(".lds-ring").hide();
+        if (result.servicepoint.length > 0) {
+          var planes = [];
+          if(branch_name_val != "" && branch_name_val != null){
+            $.each(result.servicepoint, function (key, val) {
+              if(branch_name == val.branch_name){
+                planes.push([val.service_point_name+" "+ val.branch_name, val.lattitude, val.longtitude]);
+              }
+            });
+
+          }else{
+            $.each(result.servicepoint, function (key, val) {
+              planes.push([val.service_point_name+" "+ val.branch_name, val.lattitude, val.longtitude]);
+            });
+          }
+          
+          map.off();
+          map.remove();
+
+          setTimeout(function () {
+            map = L.map('Map').setView([planes[0][1], planes[0][2]], 10);
+            mapLink =
+              '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+            L.tileLayer(
+              'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; ' + mapLink + ' Contributors',
+              maxZoom: 18,
+            }).addTo(map);
+
+            for (var i = 0; i < planes.length; i++) {
+              marker = new L.marker([planes[i][1], planes[i][2]])
+                .bindPopup(planes[i][0])
+                .addTo(map);
+            }
+          }, 1000);
+
+        }
+      },
+      error: function (xhr, status, error) {
+        $(".lds-ring").hide();
+        if (xhr.responseJSON.message.search("Unauthorized") > -1) {
+          window.location.href = "#login";
+        }
+        // clearMap();
+      }
+    });
+  }
+
+  function clearMap(){
+    map.off();
+        map.remove();
+        setTimeout(function () {
+          map = L.map('Map').setView([13.767246756409243, 100.49440032288396], 10);
+            mapLink =
+              '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+            L.tileLayer(
+              'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; ' + mapLink + ' Contributors',
+              maxZoom: 18,
+            }).addTo(map);
+          }, 1000);
   }
 
   function getLastServicePoint() {
@@ -356,7 +466,9 @@
             getServicepointamphor(obj.attr("province_name_th"));
             setTimeout(function () {
               $("#service-center-field").val(obj.attr("amphor_name_th"));
-              
+              setTimeout(function () {
+                $("#amphor-field").val(obj.attr("amphor_name_th"));
+              }, 1000);
               var planes = [];
               planes.push([obj.attr("branch_name"), obj.attr("lattitude"), obj.attr("longtitude")]);
 

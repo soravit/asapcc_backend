@@ -3,7 +3,7 @@
         <div class="text-header-confirm">ยืนยันข้อมูล</div>
         <div class="confirm-register-box-left">
             <div class="confirm-register-img-sub-left"></div>
-            <img class="confirm-register-img-left" src="" id="car_brand_img" width="210px">
+            <img class="confirm-register-img-left" src="" id="car_brand_img" width="210px" onerror="hideImage()">
         </div>
         <div class="confirm-register-box-right">
             <div>
@@ -211,6 +211,10 @@
                 }
             }
         });
+    }
+
+    function hideImage(){
+        $(".confirm-register-box-left").hide();
     }
 
 </script>

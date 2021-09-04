@@ -52,6 +52,7 @@
                 <li><a href="#/dashboard/" id="menu-dashboard">Dashboard</a></li>
                 <li><a href="#/uploadcsvcar/" id="menu-uploadcsvcar">Upload csv car</a></li>
                 <li><a href="#/uploadcsvservicepoint/" id="menu-uploadcsvservicepoint">Upload csv service point</a></li>
+                <li><a href="#/uploadcsvemployee/" id="menu-uploadcsvemployee">Upload csv employee</a></li>
                 <li><a href="" id="menu-logout" onClick="logout()">Logout</a></li>
               </ul>
             </li>
@@ -141,6 +142,13 @@
       }
       $("#username-fullname").text(employee_fullname);
       $("#username-code").text(emp_code);
+
+      if (localStorage.getItem("emp_role").toLowerCase() != "admin") {
+        $("#menu-uploadcsvcar").remove();
+        $("#menu-uploadcsvservicepoint").remove();
+        $("#menu-uploadcsvemployee").remove();
+        window.location.href = "#/dashboard/";
+      }
     }
 
   </script>

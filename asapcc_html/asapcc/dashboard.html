@@ -63,6 +63,7 @@
                 <li><a href="#/dashboard/" id="menu-dashboard">Dashboard</a></li>
                 <li><a href="#/uploadcsvcar/" id="menu-uploadcsvcar">Upload csv car</a></li>
                 <li><a href="#/uploadcsvservicepoint/" id="menu-uploadcsvservicepoint">Upload csv service point</a></li>
+                <li><a href="#/uploadcsvemployee/" id="menu-uploadcsvemployee">Upload csv employee</a></li>
                 <li><a href="" id="menu-logout" onClick="logout()">Logout</a></li>
               </ul>
             </li>
@@ -79,9 +80,9 @@
         <div class="form-group">
           <div class='input-group date' id='dateStart'>
             <input type='text' class="form-control" style="height:40px;" placeholder="วันที่เริ่มต้น" disabled />
-            <span class="input-group-addon">
+           <!--<span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+            </span>--> 
           </div>
         </div>
       </div>
@@ -89,9 +90,9 @@
         <div class="form-group">
           <div class='input-group date' id='dateEnd'>
             <input type='text' class="form-control" style="height:40px;" placeholder="วันที่สิ้นสุด" disabled />
-            <span class="input-group-addon">
+            <!--<span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+            </span>-->
           </div>
         </div>
       </div>
@@ -648,29 +649,30 @@
       });
 
       $("#customer-group-default").click(function () {
-        employee_default_customer_type = localStorage.getItem("employee_default_customer_type");
-        $("#customer-group").val(employee_default_customer_type);
+        // employee_default_customer_type = localStorage.getItem("employee_default_customer_type");
+        // $("#customer-group").val(employee_default_customer_type);
 
-        carlicense = "";
-        customername = "";
-        statusjob = "";
-        service_group = "";
-        branch = "";
-        emp_name_assign = "";
-        emp_name_jobclose = "";
-        ordercondition = "datecreated_newfirst";
+        // carlicense = "";
+        // customername = "";
+        // statusjob = "";
+        // service_group = "";
+        // branch = "";
+        // emp_name_assign = "";
+        // emp_name_jobclose = "";
+        // ordercondition = "datecreated_newfirst";
 
-        $("#filter-carlicense").val(carlicense);
-        $("#filter-customername").val(customername);
-        $("#filter-statusjob").val(statusjob);
-        $("#filter-service_group").val(service_group);
-        $("#filter-branch").val(branch);
-        $("#filter-emp_name_assign").val(emp_name_assign);
-        $("#filter-emp_name_jobclose").val(emp_name_jobclose);
-        $("#filter-ordercondition").val(ordercondition);
+        // $("#filter-carlicense").val(carlicense);
+        // $("#filter-customername").val(customername);
+        // $("#filter-statusjob").val(statusjob);
+        // $("#filter-service_group").val(service_group);
+        // $("#filter-branch").val(branch);
+        // $("#filter-emp_name_assign").val(emp_name_assign);
+        // $("#filter-emp_name_jobclose").val(emp_name_jobclose);
+        // $("#filter-ordercondition").val(ordercondition);
 
-        //getDatatable();
-        getDatatableFilter();
+        
+        // getDatatableFilter();
+        location.reload();
       });
 
       $('#jobstatusNewModal').on('hidden.bs.modal', function () {
@@ -691,7 +693,7 @@
       var confirmServicePoint = $("#jobstatus-service_point_name_confirm").val();
 
       console.log(confirmDateTime + "," + confirmProvince + "," + confirmAmphor + "," + confirmServicePoint)
-      if (confirmDateTime == "" || confirmProvince == "" || confirmAmphor == "" || confirmServicePoint == "" || confirmDateTime == null || confirmProvince == null || confirmAmphor == null || confirmServicePoint == null) {
+      if (confirmDateTime == "" || confirmProvince == "" || confirmServicePoint == "" || confirmDateTime == null || confirmProvince == null || confirmAmphor == null || confirmServicePoint == null) {
         $("#updateJobStatus").prop("disabled", true);
       } else {
         $("#updateJobStatus").prop("disabled", false);
@@ -712,6 +714,12 @@
       }
       $("#username-fullname").text(employee_fullname);
       $("#username-code").text(emp_code);
+
+      if (localStorage.getItem("emp_role").toLowerCase() != "admin") {
+        $("#menu-uploadcsvcar").remove();
+        $("#menu-uploadcsvservicepoint").remove();
+        $("#menu-uploadcsvemployee").remove();
+      }
     }
 
     function getDatatable() {
@@ -842,9 +850,9 @@
             "targets": 1, data: 'job_info',
             "render": function (data, type, row) {
               if(row.job_status.toLowerCase() == "new"){
-                return "<span class='text-blue'>"+row.final_job_id + "<br>" + row.job_appoint_datetime+"</span>";
+                return "<span class='text-blue'>"+row.final_job_id + "<br>" + row.job_add_datetime+"</span>";
               }else{
-                return (row.final_job_id == null ? "" : row.final_job_id+"<br>")  + (row.job_appoint_datetime == null ? "" : row.job_appoint_datetime);
+                return (row.final_job_id == null ? "" : row.final_job_id+"<br>")  + (row.job_add_datetime == null ? "" : row.job_add_datetime);
               }
             }
           },
@@ -1078,10 +1086,11 @@
               $("#jobstatus-province_name_th").append("<option value='" + val.province_name_th + "'>" + val.province_name_th + "</option>");
             });
             $("#jobstatus-province_name_th").off().change(function () {
-              $("#jobstatus-amphor_name_th").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกอำเภอ</option>');
+              $("#jobstatus-amphor_name_th").html('<option value="null" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกอำเภอ</option>');
+              $("#jobstatus-amphor_name_th").append('<option value="" selected ><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> ทั้งหมด</option>');
               $("#jobstatus-service_point_name_confirm").html('<option value="" selected disabled><span class="glyphicon glyphicon-map-marker marker-icon" aria-hidden="true"></span> เลือกศูนย์บริการ</option>');
               currentProvince = $(this).val();
-              getServicepointamphor($(this).val(), null);
+              getServicepointamphor($(this).val(), "null");
               validateForm();
             });
             $("#jobstatus-amphor_name_th").off().change(function () {
@@ -1150,7 +1159,7 @@
           if (result.servicepoint.length > 0) {
 
             $.each(result.servicepoint, function (key, val) {
-              $("#jobstatus-service_point_name_confirm").append("<option amphor='" + val.amphor_name_th + "' value='" + val.service_code + "''>" + val.branch_name + "</option>");
+              $("#jobstatus-service_point_name_confirm").append("<option amphor='" + val.amphor_name_th + "' value='" + val.service_code + "''>" + val.service_point_name+" "+ val.branch_name + "</option>");
             });
 
             if (service_point_name_confirm) {

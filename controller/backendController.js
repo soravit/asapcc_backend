@@ -993,6 +993,7 @@ datenow=new Date().toISOString().slice(0, 10);
     } 
     
     else if(req.body.startdate!='' && req.body.enddate!='' && req.body.customergroup=='' && (req.body.carlicense=='' && req.body.customername=='' && req.body.statusjob=='' && req.body.service_group=='' && req.body.branch=='' && req.body.emp_name_assign=='' && req.body.emp_name_jobclose=='')){
+        console.log('default search2')
         EmployeeModel.searchjob_all({order:orderstring,daterange:'WHERE DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row]) => {
            
             EmployeeModel.statsearchjob_all2({daterange:'WHERE DATE(job_add_datetime) BETWEEN "'+req.body.startdate+'" AND "'+req.body.enddate+'"'}).then(([row2]) => {

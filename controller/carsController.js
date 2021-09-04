@@ -7,9 +7,18 @@ const dotenv = require('dotenv'); // ดึงค่า .env ใช้
 dotenv.config();
 
 const CarsModel = require('../model/carsModel');
+function trim(str) {
+      
+    // Use trim() function
+    var trimContent = str.trim();
+   
+    console.log(trimContent);
+    return trimContent;
+}
 
 exports.carsGetByLicense = (req, res, next) => {
-    CarsModel.findCarByLicense({carlicense:req.params.licenseId}).then(([row]) => {
+    
+    CarsModel.findCarByLicense({carlicense:trim(req.params.licenseId)}).then(([row]) => {
         //console.log(req.params.licenseId)
         
         if(row.length !== 0) {

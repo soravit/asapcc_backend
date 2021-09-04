@@ -62,11 +62,13 @@
 
     </div>
   </nav>
+
   <div class="center-block upload-box">
     <div class="header-title">
-      Upload รายการศูนย์บริการ (csv)
+      Upload รายชื่อพนักงาน (csv)
     </div>
     <br>
+
     <span class="control-fileupload">
       <label for="file">Choose a file :</label>
       <input type="file" id="file" name="file">
@@ -85,7 +87,7 @@
       $('.modal').modal('hide');
       $('.modal-backdrop').remove();
 
-      $("#upload-btn").click(function () {
+      $("#upload-btn").click(function (e) {
         uploadExcel();
       });
 
@@ -100,8 +102,8 @@
 
       $(".lds-ring").show();
       $.ajax({
-        url: baseURL + "back/uploadcsvservicepoint",
-        //url: "https://50a6daee3a3c.ngrok.io/" + "api/back/uploadcsvservicepoint",
+        url: baseURL + "back/uploadcsvemployee",
+        //url: "https://50a6daee3a3c.ngrok.io/" + "api/back/uploadcsvcar",
         method: "POST",
         data: formData,
         cache: false,
@@ -111,7 +113,6 @@
         headers: {
           "Authorization": "Bearer " + localStorage.getItem("tokenCC")
         },
-        async: false,
         success: function (result) {
           if (result.message) {
             $("#message-success").text(result.message);

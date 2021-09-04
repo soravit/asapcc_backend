@@ -35,7 +35,7 @@
 }
 
 .navbar-brand-navigate-login {
-    font-family: SukhumvitSet;
+    
     color: #ff544a !important;
 }
 
@@ -67,7 +67,7 @@
     /* width: 94px;
         height: 37px; */
     margin: 0 46px 0 0;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -82,7 +82,7 @@
     /* width: 191px;
         height: 22px; */
     /* margin: 37px 37px 26px 0; */
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -206,7 +206,7 @@ label {
 }
 
 .forgot-password a {
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: 500;
     font-stretch: normal;
@@ -227,7 +227,7 @@ label {
     border-radius: 25px;
     box-shadow: 0 0 15px 0 rgba(174, 36, 66, 0.35);
     background-color: #ff595a;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -250,7 +250,7 @@ label {
 .login-text-optional {
     width: 40%;
     float: left;
-    font-family: SukhumvitSet;
+    
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;
@@ -286,7 +286,7 @@ label {
     width: 146px;
     height: 18px;
     margin: 0 8px 4px 21%;
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: 500;
     font-stretch: normal;
@@ -303,7 +303,7 @@ label {
     width: 62px;
     height: 22px;
     margin: 0 0 0 0px;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
@@ -412,7 +412,7 @@ label {
     width: 100%;
     height: 37px;
     margin: 0 109px 16px 8px;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -427,7 +427,7 @@ label {
     width: 22px;
     height: 23px;
     margin: 2px 20px 1px 1px;
-    font-family: FontAwesome5Pro;
+    
     font-size: 22px;
     font-weight: normal;
     font-stretch: normal;
@@ -448,7 +448,7 @@ label {
     top: 0px;
     left: 15px;
     margin: 0 26px 0 19px;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -464,7 +464,7 @@ label {
     top: 28px;
     left: 15px;
     margin: 1px 57px 12px 19px;
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -487,7 +487,7 @@ label {
 }
 
 .m-text-header-welcome {
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 500;
     font-stretch: normal;
@@ -571,7 +571,7 @@ label {
     width: 100%;
     height: 37px;
     margin: 0 175.8px 0 0;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -586,7 +586,7 @@ label {
     width: 100%;
     height: 22px;
     margin: 6px 0px 32px 0;
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -654,7 +654,7 @@ label {
     width: 100%;
     height: 37px;
     margin: 0 82px 15px 9.5px;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -712,7 +712,7 @@ label {
     /* width: 50px; */
     height: 26px;
     /* margin: 0 77px 15px 10px; */
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -730,7 +730,7 @@ label {
     width: 114px;
     height: 19px;
     /* margin: 22px 0 0 10px; */
-    font-family: SukhumvitSet;
+    
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;
@@ -767,7 +767,7 @@ label {
     width: 100%;
     height: 26px;
     margin: 9px 25px 49px 10px;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -804,7 +804,7 @@ label {
     width: 100%;
     height: 37px;
     margin: 17px 0 0;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -819,7 +819,7 @@ label {
     width: 100%;
     height: 37px;
     margin: 17px 0 0;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -834,7 +834,7 @@ label {
     width: 100%;
     height: 25px;
     margin: 10px 0 0 0;
-    font-family: Sarabun;
+    
     font-size: 16px;
     font-weight: 500;
     font-stretch: normal;
@@ -848,7 +848,7 @@ label {
 .icon-register-404 {
     height: 42px;
     margin: 0 70px 17px 69px;
-    font-family: FontAwesome5Pro-Solid;
+    
     font-size: 42px;
     font-weight: normal;
     font-stretch: normal;
@@ -872,7 +872,7 @@ label {
     position: absolute;
     top: -60px;
     left: -1%;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -908,7 +908,7 @@ label {
 .service-registercar {
     height: 31px;
     margin: 1px 10px 3px 14px;
-    font-family: SukhumvitSet;
+    
     font-size: 20px;
     font-weight: 600;
     font-stretch: normal;
@@ -923,7 +923,7 @@ label {
     width: 32px;
     height: 22px;
     margin: 3px 142px 25px 14px;
-    font-family: SukhumvitSet-Text;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -939,7 +939,7 @@ label {
     height: 19px;
     margin: 5px 118.5px 26px 35.5px;
     opacity: 1;
-    font-family: SukhumvitSet;
+    
     font-size: 12px;
     font-weight: bold;
     font-stretch: normal;
@@ -967,7 +967,7 @@ label {
 .service-topic {
     width: 100%;
     height: 26px;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -982,7 +982,7 @@ label {
     width: 50%;
     height: 20px;
     margin: 0 0 1.5px 7.5px;
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -1112,7 +1112,7 @@ input[type=checkbox]:checked::before {
     height: 19px;
     margin: 3px 142px 25px 10px;
     opacity: 1;
-    font-family: SukhumvitSet;
+    
     font-size: 12px;
     font-weight: bold;
     font-stretch: normal;
@@ -1155,7 +1155,7 @@ input[type=checkbox]:checked::before {
     width: 160px;
     height: 22px;
     margin: 0 6px 0 14px;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
@@ -1172,7 +1172,7 @@ input[type=checkbox]:checked::before {
 .services-trash-item {
     width: 12px;
     height: 14px;
-    font-family: FontAwesome5Pro-Solid;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -1221,7 +1221,7 @@ input[type=checkbox]:checked::before {
 .services-cancel-btn {
     width: 120px;
     height: 26px;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -1266,7 +1266,7 @@ input[type=checkbox]:checked::before {
     position: absolute;
     top: -55px;
     left: -1%;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -1297,7 +1297,7 @@ input[type=checkbox]:checked::before {
     display: none;
     overflow: hidden;
     height: auto;
-    font-family: Sarabun;
+    
     font-size: 12px;
     font-weight: normal;
     font-stretch: normal;
@@ -1340,7 +1340,7 @@ input[type=checkbox]:checked::before {
     width: 214px;
     height: 37px;
     margin: 2px 136px 20px 0;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -1355,7 +1355,7 @@ input[type=checkbox]:checked::before {
     width: 350px;
     height: 37px;
     margin: 0 30px 2px 32px;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -1368,7 +1368,7 @@ input[type=checkbox]:checked::before {
 
 .services-cancel-dialog-detail {
     height: 47px;
-    font-family: Sarabun;
+    
     font-size: 16px;
     font-weight: 500;
     font-stretch: normal;
@@ -1395,7 +1395,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 26px;
     margin: 24px 111px 0 179px;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -1427,7 +1427,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 26px;
     margin: 0 76px 1px 0;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -1442,7 +1442,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 22px;
     margin: 1px 16px 12px 0;
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -1509,6 +1509,16 @@ input[type=checkbox]:checked::before {
     color: #d3d3d3;
 }
 
+#amphor-field {
+    width: 260px;
+    height: 40px;
+    /* margin: 20px 12px 28px 0;
+    padding: 11px 11px 11px 13px; */
+    border-radius: 5px;
+    border: solid 1px #d3d3d3;
+    background-color: #ffffff;
+}
+
 #service-center-field {
     width: 260px;
     height: 40px;
@@ -1568,7 +1578,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 22px;
     margin: 0 175px 6px 9px;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
@@ -1583,7 +1593,7 @@ input[type=checkbox]:checked::before {
     width: 300px;
     height: 37px;
     margin: 6px 0 0 5px;
-    font-family: Sarabun;
+    
     font-size: 12px;
     font-weight: normal;
     font-stretch: normal;
@@ -1598,7 +1608,7 @@ input[type=checkbox]:checked::before {
     width: 95px;
     height: 22px;
     margin: 23px 76px 11px 0;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
@@ -1634,7 +1644,7 @@ input[type=checkbox]:checked::before {
     width: 16px;
     height: 16px;
     margin: 0 3px 12px;
-    font-family: Sarabun;
+    
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;
@@ -1649,7 +1659,7 @@ input[type=checkbox]:checked::before {
     width: 22px;
     height: 20px;
     margin: 12px 0 0;
-    font-family: Gotham;
+    
     font-size: 20px;
     font-weight: 500;
     font-stretch: normal;
@@ -1761,7 +1771,7 @@ input[type=checkbox]:checked::before {
     width: 350px;
     height: 37px;
     margin: 0 30px 2px 32px;
-    font-family: SukhumvitSet;
+    
     font-size: 20px;
     font-weight: 600;
     font-stretch: normal;
@@ -1776,7 +1786,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 22px;
     margin: 13px 5px 8px 0px;
-    font-family: Sarabun;
+    
     font-size: 16px;
     font-weight: 500;
     font-stretch: normal;
@@ -1796,7 +1806,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 21px;
     margin: 30px 18.5px 0 18px;
-    font-family: Roboto;
+    
     font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
@@ -1819,7 +1829,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 26px;
     margin: 0 1.5px 15px 0;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -1845,7 +1855,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 18px;
     margin: 6px 0px 10px 18px;
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -1864,7 +1874,7 @@ input[type=checkbox]:checked::before {
     width: 14px;
     height: 14px;
     margin: 8px 0 12px 255px;
-    font-family: FontAwesome5Pro-Solid;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -1882,7 +1892,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 22px;
     margin: 19.5px 384px 3px 1px;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
@@ -1897,7 +1907,7 @@ input[type=checkbox]:checked::before {
     width: 334.5px;
     height: 43px;
     margin: 3px 157.5px 22px 0;
-    font-family: Sarabun;
+    
     font-size: 12px;
     font-weight: normal;
     font-stretch: normal;
@@ -1912,7 +1922,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 22px;
     margin: 0 105px 2px 8px;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
@@ -1927,7 +1937,7 @@ input[type=checkbox]:checked::before {
     width: auto;
     height: 42px;
     margin: 2px 2px 17px 25px;
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -1972,7 +1982,7 @@ input[type=checkbox]:checked::before {
 .appointment-services-trash {
     width: 12px;
     height: 14px;
-    font-family: FontAwesome5Pro-Solid;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -2006,7 +2016,7 @@ input[type=checkbox]:checked::before {
     width: 170px;
     height: 31px;
     margin: 0 139px 34px 48.5px;
-    font-family: SukhumvitSet;
+    
     font-size: 20px;
     font-weight: 600;
     font-stretch: normal;
@@ -2172,7 +2182,7 @@ input[type=checkbox]:checked::before {
     width: 42px;
     height: 26px;
     margin: 2px 203px 18px 44.5px;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -2197,7 +2207,7 @@ input[type=checkbox]:checked::before {
     /* width: 121px; */
     height: 26px;
     margin: 15px 50px 11px 0px;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -2223,7 +2233,7 @@ input[type=checkbox]:checked::before {
     height: auto;
     margin: 8px 0 0;
     opacity: 1;
-    font-family: SukhumvitSet;
+    
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;
@@ -2274,7 +2284,7 @@ input[type=checkbox]:checked::before {
 .confirm-book-title {
     height: 31px;
     margin: 0 0 0 9px;
-    font-family: SukhumvitSet;
+    
     font-size: 20px;
     font-weight: 600;
     font-stretch: normal;
@@ -2288,7 +2298,7 @@ input[type=checkbox]:checked::before {
 .confirm-book-subtitle {
     height: 26px;
     margin: 0 5px 0 0;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 500;
     font-stretch: normal;
@@ -2311,7 +2321,7 @@ input[type=checkbox]:checked::before {
 
 .confirm-book-content {
     height: 51px;
-    font-family: SukhumvitSet-Text;
+    
     font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
@@ -2339,7 +2349,7 @@ input[type=checkbox]:checked::before {
 
 .confirm-book-add-btn {
     height: 26px;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -2371,7 +2381,7 @@ input[type=checkbox]:checked::before {
     position: absolute;
     top: -55px;
     left: 0px;
-    font-family: SukhumvitSet;
+    
     font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
@@ -2458,7 +2468,7 @@ input[type=checkbox]:checked::before {
     width: 75px;
     height: 22px;
     margin: 15px 206px 15px 6px;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
@@ -2473,7 +2483,7 @@ input[type=checkbox]:checked::before {
     width: 188px;
     height: 22px;
     margin: 0 7px 0 0;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
@@ -2517,7 +2527,7 @@ input[type=checkbox]:checked::before {
     /* width: 52px; */
     height: 26px;
     margin: 0 106px 2px 0;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -2536,7 +2546,7 @@ input[type=checkbox]:checked::before {
     width: 158px;
     height: 19px;
     margin: 2px 0 0;
-    font-family: SukhumvitSet;
+    
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;
@@ -2568,7 +2578,7 @@ input[type=checkbox]:checked::before {
     width: 57px;
     height: 19px;
     margin: 7.5px 0 25.5px 150px;
-    font-family: SukhumvitSet;
+    
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;
@@ -2623,7 +2633,7 @@ input[type=checkbox]:checked::before {
 .services-total{
     width: 95px;
     height: 26px;
-    font-family: SukhumvitSet;
+    
     font-size: 16px;
     font-weight: 600;
     font-stretch: normal;
@@ -2638,7 +2648,7 @@ input[type=checkbox]:checked::before {
   .services-select-all{
     width: 70px;
     height: 20px;
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -2654,7 +2664,7 @@ input[type=checkbox]:checked::before {
     width: 83px;
     height: 22px;
     margin: 3px 0px 17.5px 262px;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
@@ -2730,7 +2740,7 @@ input[type=checkbox]:checked::before {
   .appointment-date-subtitle{
     height: 22px;
     margin: 1px 5px 11px 0;
-    font-family: Sarabun;
+    
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -2816,7 +2826,7 @@ input[type=checkbox]:checked::before {
   .select-services-btn{
     height: 22px;
     margin: 0px;
-    font-family: SukhumvitSet;
+    
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;

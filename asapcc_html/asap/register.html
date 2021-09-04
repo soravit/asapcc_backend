@@ -68,8 +68,9 @@
     $(document).ready(function () {
         isLogin();
         $input.keyup(function () {
+            console.log($input.val().search("-"));
             $("#searchResult").empty();
-            if ($input.val() == "") {
+            if ($input.val() == "" || ($input.val().search("-") != 2 && $input.val().search("-") != 3)) {
                 $("#next-btn").addClass("register-car-number-btn-disabled");
                 $("#next-btn").removeClass("register-car-number-btn");
                 $("#next-btn").prop("disabled", true);
@@ -101,7 +102,7 @@
     });
 
     function doneTyping() {
-        if ($input.val() == "") {
+        if ($input.val() == "" || ($input.val().search("-") != 2 && $input.val().search("-") != 3)) {
             $("#next-btn").addClass("register-car-number-btn-disabled");
             $("#next-btn").removeClass("register-car-number-btn");
             $("#next-btn").prop("disabled", true);
@@ -110,7 +111,7 @@
             $("#next-btn").addClass("register-car-number-btn");
             $("#next-btn").removeClass("register-car-number-btn-disabled");
             $("#next-btn").prop("disabled", false);
-            getMyCarAll();
+            // getMyCarAll();
         }
     }
 

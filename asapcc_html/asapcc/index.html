@@ -154,6 +154,9 @@
             },
             uploadcsvcar: function () {
                 $('#content').load('uploadcsvcar.html').show();
+            },
+            uploadcsvemployee: function () {
+                $('#content').load('uploadcsvemployee.html').show();
             }
         };
         $.routes.add('', newsModule.index);
@@ -161,6 +164,7 @@
         $.routes.add('/dashboard/', newsModule.dashboard);
         $.routes.add('/uploadcsvservicepoint/', newsModule.uploadcsvservicepoint);
         $.routes.add('/uploadcsvcar/', newsModule.uploadcsvcar);
+        $.routes.add('/uploadcsvemployee/', newsModule.uploadcsvemployee);
 
         $(document).ready(function () {
             isLogin();

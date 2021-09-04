@@ -138,7 +138,7 @@ static statsearchjob_default(){
 
     ///// Search job new
     static searchjob_all({order='',daterange=''}){ 
-
+        console.log('SELECT * FROM asapcc_job_main '+daterange+' '+order+'')
         return db.execute('SELECT * FROM asapcc_job_main '+daterange+' '+order+'')
        
     }
