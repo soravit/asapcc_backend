@@ -890,9 +890,9 @@
             "targets": 5, data: 'service_point_name',
             "render": function (data, type, row) {
               if(row.job_status.toLowerCase() == "new"){
-                return "<span class='text-blue'>"+(row.service_point_name == null ? "" : row.service_point_name +' '+ row.branch_name) + "<br>" + (row.telephone == null ? "" : row.telephone) + "<br>" + (row.job_appoint_confirm_datetime == null ? "" : row.job_appoint_confirm_datetime)+"</span>";
+                return "<span class='text-blue'>"+(row.service_point_name == null ? "" : row.service_point_name +' '+ row.branch_name) + "<br>" + (row.telephone == null ? "" : row.telephone) + "<br>" + (row.job_appoint_confirm_datetime == null ? row.job_appoint_datetime : row.job_appoint_confirm_datetime)+"</span>";
               }else{
-                return (row.service_point_name == null ? "" : "<span class='text-blue'>"+row.service_point_name +' '+ row.branch_name+"</span>") + "<br>" + (row.telephone == null ? "" : row.telephone) + "<br>" + (row.job_appoint_confirm_datetime == null ? "" : row.job_appoint_confirm_datetime);
+                return (row.service_point_name == null ? "" : "<span class='text-blue'>"+row.service_point_name +' '+ row.branch_name+"</span>") + "<br>" + (row.telephone == null ? "" : row.telephone) + "<br>" + (row.job_appoint_confirm_datetime == null ? row.job_appoint_datetime : row.job_appoint_confirm_datetime);
               }
             }
           },
