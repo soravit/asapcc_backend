@@ -340,7 +340,7 @@ console.log(process.env.GMAILUSER,row[0].customer_name,row[0].customer_email,row
                 to: ""+row[0].customer_name+" <"+row[0].customer_email+">",// ผู้รับ
                 subject: "ASAP Call Center : Job "+row[0].final_job_id+"",                      // หัวข้อ
                 text: "Hello,",                         // ข้อความ
-                html: "<b>คำนัดหมาย "+row[0].final_job_id+" ได้นัดหมายเรียบร้อยแล้ว ทะเบียนรถ "+row[0].car_license+" <br>มีรายการดังนี้:<ol>"+e+"</ol> <br>ที่ศูนย์บริการ "+row[0].service_point_name+" ("+row[0].branch_name+")<br>"+row[0].full_address+" <br>เวลา "+row[0].job_appoint_confirm_datetime+"<br>หากมีข้อสงสัยให้ติดต่อกลับที่ โทรศัพท์ 0-12-345678 </b><br>ASAP Call Center",                
+                html: "<b>คำนัดหมาย "+row[0].final_job_id+" ได้นัดหมายเรียบร้อยแล้ว ทะเบียนรถ "+row[0].car_license+" <br>มีรายการดังนี้:<ol>"+e+"</ol> <br>ที่ศูนย์บริการ "+row[0].service_point_name+" ("+row[0].branch_name+")<br>"+row[0].full_address+" <br>เวลา "+row[0].job_appoint_confirm_datetime+"<br>หากมีข้อสงสัยให้ติดต่อกลับที่ </b><br>ASAP Call Center",                
             // ข้อความ
             }, (err, info) => {
                 if (err) {
@@ -422,7 +422,7 @@ exports.jobupdate=(req,res,next)=>{
         ServicePoint.findServicePointByCode({code:a}).then(([row2]) => {
     
             /*`service_point_name` = '1', `branch_name` = '1', `full_address` = '1', `amphor_name_th` = '1', `province_name_th` = '1', `post_code` = '1', `telephone` = '1', `mobiletel` = '1', `lattitude` = '1', `longtitude` = '1', `service_group`*/
-             EmployeeModel.updateservicepointdatainjobtable({final_job_id:req.body.final_job_id,service_point_name:row2[0].service_point_name,branch_name:row2[0].branch_name,full_address:row2[0].full_address,amphor_name_th:row2[0].amphor_name_th,province_name_th:row2[0].province_name_th,post_code:row2[0].post_code,telephone:row2[0].telephone,mobiletel:row2[0].mobiletel,lattitude:row2[0].lattitude,longtitude:row2[0].longtitude,service_group:row2[0].service_group,service_code:a,cfdate:b})
+             EmployeeModel.updateservicepointdata_confirm_injobtable({final_job_id:req.body.final_job_id,service_point_name:row2[0].service_point_name,branch_name:row2[0].branch_name})
  
         });
          
@@ -470,8 +470,8 @@ exports.csvcar=(req,res,next)=>{
         fs.createReadStream(filePath)
             .pipe(csv.parse({ headers: true }))
             .on("error", (error) => {
-                console.log("err")
-                throw error.message;
+                console.log("err");
+               // throw error.message;
                 
             })
             .on("data", (row) => {
@@ -523,8 +523,8 @@ exports.csvservicepoint=(req,res,next)=>{
         fs.createReadStream(filePath)
             .pipe(csv.parse({ headers: true }))
             .on("error", (error) => {
-                console.log("err")
-                throw error.message;
+                console.log("err");
+               // throw error.message;
                 
             })
             .on("data", (row) => {
@@ -576,8 +576,8 @@ exports.csvemployee=(req,res,next)=>{
         fs.createReadStream(filePath)
             .pipe(csv.parse({ headers: true }))
             .on("error", (error) => {
-                console.log("err")
-                throw error.message;
+                console.log("err");
+              //  throw error.message;
                 
             })
             .on("data", (row) => {
