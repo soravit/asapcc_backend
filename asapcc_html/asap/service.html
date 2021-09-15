@@ -31,7 +31,8 @@
   <span class="service-checkbox"><input type="text" id="other-input" class="service-input-other hide"> </span>
   <span class="service-checkbox"><input type="number" id="km-input" class="service-input-km"
       placeholder="เลขไมล์                                  กม."> </span>
-
+      
+  <div class="service-checkbox" style="color:red;display:none;margin-top: -14px;margin-left: 14px;" id="service-input-km-error">กรุณาใส่เลขระยะทางสะสม</div>
   <div class="service-topic-box">
     <div class="service-topic" id="service-topic-2">บริการให้คำปรึกษา</div>
   </div>
@@ -60,7 +61,7 @@
 <script>
 
   var isCheckRepair = false;
-  var isCheckConsult = true;
+  var isCheckConsult = false;
   var vinID = "";
   var currentJob = {};
   var currentJobList = [];
@@ -73,7 +74,7 @@
         isCheckRepair = false;
         $("#other-input").toggleClass("hide");
       } else {
-        isCheckRepair = true;
+        //isCheckRepair = true;
         $("#other-input").val("");
         $("#other-input").toggleClass("hide");
         $("#other-input").removeClass("validation-error");
@@ -86,7 +87,7 @@
       } else {
         isCheckRepair = false;
       }
-      if (isCheckRepair && isCheckConsult) {
+      if (isCheckRepair) {
         $("#next-btn").removeClass("service-next-btn-disable");
         $("#next-btn").addClass("service-next-btn");
         $("#next-btn").prop("disabled", false);
@@ -103,7 +104,7 @@
       } else {
         isCheckConsult = false;
       }
-      if (isCheckRepair && isCheckConsult) {
+      if (isCheckConsult) {
         $("#next-btn").removeClass("service-next-btn-disable");
         $("#next-btn").addClass("service-next-btn");
         $("#next-btn").prop("disabled", false);
@@ -119,7 +120,7 @@
         isCheckConsult = false;
         $("#other-input-inquiry").toggleClass("hide");
       } else {
-        isCheckConsult = true;
+        //isCheckConsult = true;
         $("#other-input-inquiry").val("");
         $("#other-input-inquiry").toggleClass("hide");
         $("#other-input-inquiry").removeClass("validation-error");
@@ -134,7 +135,7 @@
         }
       });
 
-      if (isCheckRepair && isCheckConsult) {
+      if (isCheckRepair || isCheckConsult) {
         $("#next-btn").removeClass("service-next-btn-disable");
         $("#next-btn").addClass("service-next-btn");
         $("#next-btn").prop("disabled", false);
@@ -153,7 +154,7 @@
         }
       });
 
-      if (isCheckRepair && isCheckConsult) {
+      if (isCheckConsult || isCheckRepair) {
         $("#next-btn").removeClass("service-next-btn-disable");
         $("#next-btn").addClass("service-next-btn");
         $("#next-btn").prop("disabled", false);
@@ -171,10 +172,12 @@
       var otherConsult = $("#other-check-inquiry").prop("checked");
       var otherConsultText = $("#other-input-inquiry").val();
 
-      if (km == "") {
+      if (isCheckRepair && km == "") {
         $("#km-input").addClass("validation-error");
+        $("#service-input-km-error").show();
       } else {
         $("#km-input").removeClass("validation-error");
+        $("#service-input-km-error").hide();
       }
 
       if (otherRepair && otherRepairText == "") {

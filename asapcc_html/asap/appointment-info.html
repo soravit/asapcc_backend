@@ -188,6 +188,9 @@
         }
         $(id).find(".appointment-services-total-checkbox").text("x" + $(id).find("li").length);
       });
+      setTimeout(function(){
+        $(".collapsible").trigger("click");
+      },3000);
     } else {
       $(".appointment-info-btn-confirm").prop("disabled", true);
       $(".appointment-info-btn-confirm").addClass("appointment-info-btn-confirm-inactive");

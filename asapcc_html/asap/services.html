@@ -5,7 +5,7 @@
 
   <div class="services-add-btn"><i class="fas fa-plus"></i> เพิ่มรถ</div>
 
-  <div class="services-cancel-btn">ยกเลิกทั้งหมด</div>
+  <div class="services-cancel-btn"></div>
   <button class="services-next-btn">ทำรายการต่อ</button>
 </div>
 
@@ -345,6 +345,7 @@
       removeJobByOrder();
       renderJobList();
       $("#deleteModal").modal('hide');
+      $(".services-add-btn").show();
     });
 
     $("#services-cancel-confirm-btn-all").click(function () {
@@ -352,6 +353,7 @@
       removeJobAll();
       renderJobList();
       $("#myCancelAllModal").modal('hide');
+      $(".services-add-btn").show();
     });
 
     $("#registercar-field").keyup(function () {
@@ -619,10 +621,15 @@
           $(".services-add-btn").after(getJobTemplate(key, val));
         }
         $(id).find(".services-total-checkbox").text("x" + $(id).find("li").length);
+        $(".services-add-btn").hide();
       });
+      setTimeout(function(){
+        $(".collapsible").trigger("click");
+      },3000);
     } else {
       $(".services-next-btn").prop("disabled", true);
       $(".services-next-btn").addClass("services-next-btn-inactive");
+      $(".services-add-btn").show();
     }
     setEvent();
     $(".lds-ring").hide();

@@ -12,7 +12,7 @@
     </span> -->
     <!-- <div class="mylist-divider"></div> -->
     <span class="mylist-total">ทั้งหมด 0 คัน</span>
-    <span class="mylist-sort">เรียงจาก : รถที่เข้ารับบริการล่าสุด</span>
+    <!-- <span class="mylist-sort">เรียงจาก : รถที่เข้ารับบริการล่าสุด</span> -->
     <br>
 
     <div id="mylist" style="position:relative;display: inline-block;">
@@ -162,14 +162,16 @@
         });
     }
 
-    function getJobTemplate(key, val) {
+    function getJobTemplate(key, val) {console.log(val)
         var template;
         var templateNormal = `
         <div class="mylist-item">
             <span class=""><img src="./assets/img/${val.car_brand.toLowerCase()}.png" class="mylist-item-img"></span>
             <div class="mylist-item-line"></div>
             <div class="mylist-item-title">${val.car_license}</div>
-            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด ${val.last_service_date}</div>
+            
+            <div class="mylist-item-subtitle">ขอเข้ารับบริการ  ${val.last_service_date}</div>
+            <div class="mylist-item-subtitle">จุดบริการ  ${val.service_point_name}</div>
             <div class="mylist-item-checkbox"><input type="checkbox" id="" name="mylist-item" value="${val.car_license}" car_brand="${val.car_brand}" car_series="${val.car_series}" car_vin_id="${val.car_vin_id}"></div>
         </div>
         `;
@@ -178,7 +180,9 @@
             <span class=""><img src="./assets/img/${val.car_brand.toLowerCase()}.png" class="mylist-item-img"></span>
             <div class="mylist-item-line"></div>
             <div class="mylist-item-title">${val.car_license}</div>
-            <div class="mylist-item-subtitle">เข้ารับบริการล่าสุด ${val.last_service_date}</div>
+            
+            <div class="mylist-item-subtitle">ขอเข้ารับบริการ  ${val.last_service_date}</div>
+            <div class="mylist-item-subtitle">จุดบริการ  ${val.service_point_name}</div>
             <div class="mylist-item-expired-text">หมดสัญญา</div>
         </div>
         `;
@@ -197,13 +201,13 @@
             if ($('input[name=mylist-item]:checked').length > 0) {
                 $(".mylist-next-btn").removeClass("mylist-next-btn-inactive");
                 $(".mylist-next-btn").prop("disabled", false);
-               /* $(".mylist-add-btn").prop("disabled", false);*/
+                $(".mylist-add-btn").prop("disabled", false);
                 $('input[name=mylist-item]').prop("disabled", true);
                 $(this).prop("disabled", false);
             } else {
                 $(".mylist-next-btn").addClass("mylist-next-btn-inactive");
                 $(".mylist-next-btn").prop("disabled", true);
-              /*  $(".mylist-add-btn").prop("disabled", true);*/
+                $(".mylist-add-btn").prop("disabled", true);
                 $('input[name=mylist-item]').prop("disabled", false);
             }
         });

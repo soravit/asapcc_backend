@@ -275,7 +275,7 @@
         if (result.servicepoint.length > 0) {
 
           $.each(result.servicepoint, function (key, val) {
-            $("#service-center-field").append("<option value='" + val.amphor_name_th + "' serviceCode='"+val.service_code+"''>" + val.branch_name + "</option>");
+            $("#service-center-field").append("<option value='" + val.amphor_name_th + "' serviceCode='"+val.service_code+"' branchName='"+val.branch_name+"'>" + val.service_point_name+" "+val.branch_name + "</option>");
           });
 
           getServicePointByLoc();
@@ -349,7 +349,7 @@
     $(".lds-ring").show();
     var province = $("#province-field").val();
     var amphor =  ($("#amphor-field").val() ? $("#amphor-field").val() : ($("#service-center-field").val() ? $("#service-center-field").val() : ""));
-    var branch_name = $("#service-center-field option:selected").text();
+    var branch_name = $("#service-center-field option:selected").attr("branchName");
     var branch_name_val = $("#service-center-field").val();
 
     $.ajax({
