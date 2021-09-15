@@ -684,6 +684,8 @@
       $('#filterModal').on('hidden.bs.modal', function () {
         $(".lds-ring").hide();
       });
+
+      setInterval(function(){ location.reload(); }, 300000);
     });
 
     function validateForm() {

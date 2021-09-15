@@ -272,10 +272,18 @@
                         $(".login-box").show();
                         $("#content").show();
                         $(".lds-ring").hide();
+                        
+                        var firstlogin = localStorage.getItem("firstlogin");
 
-                        if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "#/login" || window.location.hash == "#/login/" || window.location.hash.indexOf("#/?token=") > -1) {
-                            window.location.href = '#/welcome/';
+                        if(firstlogin == "yes"){
+                            window.location.href = "#/welcome/";
+                        }else{
+                            window.location.href = "#/mylist/";
                         }
+
+                        // if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "#/login" || window.location.hash == "#/login/" || window.location.hash.indexOf("#/?token=") > -1) {
+                        //     window.location.href = '#/welcome/';
+                        // }
                     },
                     error: function (xhr, status, error) {
                         if (window.location.hash.indexOf("#/?token=") > -1) {
@@ -347,11 +355,13 @@
                     $(".lds-ring").hide();
                     if (result.token) {
                         localStorage.setItem("token", result.token);
+                        localStorage.setItem("firstlogin", result.firstlogin);
                     }
                 },
                 error: function (xhr, status, error) {
                     $(".lds-ring").hide();
                     localStorage.setItem("token", tokenParam);
+                    localStorage.setItem("firstlogin", "");
                 }
             });
         }
