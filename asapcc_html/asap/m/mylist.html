@@ -146,13 +146,13 @@
             if ($('input[name=mylist-item]:checked').length > 0) {
                 $(".mylist-next-btn").removeClass("mylist-next-btn-inactive");
                 $(".mylist-next-btn").prop("disabled", false);
-                $(".mylist-add-btn").prop("disabled", false);
+                //$(".mylist-add-btn").prop("disabled", false);
                 $('input[name=mylist-item]').prop("disabled", true);
                 $(this).prop("disabled", false);
             } else {
                 $(".mylist-next-btn").addClass("mylist-next-btn-inactive");
                 $(".mylist-next-btn").prop("disabled", true);
-                $(".mylist-add-btn").prop("disabled", true);
+                //$(".mylist-add-btn").prop("disabled", true);
                 $('input[name=mylist-item]').prop("disabled", false);
             }
         });
