@@ -260,6 +260,7 @@
             }
 
             if (localStorage.getItem("token")) {
+    
                 $.ajax({
                     url: baseURL + "customerprofile",
                     method: "GET",
@@ -274,12 +275,19 @@
                         $(".lds-ring").hide();
                         
                         var firstlogin = localStorage.getItem("firstlogin");
-
-                        if(firstlogin == "yes"){
-                            window.location.href = "#/welcome/";
-                        }else{
-                            window.location.href = "#/mylist/";
+                        
+                        if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "#/login" || window.location.hash == "#/login/" || window.location.hash.indexOf("#/?token=") > -1) {
+                            if(firstlogin == "yes"){
+                                window.location.href = "#/welcome/";
+                            }else{
+                                window.location.href = "#/mylist/";
+                            }
                         }
+                        // if(firstlogin == "yes"){
+                        //     window.location.href = "#/welcome/";
+                        // }else{
+                        //     window.location.href = "#/mylist/";
+                        // }
 
                         // if (window.location.hash == "" || window.location.hash == "#/" || window.location.hash == "#/login" || window.location.hash == "#/login/" || window.location.hash.indexOf("#/?token=") > -1) {
                         //     window.location.href = '#/welcome/';

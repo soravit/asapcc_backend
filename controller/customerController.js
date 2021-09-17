@@ -237,7 +237,7 @@ exports.CustomerLogin = (req, res, next) => {
                                     token: jwtToken,
                                     expiresIn: process.env.TOKEN_EXPIRE_IN,
                                     firstlogin: row999[0].checka
-                              
+                              /*  firstlogin: row999[0].checka */
                                 });
                         });
                         });
