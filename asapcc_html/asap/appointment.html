@@ -352,6 +352,7 @@
     var amphor =  ($("#amphor-field").val() ? $("#amphor-field").val() : ($("#service-center-field").val() ? $("#service-center-field").val() : ""));
     var branch_name = $("#service-center-field option:selected").attr("branchName");
     var branch_name_val = $("#service-center-field").val();
+    var service_code = $("#service-center-field option:selected").attr("servicecode");
     
     $.ajax({
       url: baseURL + "searchservicepointbyloc?province=" + province + "&amphor=" + amphor,
@@ -368,7 +369,7 @@
           var planes = [];
           if(branch_name_val != "" && branch_name_val != null){
             $.each(result.servicepoint, function (key, val) {
-              if(branch_name == val.branch_name){
+              if(branch_name == val.branch_name && service_code == val.service_code){
                 planes.push([val.service_point_name+" "+ val.branch_name, val.lattitude, val.longtitude]);
               }
             });
