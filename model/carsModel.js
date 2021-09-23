@@ -16,13 +16,13 @@ class CarsModel {
 
 
     static getMyCars({customer_code=''}){
-        return db.execute('SELECT cm.car_vin_id,cm.customer_code,car.car_license,car.car_brand,car.car_series,car.car_model,car.car_engine_no,car.car_customer_type,car.business_name,car.contract_startdate,car.contract_enddate,IFNULL((SELECT MAX(job_appoint_confirm_datetime) FROM asapcc_job_main WHERE job_car_vin_id=cm.car_vin_id LIMIT 1),"") as last_service_date,IFNULL((SELECT CONCAT(service_point_name," (",branch_name,")") FROM asapcc_job_main WHERE job_car_vin_id=cm.car_vin_id AND job_appoint_confirm_datetime!="" ORDER BY job_appoint_confirm_datetime DESC LIMIT 1),"") as service_point_name,IF(DATE_FORMAT(NOW(), "%Y-%m-%d") > car.contract_enddate,"yes","no") as isexpirecontract,car.carpicture FROM asapcc_car_mapping_customer cm INNER JOIN asapcc_car_db car ON cm.car_vin_id=car.car_vin WHERE cm.customer_code=? order by last_service_date DESC',[customer_code]);
+        return db.execute('SELECT cm.car_vin_id,cm.customer_code,car.car_license,car.car_brand,car.car_series,car.car_model,car.car_engine_no,car.car_customer_type,car.business_name,car.contract_startdate,car.contract_enddate,IFNULL((SELECT MAX(job_appoint_confirm_datetime) FROM asapcc_job_main WHERE job_car_vin_id=cm.car_vin_id LIMIT 1),"") as last_service_date,IFNULL((SELECT CONCAT(service_point_name," (",branch_name,")") FROM asapcc_job_main WHERE job_car_vin_id=cm.car_vin_id AND job_appoint_confirm_datetime!="" ORDER BY job_appoint_confirm_datetime DESC LIMIT 1),"") as service_point_name,IF(NOW() > STR_TO_DATE(car.contract_enddate,"%d/%m/%Y"),"yes","no") as isexpirecontract,car.carpicture FROM asapcc_car_mapping_customer cm INNER JOIN asapcc_car_db car ON cm.car_vin_id=car.car_vin WHERE cm.customer_code=? order by last_service_date DESC',[customer_code]);
     }
 
 
     static findCarByLicense({carlicense=''}){
-      console.log('SELECT * FROM asapcc_car_db WHERE car_license LIKE "%'+carlicense+'%" AND contract_enddate > DATE_FORMAT(NOW(), "%Y-%m-%d")')
-        return db.execute('SELECT * FROM asapcc_car_db WHERE car_license LIKE "%'+carlicense+'%" AND contract_enddate > DATE_FORMAT(NOW(), "%Y-%m-%d")');
+      
+        return db.execute('SELECT * FROM asapcc_car_db WHERE car_license LIKE "%'+carlicense+'%" AND STR_TO_DATE(contract_enddate,"%d/%m/%Y") > NOW()');
     }
 
     static findCarByVin({vinid=''}){
@@ -35,7 +35,7 @@ class CarsModel {
              
             return db.execute('SELECT * FROM asapcc_car_mapping_customer m INNER JOIN asapcc_car_db cardb ON m.car_vin_id=cardb.car_vin WHERE m.car_vin_id ="'+car_vin_id+'" AND m.customer_code ="'+customer_code+'"');
         } else if(checkvaliddate=='true'){
-            return db.execute('SELECT * FROM asapcc_car_mapping_customer m INNER JOIN asapcc_car_db cardb ON m.car_vin_id=cardb.car_vin WHERE m.car_vin_id ="'+car_vin_id+'" AND m.customer_code ="'+customer_code+'" AND cardb.contract_enddate < DATE_FORMAT(NOW(), "%Y-%m-%d")');
+            return db.execute('SELECT * FROM asapcc_car_mapping_customer m INNER JOIN asapcc_car_db cardb ON m.car_vin_id=cardb.car_vin WHERE m.car_vin_id ="'+car_vin_id+'" AND m.customer_code ="'+customer_code+'" AND STR_TO_DATE(cardb.contract_enddate,"%d/%m/%Y") < NOW()');
         }
     }
 
