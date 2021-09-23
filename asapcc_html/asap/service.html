@@ -196,6 +196,7 @@
         //alert("Fail");
       } else {
         //alert("Success");
+        localStorage.removeItem("currentJobList");
         if (localStorage.getItem("currentJobList") !== null) {
           currentJobList = JSON.parse(localStorage.getItem("currentJobList"));
           var resultObject = searchObj(carLicense, currentJobList);
