@@ -132,13 +132,15 @@ class EmployeeModel {
 
 
 // Default search job
-static searchjob_default({order=''}){ 
+static searchjob_default({order='',customergroup=''}){ 
+console.log('SELECT * FROM asapcc_job_main WHERE car_customer_type = "'+customergroup+'" AND (job_status IN("new","onprocess") OR (job_status IN("finished") AND DATE(job_add_datetime)=DATE(NOW()))) '+order+'')
+    return db.execute('SELECT * FROM asapcc_job_main WHERE car_customer_type = "'+customergroup+'" AND (job_status IN("new","onprocess") OR (job_status IN("finished") AND DATE(job_add_datetime)=DATE(NOW()))) '+order+'')
 
-    return db.execute('SELECT * FROM asapcc_job_main WHERE job_status IN("new","onprocess") OR (job_status IN("finished") AND DATE(job_add_datetime)=DATE(NOW())) '+order+'')
    
 }
-static statsearchjob_default(){ 
-    return db.execute('SELECT (SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="new" ) AS NEWJOB,(SELECT COUNT(*) FROM asapcc_job_main   WHERE job_status="onprocess") AS ONPROCESS,(SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="finished" AND DATE(job_add_datetime)=DATE(NOW())) AS FINISHED')
+static statsearchjob_default({customergroup=''}){ 
+    console.log('SELECT (SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="new" AND car_customer_type = "'+customergroup+'" ) AS NEWJOB,(SELECT COUNT(*) FROM asapcc_job_main   WHERE job_status="onprocess" AND car_customer_type = "'+customergroup+'" ) AS ONPROCESS,(SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="finished"  AND car_customer_type = "'+customergroup+'"  AND DATE(job_add_datetime)=DATE(NOW())) AS FINISHED')
+    return db.execute('SELECT (SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="new" AND car_customer_type = "'+customergroup+'" ) AS NEWJOB,(SELECT COUNT(*) FROM asapcc_job_main   WHERE job_status="onprocess" AND car_customer_type = "'+customergroup+'" ) AS ONPROCESS,(SELECT COUNT(*) FROM asapcc_job_main  WHERE job_status="finished"  AND car_customer_type = "'+customergroup+'"  AND DATE(job_add_datetime)=DATE(NOW())) AS FINISHED')
   
 }
 

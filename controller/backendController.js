@@ -724,9 +724,9 @@ exports.exportjob=(req,res,next) => {
     // Part 1 Core Filter
     datenow=new Date().toISOString().slice(0, 10);
     if((req.body.startdate==req.body.enddate && req.body.startdate==datenow) && req.body.customergroup!='' && (req.body.carlicense=='' && req.body.customername=='' && req.body.statusjob=='' && req.body.service_group=='' && req.body.branch=='' && req.body.emp_name_assign=='' && req.body.emp_name_jobclose=='')){ 
-        EmployeeModel.searchjob_default({order:orderstring}).then(([row]) => {
+        EmployeeModel.searchjob_default({order:orderstring,customergroup:req.body.customergroup}).then(([row]) => {
 
-            EmployeeModel.statsearchjob_default().then(([row2]) => {
+            EmployeeModel.statsearchjob_default({customergroup:req.body.customergroup}).then(([row2]) => {
 
                 let tutorials = [];
 
@@ -978,9 +978,9 @@ exports.searchjob=(req,res,next) => {
     // Part 1 Core Filter
 datenow=new Date().toISOString().slice(0, 10);
     if((req.body.startdate==req.body.enddate && req.body.startdate==datenow) && req.body.customergroup!='' && (req.body.carlicense=='' && req.body.customername=='' && req.body.statusjob=='' && req.body.service_group=='' && req.body.branch=='' && req.body.emp_name_assign=='' && req.body.emp_name_jobclose=='')){ // Default search
-        EmployeeModel.searchjob_default({order:orderstring}).then(([row]) => {
+        EmployeeModel.searchjob_default({order:orderstring,customergroup:req.body.customergroup}).then(([row]) => {
             console.log('default search')
-            EmployeeModel.statsearchjob_default().then(([row2]) => {
+            EmployeeModel.statsearchjob_default({customergroup:req.body.customergroup}).then(([row2]) => {
 
             res.status(200).json({
                 joblist: row,
