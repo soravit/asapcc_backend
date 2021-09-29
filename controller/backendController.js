@@ -314,7 +314,7 @@ exports.jobclose=(req,res,next)=>{
             e=e+"<li>เปลี่ยนยาง</li>";
           
         }  else if(row[0].servicenote!=''){
-            e=e+"<li>สอบถามอื่นๆ: "+row[0].servicenote+"</li>";
+            e=e+"<li>"+row[0].servicenote+"</li>";
 
         } else if(row[0].custcare1=='1' ){ // ใส่ cust care note เข้าไปทุกอันด้วย
            
@@ -329,7 +329,7 @@ exports.jobclose=(req,res,next)=>{
             e=e+"<li>สอบถามสถานะรถทดแทน</li>";
             
         }  else if(row[0].custcarenote!=''){
-            e=e+"<li>สอบถามบริการอื่นๆ: "+row[0].custcarenote+"</li>";
+            e=e+"<li>"+row[0].custcarenote+"</li>";
         }
 
         // Send email summary job JOB ID 2108XXXXX

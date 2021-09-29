@@ -94,7 +94,7 @@ function check3(req){
         order=order+1;
         e=e+"<li>สอบถามอื่นๆ: "+req.body.servicenote+"</li>";
       
-        JobModel.insertJobs({job_orderss:order,job_customer_id:req.user.customer_code,job_car_vin_id:req.body.job_car_vin_id,job_service_point_code:req.body.job_service_point_code,job_appoint_datetime:req.body.job_appoint_datetime,servicetask1:'',servicetask2:req.body.servicetask2,servicenote:req.body.servicenote,custcare1:'',custcare2:'',custcare3:'',custcarenote:'',car_odo_mile:req.body.car_odo_mile,usertasknote:req.body.usertasknote}).then(([row]) => {
+        JobModel.insertJobs({job_orderss:order,job_customer_id:req.user.customer_code,job_car_vin_id:req.body.job_car_vin_id,job_service_point_code:req.body.job_service_point_code,job_appoint_datetime:req.body.job_appoint_datetime,servicetask1:'',servicetask2:'',servicenote:'สอบถามอื่นๆ: '+req.body.servicenote,custcare1:'',custcare2:'',custcare3:'',custcarenote:'',car_odo_mile:req.body.car_odo_mile,usertasknote:req.body.usertasknote}).then(([row]) => {
            
         });
     } 
@@ -142,7 +142,7 @@ function check7(req){
         order=order+1;
         e=e+"<li>สอบถามบริการอื่นๆ: "+req.body.custcarenote+"</li>";
     
-        JobModel.insertJobs({job_orderss:order,job_customer_id:req.user.customer_code,job_car_vin_id:req.body.job_car_vin_id,job_service_point_code:req.body.job_service_point_code,job_appoint_datetime:req.body.job_appoint_datetime,servicetask1:'',servicetask2:'',servicenote:'',custcare1:'',custcare2:'',custcare3:req.body.custcare3,custcarenote:req.body.custcarenote,car_odo_mile:req.body.car_odo_mile,usertasknote:req.body.usertasknote}).then(([row]) => {
+        JobModel.insertJobs({job_orderss:order,job_customer_id:req.user.customer_code,job_car_vin_id:req.body.job_car_vin_id,job_service_point_code:req.body.job_service_point_code,job_appoint_datetime:req.body.job_appoint_datetime,servicetask1:'',servicetask2:'',servicenote:'',custcare1:'',custcare2:'',custcare3:'สอบถามบริการอื่นๆ: '+req.body.custcare3,custcarenote:req.body.custcarenote,car_odo_mile:req.body.car_odo_mile,usertasknote:req.body.usertasknote}).then(([row]) => {
        
         });
     }
